@@ -1,0 +1,6 @@
+destination: docs
+title: GOF
+url: http://MarselScheer.github.io/GOF
+template:
+  params:
+    bootswatch: flatly
