@@ -1,0 +1,61 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+
+```{r badges, results='asis', echo=FALSE}
+suppressPackageStartupMessages(library(badgecreatr))
+acc <- "MarselScheer"
+repo <- "GOF"
+branch <- "master"
+status <- "active"
+lifecycle <- "experimental"
+badges <- list(
+  badge_travis(ghaccount = acc, ghrepo = repo, branch = branch),
+  badge_lifecycle(lifecycle = lifecycle),
+  badge_projectstatus(status = status),
+  badge_cran_version_ago(packagename = repo),
+  badge_cran_downloads(packagename = repo),
+  badge_license()
+  )
+cat(paste(badges, collapse = " "))
+```
+
+
+# GOF
+
+Bootstrap based goodness-of-fit tests.
+    
+## Example 
+
+...
+
+## Installation
+
+You can install it from CRAN
+
+```{r, eval = FALSE}
+install.packages("GOF")
+```
+
+or github
+
+```{r gh-installation, eval = FALSE}
+devtools::install_github("MarselScheer/GOF")
+```
+
+# sessionInfo
+
+```{r}
+sessionInfo()
+```
