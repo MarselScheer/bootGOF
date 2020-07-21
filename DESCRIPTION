@@ -21,4 +21,5 @@ Suggests:
     testthat,
     covr,
     roxygen2,
-    pkgdown
+    pkgdown,
+    devtools
