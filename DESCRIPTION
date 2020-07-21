@@ -17,3 +17,5 @@ LazyData: true
 RoxygenNote: 7.0.2
 URL: https://github.com/MarselScheer/GOF
 BugReports: https://github.com/MarselScheer/GOF/issues
+Suggests: 
+    testthat
