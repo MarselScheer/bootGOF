@@ -1,5 +1,9 @@
+^renv$
+^renv\.lock$
 ^GOF\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^docker$
+^README\.Rmd$
