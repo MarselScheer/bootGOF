@@ -6,6 +6,8 @@ USER rstudio
 RUN git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d \
     && ~/.emacs.d/bin/doom --yes install \
     && sed -i 's/;;ess/ess/g' ~/.doom.d/init.el \
+    && echo '(package! poly-R\n\
+  :recipe (:host github :repo "polymode/poly-R"))' >> ~/.doom.d/packages.el \
     && ~/.emacs.d/bin/doom sync
 
 RUN sed -i "s/display-line-numbers-type t/display-line-numbers-type 'relative/g" ~/.doom.d/config.el \
@@ -29,6 +31,18 @@ RUN sed -i "s/display-line-numbers-type t/display-line-numbers-type 'relative/g"
     (setq ess-eval-visibly 't)\n\
     )\n\
   )" >> ~/.doom.d/config.el \
+# bind tinytest
+    && echo "(defun ess-r-tinytest ()\n\
+  \"Interface to tinytest.\"\n\
+  (interactive)\n\
+  (projectile-save-project-buffers)\n\
+  (ess-r-package-eval-linewise\n\
+   \"sapply(pkgload::load_all(); tinytest::test_all()\n\"\n\
+   \"Source all R-files. Test with tinytest\"\n\
+   ))\n\
+(map! :leader\n\
+      :desc \"ess-r-tinytest\"\n\
+      \"m p t\" #'ess-r-tinytest)" >> ~/.doom.d/config.el \
 # set doom key-bindings
 ## save during insert mode
     && echo "(map! :i \"C-x C-s\" #'save-buffer)" >> ~/.doom.d/config.el
