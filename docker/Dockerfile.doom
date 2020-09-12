@@ -4,7 +4,7 @@ USER rstudio
 
 # install and configure doom-emacs
 RUN git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d \
-    && ~/.emacs.d/bin/doom --yes install \
+    && yes | ~/.emacs.d/bin/doom install \
     && sed -i 's/;;ess/ess/g' ~/.doom.d/init.el \
     && echo '(package! poly-R\n\
   :recipe (:host github :repo "polymode/poly-R"))' >> ~/.doom.d/packages.el \
