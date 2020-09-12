@@ -18,5 +18,4 @@ RUN apt-get update && apt-get install -y \
 # create directory for mounting the host file system
     && su -l rstudio -c "mkdir -p /tmp/hostfs" \
     && su -l rstudio -c "ln -s /tmp/hostfs /home/rstudio/hostfs" \
-    && su -l rstudio -c "ln -s /home/rstudio/hostfs/.Renviron /home/rstudio/.Renviron"
-
+    && su -l rstudio -c "echo RENV_PATHS_ROOT=~/hostfs/renv/ > /home/rstudio/.Renviron"
