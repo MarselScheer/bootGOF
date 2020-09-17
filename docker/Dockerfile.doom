@@ -37,7 +37,7 @@ RUN sed -i "s/display-line-numbers-type t/display-line-numbers-type 'relative/g"
   (interactive)\n\
   (projectile-save-project-buffers)\n\
   (ess-r-package-eval-linewise\n\
-   \"sapply(pkgload::load_all(); tinytest::test_all()\"\n\
+   \"pkgload::load_all(); tinytest::test_all()\"\n\
    \"Source all R-files. Test with tinytest\"\n\
    ))\n\
 (map! :leader\n\
