@@ -22,4 +22,5 @@ Suggests:
     covr,
     roxygen2,
     pkgdown,
-    devtools
+    devtools,
+    tinytest
