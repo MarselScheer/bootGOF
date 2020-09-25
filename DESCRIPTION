@@ -11,6 +11,7 @@ Authors@R:
              role = c("aut"),
              email = "dikta@fh-aachen.de"))
 Description: Bootstrap based goodness-of-fit tests.
+Imports: checkmate (>= 2.0.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
