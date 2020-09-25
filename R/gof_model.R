@@ -63,3 +63,20 @@ calc_beta_times_covariates <- function(model) {
   ret <- predict.lm(model, type = "response")
   return(ret)
 }
+
+##' Extracts the target-name used in the model definition
+##'
+##' @param model an object that returns a formula using formula().
+##' @return The left hand side of the formula extracted from
+##'   \code{model}
+get_Y_name <- function(model) {
+  frml <- formula(x = model)
+  if (length(frml) != 3) {
+    stop(sprintf(
+      fmt = "Formula '%s' contained in the model does not contain a left hand side",
+      as.character(frml)))
+  }
+
+  ret <- as.character(frml[2])
+  return(ret)
+}
