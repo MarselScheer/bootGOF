@@ -32,3 +32,16 @@ extract_Y_name_wo_lhs_gen_error <- function() {
     pattern = "Formula.*does not contain a left hand side")
 }
 extract_Y_name_wo_lhs_gen_error()
+
+refit_model_uses_new_data_to_update <- function() {
+  X <- 1:10
+  d = data.frame(y = 2 * X, x = X)
+  fit <- lm(y ~ x, data = d)
+
+  new_d <- data.frame(y = 3 * X, x = X)
+  update_fit <- refit_model(model = fit, data = new_d)
+  expect_equal(
+    coefficients(object = update_fit),
+    c("(Intercept)" = 0, "x" = 3))
+}
+refit_model_uses_new_data_to_update()

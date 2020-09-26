@@ -80,3 +80,12 @@ get_Y_name <- function(model) {
   ret <- as.character(frml[2])
   return(ret)
 }
+
+##' Refits a model using new data
+##'
+##' @param model to be refitted using \code{data}
+##' @param data used to refit \code{model}
+##' @return \code{model} but reffitted using \code{data}
+refit_model <- function(model, data) {
+  update(object = model, data = data)
+}
