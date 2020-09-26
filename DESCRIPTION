@@ -24,4 +24,5 @@ Suggests:
     roxygen2,
     pkgdown,
     devtools,
-    tinytest
+    tinytest,
+    mockery
