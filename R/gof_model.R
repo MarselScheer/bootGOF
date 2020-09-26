@@ -104,3 +104,22 @@ Rn1 <- function(Y, Y_hat, order_beta_time_covariates) {
   ret <- cumsum(err) / sqrt(length(Y))
   return(ret)
 }
+
+##' Cramer von Mises distance for a marked empirical process
+##'
+##' @param Rn1_vec marked empirical process evaluated at every
+##'   position of the scalar of the estimated beta and the covariate
+##' @return Cramer von Mises distance of \code{Rn1_vec}
+Rn1_CvM <- function(Rn1_vec) {
+  ret <- mean(Rn1_vec^2)
+  return(ret)
+}
+##' Kolmogorov-Smirnov distance for a marked empirical process
+##'
+##' @param Rn1_vec marked empirical process evaluated at every
+##'   position of the scalar of the estimated beta and the covariate
+##' @return Kolmogorov-Smirnov distance of \code{Rn1_vec}
+Rn1_KS <- function(Rn1_vec) {
+  ret <- max(abs(Rn1_vec))
+  return(ret)
+}

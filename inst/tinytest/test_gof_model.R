@@ -65,3 +65,15 @@ Rn1_calculates_marked_emp_process <- function() {
     )
 }
 Rn1_calculates_marked_emp_process()
+
+calculate_cramer_von_mises_for_marked_emp_process <- function() {
+  e <- rnorm(10)
+  expect_equal(Rn1_CvM(e), mean(e^2))
+}
+calculate_cramer_von_mises_for_marked_emp_process()
+
+calculate_kolmogorov_smirnov_for_marked_emp_process <- function() {
+  e <- rnorm(10)
+  expect_equal(Rn1_KS(e), max(abs(e)))
+}
+calculate_kolmogorov_smirnov_for_marked_emp_process()
