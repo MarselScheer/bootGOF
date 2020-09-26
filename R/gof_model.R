@@ -89,3 +89,18 @@ get_Y_name <- function(model) {
 refit_model <- function(model, data) {
   update(object = model, data = data)
 }
+##' Calculates the marked empirical process
+##'
+##' @param Y the dependent variable
+##' @param Y_hat estimate of the dependent variable
+##' @param order_beta_time_covariates order of the scalar product
+##'   of the estimated beta and the covariates.
+##' @return the marked empirical process evaluated at every
+##'   position of the (ordered) scalar of the estimated beta
+##'   and the covariate
+Rn1 <- function(Y, Y_hat, order_beta_time_covariates) {
+  err <- Y - Y_hat
+  err <- err[order_beta_time_covariates]
+  ret <- cumsum(err) / sqrt(length(Y))
+  return(ret)
+}

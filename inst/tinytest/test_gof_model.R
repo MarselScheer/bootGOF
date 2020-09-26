@@ -45,3 +45,23 @@ refit_model_uses_new_data_to_update <- function() {
     c("(Intercept)" = 0, "x" = 3))
 }
 refit_model_uses_new_data_to_update()
+
+Rn1_calculates_marked_emp_process <- function() {
+  Y <- 1:10
+  Y_hat <- 10 * runif(n = 10)
+  expect_equal(
+    Rn1(
+      Y = Y,
+      Y_hat = Y_hat,
+      order_beta_time_covariates = 1:10),
+    cumsum(Y - Y_hat) / sqrt(10)
+    )
+  expect_equal(
+    Rn1(
+      Y = Y,
+      Y_hat = Y_hat,
+      order_beta_time_covariates = 10:1),
+    cumsum(rev(Y - Y_hat)) / sqrt(10)
+    )
+}
+Rn1_calculates_marked_emp_process()
