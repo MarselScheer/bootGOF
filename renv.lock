@@ -4,7 +4,7 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://packagemanager.rstudio.com/all/291"
+        "URL": "https://cloud.r-project.org"
       }
     ]
   },
@@ -439,9 +439,7 @@
     "renv": {
       "Package": "renv",
       "Version": "0.11.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "1c3ef87cbb81c23ac96797781ec7aecc"
+      "Source": "Repository"
     },
     "rex": {
       "Package": "rex",
