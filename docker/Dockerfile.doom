@@ -7,7 +7,10 @@ RUN git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d \
     && yes | ~/.emacs.d/bin/doom install \
     && mv ~/.doom.d ~/.doom.d.org \
     && git clone https://github.com/MarselScheer/.doom.d.git ~/.doom.d \
-    && ~/.emacs.d/bin/doom sync
+    && echo "(package! plantuml-mode)" >> ~/.doom.d/packages.el \
+    && ~/.emacs.d/bin/doom sync \
+    && echo '(setq plantuml-jar-path "/home/rstudio/hostfs/plantuml.jar")' >> ~/.doom.d/config.el \
+    && echo "(setq plantuml-default-exec-mode 'jar)" >> ~/.doom.d/config.el
 
 # root at the end is need, otherwise
 # container stops directly after start?!?
