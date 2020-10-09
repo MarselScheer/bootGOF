@@ -7,13 +7,15 @@ Rn1_statistic <|-- Rn1_CvM
 class GOF_model_simulator {
     + resample_y(model)
 }
-class GOF_model_trainer {
-    + refit(model, data)
-}
 GOF_model_simulator <|-- GOF_lm_sim_param
 GOF_model_simulator <|-- GOF_lm_sim_wild_rademacher
 GOF_model_simulator <|-- GOF_glm_sim_param
 GOF_model_simulator <|-- GOF_glm_sim_wild_rademacher
+class GOF_model_trainer {
+    + refit(model, data)
+}
+GOF_model_trainer <|-- GOF_lm_trainer
+GOF_model_trainer <|-- GOF_glm_trainer
 class GOF_model_info_extractor {
     + double[] yhat(model)
     + double[] y_minus_yhat(model)
