@@ -21,13 +21,13 @@ class GOF_model_info_extractor {
     + double[] y_minus_yhat(model)
     + double[] beta_x_covariates(model)
 }
-class GOF_model_resample_skeleton {
+class GOF_model_resample {
     - GOF_model_simulator
     - GOF_model_trainer
     + resample()
 }
-GOF_model_resample_skeleton *-- GOF_model_simulator
-GOF_model_resample_skeleton *-- GOF_model_trainer
+GOF_model_resample *-- GOF_model_simulator
+GOF_model_resample *-- GOF_model_trainer
 class GOF_model_test {
     - GOF_model_info_exctractor
     - GOF_model_resample_skeleton RSS
@@ -40,6 +40,6 @@ class GOF_model_test {
     + get_pvalue()
 }
 GOF_model_test *-- GOF_model_info_extractor
-GOF_model_test *-- GOF_model_resample_skeleton
+GOF_model_test *-- GOF_model_resample
 GOF_model_test *-- Rn1_statistic
 @enduml
