@@ -21,6 +21,8 @@ class GOF_model_info_extractor {
     + double[] y_minus_yhat(model)
     + double[] beta_x_covariates(model)
 }
+GOF_model_info_extractor <|-- GOF_lm_info_extractor
+GOF_model_info_extractor <|-- GOF_glm_info_extractor
 class GOF_model_resample {
     - GOF_model_simulator
     - GOF_model_trainer
