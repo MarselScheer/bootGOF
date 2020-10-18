@@ -65,21 +65,3 @@ GOF_glm_sim_param <- R6::R6Class(
     resample_y = function(model) {
       simulate(model)[,1]
     }))
-
-
-##' Implements the "interface" GOF_model_simulator for
-##' for generalized linear models
-GOF_glm_sim_wild_rademacher <- R6::R6Class(
-  classname = "GOF_glm_sim_wild_rademacher",
-  public = list(
-    ##' @description a wild bootstrap using Rademacher random
-    ##'   variables to resample the dependent variable
-    ##' @param model see \link{GOF_model_simulator}
-    ##' @return see \link{GOF_model_simulator}
-    resample_y = function(model) {
-      eps <- residuals.glm(object = model, type = "response")
-      yhat <- predict.glm(object = model, type = "response")
-      r <- rrademacher(n = length(eps))
-      ret <- yhat + r * eps
-      return(ret)
-    }))

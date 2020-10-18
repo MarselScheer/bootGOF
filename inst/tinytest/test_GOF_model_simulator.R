@@ -69,31 +69,3 @@ GOF_glm_sim_param_simulates <- function() {
 }
 GOF_glm_sim_param_simulates()
 
-GOF_glm_sim_param_wild_rademacher_simulates <- function() {
-  set.seed(1)
-  ms <- GOF_glm_sim_wild_rademacher$new()
-  X <- 1:10
-  Y <- X + rnorm(10)
-  d <- data.frame(y = Y, x = X)
-  fit <- glm(y~x, data = d, family = Gamma())
-  mockery::stub(
-    where = ms$resample_y,
-    what = "rrademacher",
-    how = rep(1, 10)
-  )
-  expect_equivalent(
-    ms$resample_y(model = fit),
-    Y
-  )
-  mockery::stub(
-    where = ms$resample_y,
-    what = "rrademacher",
-    how = rep(-1, 10)
-  )
-  expect_equivalent(
-    ms$resample_y(model = fit),
-    predict.glm(fit, type = "response") -
-      residuals.glm(fit, type = "response")
-  )
-}
-GOF_glm_sim_param_wild_rademacher_simulates()

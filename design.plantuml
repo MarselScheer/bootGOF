@@ -10,7 +10,6 @@ class GOF_model_simulator {
 GOF_model_simulator <|-- GOF_lm_sim_param
 GOF_model_simulator <|-- GOF_lm_sim_wild_rademacher
 GOF_model_simulator <|-- GOF_glm_sim_param
-GOF_model_simulator <|-- GOF_glm_sim_wild_rademacher
 class GOF_model_trainer {
     + refit(model, data)
 }

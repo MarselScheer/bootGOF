@@ -16,8 +16,14 @@ GOF_model_test_injector <- function(model,
       semi_parametric_rademacher = GOF_lm_sim_wild_rademacher),
     glm = list(
       parametric = GOF_glm_sim_param,
-      semi_parametric_rademacher = GOF_glm_sim_wild_rademacher
-      ))
+      semi_parametric_rademacher = list(
+        new = function() stop(
+          paste(
+            "Ordinary Least Square estimate necessary for semi_parameteric_rademacher.",
+            "But MLE is used for GLMs."
+          )))
+    )
+  )
 
   if (inherits(x = model, what = "glm")) {
     ms <- simulators[["glm"]][[simulator_type]]$new()

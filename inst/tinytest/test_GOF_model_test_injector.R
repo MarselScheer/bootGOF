@@ -159,28 +159,6 @@ GOF_model_test_injector_uses_glm_parametric_simulator <- function() {
 }
 GOF_model_test_injector_uses_glm_parametric_simulator()
 
-GOF_model_test_injector_uses_glm_rademacher_simulator <- function() {
-  dummy_glm <- dummy_glm_model()
-
-  inject_glm_rademacher_simulator <- FALSE
-  GOF_model_resample_spy <- R6::R6Class(
-   classname = "GOF_model_resample",
-    public = list(
-      initialize = function(gof_model_simulator, gof_model_trainer) {
-        inject_glm_rademacher_simulator <<- inherits(
-          x = gof_model_simulator,
-          what = "GOF_glm_sim_wild_rademacher")
-      }))
-
-  GOF_model_test_injector(
-    model = dummy_glm$fit,
-    simulator_type = "semi_parametric_rademacher",
-    gof_model_test_class = GOF_model_test_dummy,
-    gof_model_resample_class = GOF_model_resample_spy)
-  expect_true(inject_glm_rademacher_simulator)
-}
-GOF_model_test_injector_uses_glm_rademacher_simulator()
-
 GOF_model_test_injector_uses_glm_info_extractor <- function() {
   dummy_lm <- dummy_glm_model()
 
@@ -350,3 +328,25 @@ GOF_model_test_injector_expect_non_small_pvalue <- function() {
   expect_equal(mt$get_pvalue(), 0.8)
 }
 GOF_model_test_injector_expect_non_small_pvalue()
+
+GOF_model_test_injector_error_for_glm_semi_parametric <- function() {
+  set.seed(1)
+  X1 <- rnorm(100)
+  d <- data.frame(
+    y = rpois(n = 100, lambda = exp(4 + X1 * 2)),
+    x1 = X1)
+  fit <- glm(y~x1, data = d, family = poisson())
+  expect_error(
+    GOF_model_test_injector(
+      model = fit,
+      data = d,
+      nmb_boot_samples = 100,
+      simulator_type = "semi_parametric_rademacher",
+      y_name = "y",
+      Rn1_statistic = CRn1_KS$new(),
+      gof_model_resample_class = GOF_model_resample,
+      gof_model_test_class = GOF_model_test),
+    pattern = "Ordinary Least Square estimate necessary for semi_parameteric_rademacher"
+  )
+}
+GOF_model_test_injector_error_for_glm_semi_parametric()
