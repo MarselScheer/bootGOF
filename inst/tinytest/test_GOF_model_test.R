@@ -127,7 +127,7 @@ GOF_model_test_calc_pvalue <- function() {
   Y <- 5 * X + rnorm(10)
   d <- data.frame(y = Y, x = X)
   fit <- lm(y ~ x, data = d)
-  KS <- CRn1_KS$new()
+  KS <- Rn1_KS$new()
   mt <- GOF_model_test$new(
     model = fit,
     data = d,
@@ -164,7 +164,7 @@ GOF_model_test_expect_small_pvalue <- function() {
     model = fit,
     data = d,
     y_name = "y",
-    Rn1_statistic = CRn1_KS$new(),
+    Rn1_statistic = Rn1_KS$new(),
     nmb_boot_samples = 100,
     gof_model_info_extractor = GOF_glm_info_extractor$new(),
     gof_model_resample = GOF_model_resample$new(
@@ -182,7 +182,7 @@ GOF_model_test_expect_small_pvalue <- function() {
     model = fit,
     data = d,
     y_name = "y",
-    Rn1_statistic = CRn1_KS$new(),
+    Rn1_statistic = Rn1_KS$new(),
     nmb_boot_samples = 100,
     gof_model_info_extractor = GOF_lm_info_extractor$new(),
     gof_model_resample = GOF_model_resample$new(
@@ -204,7 +204,7 @@ GOF_model_test_expect_non_small_pvalue <- function() {
     model = fit,
     data = d,
     y_name = "y",
-    Rn1_statistic = CRn1_KS$new(),
+    Rn1_statistic = Rn1_KS$new(),
     nmb_boot_samples = 100,
     gof_model_info_extractor = GOF_glm_info_extractor$new(),
     gof_model_resample = GOF_model_resample$new(
@@ -222,7 +222,7 @@ GOF_model_test_expect_non_small_pvalue <- function() {
     model = fit,
     data = d,
     y_name = "y",
-    Rn1_statistic = CRn1_CvM$new(),
+    Rn1_statistic = Rn1_CvM$new(),
     nmb_boot_samples = 100,
     gof_model_info_extractor = GOF_lm_info_extractor$new(),
     gof_model_resample = GOF_model_resample$new(

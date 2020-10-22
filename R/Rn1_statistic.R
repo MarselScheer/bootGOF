@@ -3,7 +3,7 @@
 ##'
 ##' R6 does not offer interfaces. Hence all methods
 ##' are considered as abstract.
-CRn1_statistic <- R6::R6Class(
+Rn1_statistic <- R6::R6Class(
   classname = "Rn1_statistic",
   public = list(
     ##' @description Abstract function that calculates the statistic
@@ -16,13 +16,13 @@ CRn1_statistic <- R6::R6Class(
   )
 
 ##' Implements the "interface" Rn1_statistic
-CRn1_KS <- R6::R6Class(
+Rn1_KS <- R6::R6Class(
   classname = "Rn1_KS",
-  inherit = CRn1_statistic,
+  inherit = Rn1_statistic,
   public = list(
     ##' @description calculates the Kolmogorov-Smirnov-statistic
-    ##' @param Rn1 see \link{CRn1_statistic}
-    ##' @return see \link{CRn1_statistic}
+    ##' @param Rn1 see \link{Rn1_statistic}
+    ##' @return see \link{Rn1_statistic}
     calc_statistic = function(Rn1) {
       ret <- max(abs(Rn1))
       return(ret)
@@ -30,14 +30,14 @@ CRn1_KS <- R6::R6Class(
 )
 
 ##' Implements the "interface" Rn1_statistic
-CRn1_CvM <- R6::R6Class(
+Rn1_CvM <- R6::R6Class(
   classname = "Rn1_CvM",
-  inherit = CRn1_statistic,
+  inherit = Rn1_statistic,
   public = list(
     ##' @description calculates the calculates the Cramer-von-Mises
     ##'   statistic
-    ##' @param Rn1 see \link{CRn1_statistic}
-    ##' @return see \link{CRn1_statistic}
+    ##' @param Rn1 see \link{Rn1_statistic}
+    ##' @return see \link{Rn1_statistic}
     calc_statistic = function(Rn1) {
       ret <- mean(Rn1^2)
       return(ret)

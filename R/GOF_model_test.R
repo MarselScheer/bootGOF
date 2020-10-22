@@ -10,7 +10,7 @@ GOF_model_test <- R6::R6Class(
     ##'   samples to perform
     ##' @param Rn1_statistic statistic used to map the marked empirical
     ##'   process to the real line. Needs to be a class that implements
-    ##'   link{CRn1_statistic}
+    ##'   link{Rn1_statistic}
     ##' @param gof_model_info_extractor an instance that implements
     ##'   \link{GOF_model_info_extractor} in order to apply it to
     ##'   \code{model}

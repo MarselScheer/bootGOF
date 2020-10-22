@@ -160,9 +160,9 @@ GOF_model_test_injector_uses_glm_parametric_simulator <- function() {
 GOF_model_test_injector_uses_glm_parametric_simulator()
 
 GOF_model_test_injector_uses_glm_info_extractor <- function() {
-  dummy_lm <- dummy_glm_model()
+  dummy_glm <- dummy_glm_model()
 
-  inject_lm_info_extractor <- FALSE
+  inject_glm_info_extractor <- FALSE
   GOF_model_test_spy <- R6::R6Class(
     classname = "GOF_model_test",
     public = list(
@@ -173,7 +173,7 @@ GOF_model_test_injector_uses_glm_info_extractor <- function() {
                             Rn1_statistic,
                             gof_model_info_extractor,
                             gof_model_resample) {
-        inject_lm_info_extractor <<- inherits(
+        inject_glm_info_extractor <<- inherits(
           x = gof_model_info_extractor,
           what = "GOF_glm_info_extractor")
       }))
@@ -183,12 +183,12 @@ GOF_model_test_injector_uses_glm_info_extractor <- function() {
     simulator_type = "parametric",
     gof_model_resample_class = GOF_model_resample_dummy,
     gof_model_test_class = GOF_model_test_spy)
-  expect_true(inject_lm_info_extractor)
+  expect_true(inject_glm_info_extractor)
 }
 GOF_model_test_injector_uses_glm_info_extractor()
 
 GOF_model_test_injector_uses_glm_trainer <- function() {
-  dummy_lm <- dummy_glm_model()
+  dummy_glm <- dummy_glm_model()
 
   inject_glm_trainer <- FALSE
   GOF_model_resample_spy <- R6::R6Class(
@@ -201,7 +201,7 @@ GOF_model_test_injector_uses_glm_trainer <- function() {
       }))
 
   GOF_model_test_injector(
-    model = dummy_lm$fit,
+    model = dummy_glm$fit,
     simulator_type = "parametric",
     gof_model_test_class = GOF_model_test_dummy,
     gof_model_resample_class = GOF_model_resample_spy)
@@ -241,7 +241,7 @@ GOF_model_test_injector_pass_through_parameters <- function() {
     nmb_boot_samples = 123,
     simulator_type = "parametric",
     y_name = "targetname",
-    Rn1_statistic = CRn1_CvM$new(),
+    Rn1_statistic = Rn1_CvM$new(),
     gof_model_test_class = GOF_model_test_spy,
     gof_model_resample_class = GOF_model_resample_dummy)
   expect_equal(DATA, dummy_glm$d)
@@ -266,7 +266,7 @@ GOF_model_test_injector_expect_small_pvalue <- function() {
     nmb_boot_samples = 100,
     simulator_type = "parametric",
     y_name = "y",
-    Rn1_statistic = CRn1_KS$new(),
+    Rn1_statistic = Rn1_KS$new(),
     gof_model_resample_class = GOF_model_resample,
     gof_model_test_class = GOF_model_test)
 
@@ -283,7 +283,7 @@ GOF_model_test_injector_expect_small_pvalue <- function() {
     nmb_boot_samples = 100,
     simulator_type = "semi_parametric_rademacher",
     y_name = "y",
-    Rn1_statistic = CRn1_KS$new(),
+    Rn1_statistic = Rn1_KS$new(),
     gof_model_resample_class = GOF_model_resample,
     gof_model_test_class = GOF_model_test)
 
@@ -304,7 +304,7 @@ GOF_model_test_injector_expect_non_small_pvalue <- function() {
     nmb_boot_samples = 100,
     simulator_type = "parametric",
     y_name = "y",
-    Rn1_statistic = CRn1_KS$new(),
+    Rn1_statistic = Rn1_KS$new(),
     gof_model_resample_class = GOF_model_resample,
     gof_model_test_class = GOF_model_test)
 
@@ -321,7 +321,7 @@ GOF_model_test_injector_expect_non_small_pvalue <- function() {
     nmb_boot_samples = 100,
     simulator_type = "semi_parametric_rademacher",
     y_name = "y",
-    Rn1_statistic = CRn1_CvM$new(),
+    Rn1_statistic = Rn1_CvM$new(),
     gof_model_resample_class = GOF_model_resample,
     gof_model_test_class = GOF_model_test)
 
@@ -343,7 +343,7 @@ GOF_model_test_injector_error_for_glm_semi_parametric <- function() {
       nmb_boot_samples = 100,
       simulator_type = "semi_parametric_rademacher",
       y_name = "y",
-      Rn1_statistic = CRn1_KS$new(),
+      Rn1_statistic = Rn1_KS$new(),
       gof_model_resample_class = GOF_model_resample,
       gof_model_test_class = GOF_model_test),
     pattern = "Ordinary Least Square estimate necessary for semi_parameteric_rademacher"
