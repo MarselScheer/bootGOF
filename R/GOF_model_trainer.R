@@ -6,7 +6,7 @@ GOF_model_trainer <- R6::R6Class(
   classname = "GOF_model_trainer",
   public = list(
     ##' @description Abstract function refits the model to
-    ##'     a new data set
+    ##'   a new data set
     ##' @param model fitted model
     ##' @param data used for refitting the model
     ##' @return \code{model} refitted on \code{data}
@@ -15,8 +15,8 @@ GOF_model_trainer <- R6::R6Class(
     }))
 
 
-##' Implements the "interface" GOF_model_trainer for
-##' for linear models
+##' @title Implements the "interface" GOF_model_trainer for
+##'   for linear models
 GOF_lm_trainer <- R6::R6Class(
   classname = "GOF_lm_trainer",
   public = list(
@@ -28,8 +28,8 @@ GOF_lm_trainer <- R6::R6Class(
       update(object = model, data = data)
     }))
 
-##' Implements the "interface" GOF_model_trainer for
-##' for generalized linear models
+##' @title Implements the "interface" GOF_model_trainer for
+##'   for generalized linear models
 GOF_glm_trainer <- R6::R6Class(
   classname = "GOF_glm_trainer",
   public = list(
