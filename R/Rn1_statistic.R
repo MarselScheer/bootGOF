@@ -1,8 +1,8 @@
-##' R6 Class representing statistics for marked
-##' empirical processes
+##' @title R6 Class representing statistics for marked
+##'   empirical processes
 ##'
-##' R6 does not offer interfaces. Hence all methods
-##' are considered as abstract.
+##' @description R6 does not offer interfaces. Hence all methods
+##'   are considered as abstract.
 Rn1_statistic <- R6::R6Class(
   classname = "Rn1_statistic",
   public = list(
@@ -15,7 +15,10 @@ Rn1_statistic <- R6::R6Class(
     })
   )
 
-##' Implements the "interface" Rn1_statistic
+##' @title Kolmogorov-Smirnov-statistic for marked empirical
+##'   process
+##'
+##' @description Implements the "interface" Rn1_statistic
 Rn1_KS <- R6::R6Class(
   classname = "Rn1_KS",
   inherit = Rn1_statistic,
@@ -29,7 +32,10 @@ Rn1_KS <- R6::R6Class(
     })
 )
 
-##' Implements the "interface" Rn1_statistic
+##' @title Cramer-von-Mises-statistic for marked empirical
+##'   process
+##'
+##' @description Implements the "interface" Rn1_statistic
 Rn1_CvM <- R6::R6Class(
   classname = "Rn1_CvM",
   inherit = Rn1_statistic,
