@@ -1,24 +1,24 @@
-##' R6 Class representing generator of the dependent variable
+##' @title R6 Class representing a generator/resample of the dependent variable
 ##'
-##' R6 does not offer interfaces. Hence all methods
-##' are considered as abstract.
+##' @description R6 does not offer interfaces. Hence all methods
+##'   are considered as abstract.
 GOF_model_simulator <- R6::R6Class(
   classname = "GOF_model_simulator",
   public = list(
-    ##' @description Abstract function that resamples the dependent
-    ##'   variable
+    ##' @description Abstract function that resamples/generates
+    ##'   the dependent variable
     ##' @param model fitted model
-    ##' @return resamples the dependent variable according to
+    ##' @return generates the dependent variable according to
     ##'   the \code{model}
     resample_y = function(model) {
       stop("Abstract method. Needs to be implemented")
     }))
 
-##' Implements the "interface" GOF_model_simulator for
-##' for linear models
+##' @title Implements the "interface" GOF_model_simulator for
+##'   for linear models
 GOF_lm_sim_param <- R6::R6Class(
   classname = "GOF_lm_sim_param",
-  ##' @description resamples the dependent variables based
+  ##' @description generates/resamples the dependent variables based
   ##'   on the parameteric nature defined by \code{model}
   ##' @param model see \link{GOF_model_simulator}
   ##' @return see \link{GOF_model_simulator}
@@ -26,6 +26,8 @@ GOF_lm_sim_param <- R6::R6Class(
     resample_y = function(model) {
       simulate(model)[,1]
     }))
+
+
 ##' Generates Rademacher distributed random variables
 ##'
 ##' @param n number of random variables to be generated
@@ -36,8 +38,8 @@ rrademacher <- function(n) {
 }
 
 
-##' Implements the "interface" GOF_model_simulator for
-##' for linear models
+##' @title Implements the "interface" GOF_model_simulator for
+##'   for linear models
 GOF_lm_sim_wild_rademacher <- R6::R6Class(
   classname = "GOF_lm_sim_wild_rademacher",
   public = list(
@@ -53,13 +55,12 @@ GOF_lm_sim_wild_rademacher <- R6::R6Class(
       return(ret)
     }))
 
-##' Implements the "interface" GOF_model_simulator for
-##' for generalized linear models
+##' @title Implements the "interface" GOF_model_simulator for
+##'   for generalized linear models
 GOF_glm_sim_param <- R6::R6Class(
   classname = "GOF_glm_sim_param",
   public = list(
-    ##' @description resamples the dependent variables based
-    ##'   on the parameteric nature defined by \code{model}
+    ##' @description see \link{GOF_model_simulator}
     ##' @param model see \link{GOF_model_simulator}
     ##' @return see \link{GOF_model_simulator}
     resample_y = function(model) {
