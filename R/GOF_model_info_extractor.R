@@ -1,12 +1,12 @@
-##' R6 Class representing model information
+##' @title R6 Class representing model information
 ##'
-##' R6 does not offer interfaces. Hence all methods
+##' @description R6 does not offer interfaces. Hence all methods
 ##' are considered as abstract.
 GOF_model_info_extractor <- R6::R6Class(
   classname = "GOF_model_info_extractor",
   public = list(
     ##' @description Abstract function that estimates/predicts the
-    ##'     the dependent variable in \code{model}
+    ##'   the dependent variable in \code{model}
     ##' @param model fitted model
     ##' @return estimate/prediction of the dependent variable
     ##'   fitted by \code{model}
@@ -14,24 +14,24 @@ GOF_model_info_extractor <- R6::R6Class(
       stop("Abstract method. Needs to be implemented")
     },
     ##' @description abstract function that calculates the residuals
-    ##'     on the scale of the dependent variable.
+    ##'   on the scale of the dependent variable.
     ##' @param model fitted model
     ##' @return residuals on the scale of the dependent variable
     y_minus_yhat = function(model) {
       stop("Abstract method. Needs to be implemented")
     },
     ##' @description abstract function that calculates the scalar product
-    ##'     of estimated parameters and the independent variables.
+    ##'   of estimated parameters and the independent variables.
     ##' @param model fitted model
-    ##' @return scalr product of the estimated parameters and the
-    ##'     independent variables.
+    ##' @return scalar product of the estimated parameters and the
+    ##'   independent variables.
     beta_x_covariates = function(model) {
       stop("Abstract method. Needs to be implemented")
     })
   )
 
-##' Implements the "interface" GOF_model_info_extractor for
-##' for linear models
+##' @title Implements the "interface" GOF_model_info_extractor for
+##'   for linear models
 GOF_lm_info_extractor = R6::R6Class(
   classname = "GOF_lm_info_extractor",
   inherit = GOF_model_info_extractor,
@@ -56,8 +56,8 @@ GOF_lm_info_extractor = R6::R6Class(
     }))
 
 
-##' Implements the "interface" GOF_model_info_extractor for
-##' for generalized linear models
+##' @title Implements the "interface" GOF_model_info_extractor for
+##'   for generalized linear models
 GOF_glm_info_extractor = R6::R6Class(
   classname = "GOF_glm_info_extractor",
   inherit = GOF_model_info_extractor,
