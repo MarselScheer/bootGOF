@@ -1,16 +1,19 @@
-##' R6 Class representing the Goodness-of-Fit test
-##' for (linear) models.
+##' @title R6 Class representing the Goodness-of-Fit test
+##'   for (linear) models.
+##' @description This class can test the null hypothesis that data follows
+##'   a particular linear model.
 GOF_model_test <- R6::R6Class(
   classname = "GOF_model_test",
   public = list(
-    ##' @description constructor
     ##' @param model a fitted model
-    ##' @param data to fit \code{model}
+    ##' @param data used to fit \code{model}
     ##' @param nmb_boot_samples integer specifying the number of bootstrap
     ##'   samples to perform
+    ##' @param y_name string specifying the name of the dependent variable in
+    ##'   in \code{data}
     ##' @param Rn1_statistic statistic used to map the marked empirical
     ##'   process to the real line. Needs to be a class that implements
-    ##'   link{Rn1_statistic}
+    ##'   \link{Rn1_statistic}
     ##' @param gof_model_info_extractor an instance that implements
     ##'   \link{GOF_model_info_extractor} in order to apply it to
     ##'   \code{model}
@@ -44,7 +47,7 @@ GOF_model_test <- R6::R6Class(
     },
     ##' @description calculates the marked empricial process for \code{model}
     ##' @return vector ordered by the scalar product of the estimated
-    ##'   parameter and the dependent variables
+    ##'   parameter and the independent variables
     get_Rn1_org = function() {
       if (is.null(private$Rn1_org)) {
         private$Rn1_org <- private$Rn1(
@@ -57,7 +60,8 @@ GOF_model_test <- R6::R6Class(
     },
     ##' @description calculates the marked empricial process for the
     ##'   resampled versions of \code{model}
-    ##' @return vector ordered by the scalar product of the estimated
+    ##' @return list of length \code{nmb_boot_samples} where every element
+    ##'   is a vector ordered by the scalar product of the estimated
     ##'   parameter and the dependent variables
     get_Rn1_boot = function() {
       if (is.null(private$Rn1_boot)) {
@@ -66,7 +70,7 @@ GOF_model_test <- R6::R6Class(
       return(private$Rn1_boot)
     },
     ##' @description p-value for Goodness-of-Fit-test for \code{model}
-    ##' @return p-value for the Null-hypothesis that the dependent variable
+    ##' @return p-value for the null hypothesis that the dependent variable
     ##'   was generated according to \code{model}
     get_pvalue = function() {
       stat_org <- private$Rn1_statistic$calc_statistic(Rn1 = self$get_Rn1_org())
