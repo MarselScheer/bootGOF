@@ -3,6 +3,7 @@
 ##'
 ##' @description R6 does not offer interfaces. Hence all methods
 ##'   are considered as abstract.
+##' @export
 Rn1_statistic <- R6::R6Class(
   classname = "Rn1_statistic",
   public = list(
@@ -19,6 +20,7 @@ Rn1_statistic <- R6::R6Class(
 ##'   process
 ##'
 ##' @description Implements the "interface" Rn1_statistic
+##' @export
 Rn1_KS <- R6::R6Class(
   classname = "Rn1_KS",
   inherit = Rn1_statistic,
@@ -36,6 +38,7 @@ Rn1_KS <- R6::R6Class(
 ##'   process
 ##'
 ##' @description Implements the "interface" Rn1_statistic
+##' @export
 Rn1_CvM <- R6::R6Class(
   classname = "Rn1_CvM",
   inherit = Rn1_statistic,
