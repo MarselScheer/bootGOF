@@ -2,6 +2,7 @@
 ##'   for (linear) models.
 ##' @description This class can test the null hypothesis that data follows
 ##'   a particular linear model.
+##' @export
 GOF_model_test <- R6::R6Class(
   classname = "GOF_model_test",
   public = list(

@@ -2,6 +2,7 @@
 ##'
 ##' @description R6 does not offer interfaces. Hence all methods
 ##' are considered as abstract.
+##' @export
 GOF_model_info_extractor <- R6::R6Class(
   classname = "GOF_model_info_extractor",
   public = list(
@@ -32,6 +33,7 @@ GOF_model_info_extractor <- R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_info_extractor for
 ##'   for linear models
+##' @export
 GOF_lm_info_extractor = R6::R6Class(
   classname = "GOF_lm_info_extractor",
   inherit = GOF_model_info_extractor,
@@ -58,6 +60,7 @@ GOF_lm_info_extractor = R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_info_extractor for
 ##'   for generalized linear models
+##' @export
 GOF_glm_info_extractor = R6::R6Class(
   classname = "GOF_glm_info_extractor",
   inherit = GOF_model_info_extractor,

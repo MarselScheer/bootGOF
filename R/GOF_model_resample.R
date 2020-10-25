@@ -1,5 +1,6 @@
 ##' R6 Class representing the resampling scheme for
 ##' Goodness-of-fit-tests for (linear) models
+##' @export
 GOF_model_resample <- R6::R6Class(
   classname = "GOF_model_resample",
   public = list(

@@ -2,6 +2,7 @@
 ##'
 ##' @description R6 does not offer interfaces. Hence all methods
 ##'   are considered as abstract.
+##' @export
 GOF_model_simulator <- R6::R6Class(
   classname = "GOF_model_simulator",
   public = list(
@@ -16,6 +17,7 @@ GOF_model_simulator <- R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_simulator for
 ##'   for linear models
+##' @export
 GOF_lm_sim_param <- R6::R6Class(
   classname = "GOF_lm_sim_param",
   ##' @description generates/resamples the dependent variables based
@@ -40,6 +42,7 @@ rrademacher <- function(n) {
 
 ##' @title Implements the "interface" GOF_model_simulator for
 ##'   for linear models
+##' @export
 GOF_lm_sim_wild_rademacher <- R6::R6Class(
   classname = "GOF_lm_sim_wild_rademacher",
   public = list(
@@ -57,6 +60,7 @@ GOF_lm_sim_wild_rademacher <- R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_simulator for
 ##'   for generalized linear models
+##' @export
 GOF_glm_sim_param <- R6::R6Class(
   classname = "GOF_glm_sim_param",
   public = list(

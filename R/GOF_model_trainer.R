@@ -2,6 +2,7 @@
 ##'
 ##' R6 does not offer interfaces. Hence all methods
 ##' are considered as abstract.
+##' @export
 GOF_model_trainer <- R6::R6Class(
   classname = "GOF_model_trainer",
   public = list(
@@ -17,6 +18,7 @@ GOF_model_trainer <- R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_trainer for
 ##'   for linear models
+##' @export
 GOF_lm_trainer <- R6::R6Class(
   classname = "GOF_lm_trainer",
   public = list(
@@ -30,6 +32,7 @@ GOF_lm_trainer <- R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_trainer for
 ##'   for generalized linear models
+##' @export
 GOF_glm_trainer <- R6::R6Class(
   classname = "GOF_glm_trainer",
   public = list(
