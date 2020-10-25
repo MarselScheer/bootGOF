@@ -1,3 +1,48 @@
+##' @title Creates a GOF-model-test-class
+##'
+##' @description Simplifies the creation of an instance of
+##'   \link{GOF_model_test}
+##' @param model see \link{GOF_model_test}
+##' @param data see \link{GOF_model_test}
+##' @param nmb_boot_samples see \link{GOF_model_test}
+##' @param simulator_type either "parameteric" or "semi_parameteric_rademacher"
+##' @param y_name see \link{GOF_model_test}
+##' @param Rn1_statistic see \link{GOF_model_test}
+##' @export
+##' @return instance of \link{GOF_model_test}
+GOF_model <- function(model,
+                      data,
+                      nmb_boot_samples,
+                      simulator_type,
+                      y_name,
+                      Rn1_statistic
+                      ) {
+  ret <- GOF_model_test_injector(
+    model = model,
+    data = data,
+    nmb_boot_samples = nmb_boot_samples,
+    simulator_type = simulator_type,
+    y_name = y_name,
+    Rn1_statistic = Rn1_statistic,
+    gof_model_resample_class = GOF_model_resample,
+    gof_model_test_class = GOF_model_test)
+  return(ret)
+}
+
+
+
+##' @title Creates a GOF-model-test-class
+##'
+##' @description Simplifies the creation of a GOF-model-test-class
+##' @param model see \link{GOF_model_test}
+##' @param data see \link{GOF_model_test}
+##' @param nmb_boot_samples see \link{GOF_model_test}
+##' @param simulator_type see \link{GOF_model}
+##' @param y_name see \link{GOF_model_test}
+##' @param Rn1_statistic see \link{GOF_model_test}
+##' @param gof_model_resample_class \link{GOF_model_resample} class
+##' @param gof_model_test_class \link{GOF_model_test} class
+##' @return instance of \link{GOF_model_test}
 GOF_model_test_injector <- function(model,
                                     data,
                                     nmb_boot_samples,
