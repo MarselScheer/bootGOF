@@ -1,10 +1,12 @@
-##' R6 Class representing the resampling scheme for
+##' @title R6 Class representing the resampling scheme for
 ##' Goodness-of-fit-tests for (linear) models
+##'
+##' @description Class is able to resample model fit, i.e. generate a
+##'   new data set and refit the model to the new data.
 ##' @export
 GOF_model_resample <- R6::R6Class(
   classname = "GOF_model_resample",
   public = list(
-    ##' @description constructor.
     ##' @param gof_model_simulator an instance that implements \link{GOF_model_simulator}
     ##' @param gof_model_trainer an instance that implements \link{GOF_model_trainer}
     ##' @return No explicit return

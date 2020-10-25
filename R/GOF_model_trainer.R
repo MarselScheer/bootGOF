@@ -1,6 +1,6 @@
-##' R6 Class representing a trainer for fitting models
+##' @title R6 Class representing a trainer for fitting models
 ##'
-##' R6 does not offer interfaces. Hence all methods
+##' @description R6 does not offer interfaces. Hence all methods
 ##' are considered as abstract.
 ##' @export
 GOF_model_trainer <- R6::R6Class(
@@ -18,6 +18,7 @@ GOF_model_trainer <- R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_trainer for
 ##'   for linear models
+##' @description refits an object of class "lm" to a new data set
 ##' @export
 GOF_lm_trainer <- R6::R6Class(
   classname = "GOF_lm_trainer",
@@ -32,6 +33,7 @@ GOF_lm_trainer <- R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_trainer for
 ##'   for generalized linear models
+##' @description refits an object of class "glm" to a new data set
 ##' @export
 GOF_glm_trainer <- R6::R6Class(
   classname = "GOF_glm_trainer",

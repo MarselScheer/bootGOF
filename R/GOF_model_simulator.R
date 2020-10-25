@@ -17,6 +17,10 @@ GOF_model_simulator <- R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_simulator for
 ##'   for linear models
+##' @description after the classical linear model was fitted the
+##'   normal distribution of the
+##'   of the dependent variable is fully specified and used here
+##'   to generate new depenedent variables that follow \code{model}
 ##' @export
 GOF_lm_sim_param <- R6::R6Class(
   classname = "GOF_lm_sim_param",
@@ -42,6 +46,8 @@ rrademacher <- function(n) {
 
 ##' @title Implements the "interface" GOF_model_simulator for
 ##'   for linear models
+##' @description Rademacher random variables are used to change
+##' add or substract the residuals from the fitted values
 ##' @export
 GOF_lm_sim_wild_rademacher <- R6::R6Class(
   classname = "GOF_lm_sim_wild_rademacher",
@@ -60,6 +66,9 @@ GOF_lm_sim_wild_rademacher <- R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_simulator for
 ##'   for generalized linear models
+##' @description after the GLM was fitted the distribution of the
+##'   of the dependent variable is fully specified and used here
+##'   to generate new depenedent variables that follow \code{model}
 ##' @export
 GOF_glm_sim_param <- R6::R6Class(
   classname = "GOF_glm_sim_param",

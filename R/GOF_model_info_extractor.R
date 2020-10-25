@@ -31,8 +31,10 @@ GOF_model_info_extractor <- R6::R6Class(
     })
   )
 
-##' @title Implements the "interface" GOF_model_info_extractor for
+##' @title Implements the "interface" GOF_model_info_extractor
 ##'   for linear models
+##' @description This class is specialized in extracting various information
+##'   from an object of class "lm"
 ##' @export
 GOF_lm_info_extractor = R6::R6Class(
   classname = "GOF_lm_info_extractor",
@@ -60,6 +62,8 @@ GOF_lm_info_extractor = R6::R6Class(
 
 ##' @title Implements the "interface" GOF_model_info_extractor for
 ##'   for generalized linear models
+##' @description This class is specialized in extracting various information
+##'   from an object of class "glm"
 ##' @export
 GOF_glm_info_extractor = R6::R6Class(
   classname = "GOF_glm_info_extractor",
