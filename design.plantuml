@@ -1,28 +1,28 @@
 @startuml
-class Rn1_statistic {
+interface Rn1_statistic {
     + {abstract} double calc_statistic(Rn1)
 }
 Rn1_statistic <|-- Rn1_KS
 Rn1_statistic <|-- Rn1_CvM
-class GOF_model_simulator {
-    + resample_y(model)
+interface GOF_model_simulator {
+    + {abstract} resample_y(model)
 }
 GOF_model_simulator <|-- GOF_lm_sim_param
 GOF_model_simulator <|-- GOF_lm_sim_wild_rademacher
 GOF_model_simulator <|-- GOF_glm_sim_param
-class GOF_model_trainer {
-    + refit(model, data)
+interface GOF_model_trainer {
+    + {abstract} refit(model, data)
 }
 GOF_model_trainer <|-- GOF_lm_trainer
 GOF_model_trainer <|-- GOF_glm_trainer
-class GOF_model_info_extractor {
-    + double[] yhat(model)
-    + double[] y_minus_yhat(model)
-    + double[] beta_x_covariates(model)
+interface GOF_model_info_extractor {
+    + {abstract} double[] yhat(model)
+    + {abstract} double[] y_minus_yhat(model)
+    + {abstract} double[] beta_x_covariates(model)
 }
 GOF_model_info_extractor <|-- GOF_lm_info_extractor
 GOF_model_info_extractor <|-- GOF_glm_info_extractor
-class GOF_model_resample {
+abstract class GOF_model_resample {
     - GOF_model_simulator
     - GOF_model_trainer
     + resample()

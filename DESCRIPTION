@@ -25,4 +25,7 @@ Suggests:
     pkgdown,
     devtools,
     tinytest,
-    mockery
+    mockery,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
