@@ -2,9 +2,18 @@
 % Please edit documentation in R/GOF_model_test_injector.R
 \name{GOF_model}
 \alias{GOF_model}
-\title{Creates a GOF-model-test-class}
+\title{Convenience function for creating a GOF-test for statistical models}
 \usage{
-GOF_model(model, data, nmb_boot_samples, simulator_type, y_name, Rn1_statistic)
+GOF_model(
+  model,
+  data,
+  nmb_boot_samples,
+  simulator_type,
+  y_name,
+  Rn1_statistic,
+  gof_model_resample_class = GOF_model_resample,
+  gof_model_test_class = GOF_model_test
+)
 }
 \arguments{
 \item{model}{see \link{GOF_model_test}}
@@ -18,6 +27,16 @@ GOF_model(model, data, nmb_boot_samples, simulator_type, y_name, Rn1_statistic)
 \item{y_name}{see \link{GOF_model_test}}
 
 \item{Rn1_statistic}{see \link{GOF_model_test}}
+
+\item{gof_model_resample_class}{no need to change this parameter. Here the
+class used for resampling the model (\link{GOF_model_resample})
+is injected. This parameter simply makes it easier to test the
+convenience function properly.}
+
+\item{gof_model_test_class}{no need to change this parameter. Here the
+class used for performing the GOF test (\link{GOF_model_test})
+is injected. This parameter simply makes it easier to test the
+convenience function properly.}
 }
 \value{
 instance of \link{GOF_model_test}

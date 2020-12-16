@@ -27,10 +27,6 @@ devnull <- plot(uml)
 * *Rn1_statistics*, *GOF_model_info_extractor*, *GOF_model_simulator* 
   and *GOF_model_trainer* follow the strategy pattern
 * *GOF_model_resample* follow the template pattern.
-* The class *GOF_model_test_injector* is not part of the diagram.
-  It facilitates to create a *GOF_model_test* instance for 
-  R-objects that inherit for example from *lm* or *glm*.
-
 
 Note that the object-oriented concepts are realized via the 
 R6-package and that R6 actually does not have a real 

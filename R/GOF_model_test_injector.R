@@ -1,4 +1,4 @@
-##' @title Creates a GOF-model-test-class
+##' @title Convenience function for creating a GOF-test for statistical models
 ##'
 ##' @description Simplifies the creation of an instance of
 ##'   \link{GOF_model_test}
@@ -8,6 +8,14 @@
 ##' @param simulator_type either "parameteric" or "semi_parameteric_rademacher"
 ##' @param y_name see \link{GOF_model_test}
 ##' @param Rn1_statistic see \link{GOF_model_test}
+##' @param gof_model_resample_class no need to change this parameter. Here the
+##'   class used for resampling the model (\link{GOF_model_resample})
+##'   is injected. This parameter simply makes it easier to test the
+##'   convenience function properly.
+##' @param gof_model_test_class no need to change this parameter. Here the
+##'   class used for performing the GOF test (\link{GOF_model_test})
+##'   is injected. This parameter simply makes it easier to test the
+##'   convenience function properly.
 ##' @export
 ##' @return instance of \link{GOF_model_test}
 GOF_model <- function(model,
@@ -15,42 +23,10 @@ GOF_model <- function(model,
                       nmb_boot_samples,
                       simulator_type,
                       y_name,
-                      Rn1_statistic
+                      Rn1_statistic,
+                      gof_model_resample_class = GOF_model_resample,
+                      gof_model_test_class = GOF_model_test
                       ) {
-  ret <- GOF_model_test_injector(
-    model = model,
-    data = data,
-    nmb_boot_samples = nmb_boot_samples,
-    simulator_type = simulator_type,
-    y_name = y_name,
-    Rn1_statistic = Rn1_statistic,
-    gof_model_resample_class = GOF_model_resample,
-    gof_model_test_class = GOF_model_test)
-  return(ret)
-}
-
-
-
-##' @title Creates a GOF-model-test-class
-##'
-##' @description Simplifies the creation of a GOF-model-test-class
-##' @param model see \link{GOF_model_test}
-##' @param data see \link{GOF_model_test}
-##' @param nmb_boot_samples see \link{GOF_model_test}
-##' @param simulator_type see \link{GOF_model}
-##' @param y_name see \link{GOF_model_test}
-##' @param Rn1_statistic see \link{GOF_model_test}
-##' @param gof_model_resample_class \link{GOF_model_resample} class
-##' @param gof_model_test_class \link{GOF_model_test} class
-##' @return instance of \link{GOF_model_test}
-GOF_model_test_injector <- function(model,
-                                    data,
-                                    nmb_boot_samples,
-                                    simulator_type,
-                                    y_name,
-                                    Rn1_statistic,
-                                    gof_model_resample_class,
-                                    gof_model_test_class) {
   checkmate::assert_subset(
     x = simulator_type,
     choices = c("parametric", "semi_parametric_rademacher"))

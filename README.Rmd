@@ -60,6 +60,7 @@ that is not correct and the GOF-test should reveal that:
 
 ```{r}
 fit <- glm(y ~ x1, data = d, family = poisson())
+
 mt <- GOF_model(
   model = fit,
   data = d,
