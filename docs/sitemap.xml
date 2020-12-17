@@ -4,6 +4,63 @@
     <loc>http://MarselScheer.github.io/GOF/index.html</loc>
   </url>
   <url>
-    <loc>http://MarselScheer.github.io/GOF/reference/not_covered.html</loc>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_glm_info_extractor.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_glm_sim_param.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_glm_trainer.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_lm_info_extractor.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_lm_sim_param.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_lm_sim_wild_rademacher.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_lm_trainer.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_model.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_model_info_extractor.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_model_resample.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_model_simulator.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_model_test.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/GOF_model_trainer.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/Rn1_CvM.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/Rn1_KS.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/Rn1_statistic.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/rrademacher.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/articles/Architecture.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/articles/New-Models.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/articles/repro.html</loc>
   </url>
 </urlset>

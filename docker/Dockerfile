@@ -4,7 +4,11 @@ RUN apt-get update && apt-get install -y \
     ranger \
     git \
     tig \
+    htop \
     emacs \
+# graphviz necessary for dot-programm for instance used
+# by plantuml
+    graphviz \
 # xdg-utils and ff necessary to display 
 # drake-network-graphs from doom-emacs
     xdg-utils \

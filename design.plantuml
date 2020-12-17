@@ -1,0 +1,46 @@
+@startuml
+interface Rn1_statistic {
+    + {abstract} double calc_statistic(Rn1)
+}
+Rn1_statistic <|-- Rn1_KS
+Rn1_statistic <|-- Rn1_CvM
+interface GOF_model_simulator {
+    + {abstract} resample_y(model)
+}
+GOF_model_simulator <|-- GOF_lm_sim_param
+GOF_model_simulator <|-- GOF_lm_sim_wild_rademacher
+GOF_model_simulator <|-- GOF_glm_sim_param
+interface GOF_model_trainer {
+    + {abstract} refit(model, data)
+}
+GOF_model_trainer <|-- GOF_lm_trainer
+GOF_model_trainer <|-- GOF_glm_trainer
+interface GOF_model_info_extractor {
+    + {abstract} double[] yhat(model)
+    + {abstract} double[] y_minus_yhat(model)
+    + {abstract} double[] beta_x_covariates(model)
+}
+GOF_model_info_extractor <|-- GOF_lm_info_extractor
+GOF_model_info_extractor <|-- GOF_glm_info_extractor
+abstract class GOF_model_resample {
+    - GOF_model_simulator
+    - GOF_model_trainer
+    + resample()
+}
+GOF_model_resample *-- GOF_model_simulator
+GOF_model_resample *-- GOF_model_trainer
+class GOF_model_test {
+    - GOF_model_info_exctractor
+    - GOF_model_resample_skeleton RSS
+    - Rn1_statistic Rn1_stat
+    - double[] Rn1_org
+    - double[] Rn1_boot
+    - double[] Rn1(y_minus_yhat, order_beta_x_covariates)
+    + get_Rn1_org()
+    + get_Rn1_boot()
+    + get_pvalue()
+}
+GOF_model_test *-- GOF_model_info_extractor
+GOF_model_test *-- GOF_model_resample
+GOF_model_test *-- Rn1_statistic
+@enduml

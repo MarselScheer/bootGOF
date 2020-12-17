@@ -86,6 +86,24 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Architecture.html">Architecture</a>
+    </li>
+    <li>
+      <a href="../articles/New-Models.html">New-Models</a>
+    </li>
+    <li>
+      <a href="../articles/repro.html">UNKNOWN TITLE</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -121,7 +139,7 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-gof-tests" class="hasAnchor"><a href="#section-gof-tests" class="anchor"></a>GOF-tests</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -133,9 +151,176 @@
       <tr>
         
         <td>
-          <p><code><a href="not_covered.html">not_covered()</a></code> </p>
+          <p><code><a href="GOF_model.html">GOF_model()</a></code> </p>
         </td>
-        <td><p>example of a function that is not covered by unit-tests</p></td>
+        <td><p>Convenience function for creating a GOF-test for statistical models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GOF_model_test.html">GOF_model_test</a></code> </p>
+        </td>
+        <td><p>R6 Class representing the Goodness-of-Fit test
+  for (linear) models.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-statistics-for-the-marked-empiricial-process" class="hasAnchor"><a href="#section-statistics-for-the-marked-empiricial-process" class="anchor"></a>Statistics for the marked empiricial process</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="Rn1_statistic.html">Rn1_statistic</a></code> </p>
+        </td>
+        <td><p>R6 Class representing statistics for marked
+  empirical processes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Rn1_CvM.html">Rn1_CvM</a></code> </p>
+        </td>
+        <td><p>Cramer-von-Mises-statistic for marked empirical
+  process</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Rn1_KS.html">Rn1_KS</a></code> </p>
+        </td>
+        <td><p>Kolmogorov-Smirnov-statistic for marked empirical
+  process</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-class-that-holds-the-bootstrap-resampling-schema" class="hasAnchor"><a href="#section-class-that-holds-the-bootstrap-resampling-schema" class="anchor"></a>Class that holds the bootstrap resampling schema</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="GOF_model_resample.html">GOF_model_resample</a></code> </p>
+        </td>
+        <td><p>R6 Class representing the resampling scheme for
+Goodness-of-fit-tests for (linear) models</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-classes-for-generating-resampling-dependent-variable" class="hasAnchor"><a href="#section-classes-for-generating-resampling-dependent-variable" class="anchor"></a>Classes for generating/resampling dependent variable</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="GOF_model_simulator.html">GOF_model_simulator</a></code> </p>
+        </td>
+        <td><p>R6 Class representing a generator/resample of the dependent variable</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GOF_glm_sim_param.html">GOF_glm_sim_param</a></code> </p>
+        </td>
+        <td><p>Implements the "interface" GOF_model_simulator for
+  for generalized linear models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GOF_lm_sim_param.html">GOF_lm_sim_param</a></code> </p>
+        </td>
+        <td><p>Implements the "interface" GOF_model_simulator for
+  for linear models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GOF_lm_sim_wild_rademacher.html">GOF_lm_sim_wild_rademacher</a></code> </p>
+        </td>
+        <td><p>Implements the "interface" GOF_model_simulator for
+  for linear models</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-classes-for-refitting-a-model" class="hasAnchor"><a href="#section-classes-for-refitting-a-model" class="anchor"></a>Classes for refitting a model</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="GOF_model_trainer.html">GOF_model_trainer</a></code> </p>
+        </td>
+        <td><p>R6 Class representing a trainer for fitting models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GOF_glm_trainer.html">GOF_glm_trainer</a></code> </p>
+        </td>
+        <td><p>Implements the "interface" GOF_model_trainer for
+  for generalized linear models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GOF_lm_trainer.html">GOF_lm_trainer</a></code> </p>
+        </td>
+        <td><p>Implements the "interface" GOF_model_trainer for
+  for linear models</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-classes-extracting-information-from-a-model" class="hasAnchor"><a href="#section-classes-extracting-information-from-a-model" class="anchor"></a>Classes extracting information from a model</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="GOF_model_info_extractor.html">GOF_model_info_extractor</a></code> </p>
+        </td>
+        <td><p>R6 Class representing model information</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GOF_glm_info_extractor.html">GOF_glm_info_extractor</a></code> </p>
+        </td>
+        <td><p>Implements the "interface" GOF_model_info_extractor for
+  for generalized linear models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GOF_lm_info_extractor.html">GOF_lm_info_extractor</a></code> </p>
+        </td>
+        <td><p>Implements the "interface" GOF_model_info_extractor
+  for linear models</p></td>
       </tr>
     </tbody>
     </table>

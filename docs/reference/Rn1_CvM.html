@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Authors • GOF</title>
+<title>Cramer-von-Mises-statistic for marked empirical
+  process — Rn1_CvM • GOF</title>
 
 
 <!-- jquery -->
@@ -18,8 +19,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
-<link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script>
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -33,13 +34,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
 
-<meta property="og:title" content="Authors" />
+<meta property="og:title" content="Cramer-von-Mises-statistic for marked empirical
+  process — Rn1_CvM" />
+<meta property="og:description" content="Implements the &quot;interface&quot; Rn1_statistic" />
 
 
 
@@ -58,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -70,7 +73,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">GOF</a>
+        <a class="navbar-link" href="../index.html">GOF</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
       </span>
     </div>
@@ -78,13 +81,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -94,13 +97,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/Architecture.html">Architecture</a>
+      <a href="../articles/Architecture.html">Architecture</a>
     </li>
     <li>
-      <a href="articles/New-Models.html">New-Models</a>
+      <a href="../articles/New-Models.html">New-Models</a>
     </li>
     <li>
-      <a href="articles/repro.html">UNKNOWN TITLE</a>
+      <a href="../articles/repro.html">UNKNOWN TITLE</a>
     </li>
   </ul>
 </li>
@@ -123,26 +126,70 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Authors</h1>
+    <h1>Cramer-von-Mises-statistic for marked empirical
+  process</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MarselScheer/GOF/blob/master/R/Rn1_statistic.R'><code>R/Rn1_statistic.R</code></a></small>
+    <div class="hidden name"><code>Rn1_CvM.Rd</code></div>
     </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>Marsel Scheer</strong>. Author, maintainer. 
-        </p>
-      </li>
-      <li>
-        <p><strong>Gerhard Dikta</strong>. Author. 
-        </p>
-      </li>
-    </ul>
+    <div class="ref-description">
+    <p>Implements the "interface" Rn1_statistic</p>
+    </div>
+
+
+
+    <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
+
+    <p><code><a href='Rn1_statistic.html'>GOF::Rn1_statistic</a></code> -&gt; <code>Rn1_CvM</code></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-calc_statistic'><code>Rn1_CvM$calc_statistic()</code></a></p></li>
+<li><p><a href='#method-clone'><code>Rn1_CvM$clone()</code></a></p></li>
+</ul>
+<p><details open ><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+
+<hr>
+<a id="method-calc_statistic"></a></p><h3>Method <code>calc_statistic()</code></h3>
+<p>calculates the calculates the Cramer-von-Mises
+  statistic</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Rn1_CvM</span>$<span class='fu'>calc_statistic</span>(<span class='no'>Rn1</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>Rn1</code></dt><dd><p>see <a href='Rn1_statistic.html'>Rn1_statistic</a></p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>see <a href='Rn1_statistic.html'>Rn1_statistic</a></p>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Rn1_CvM</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
   </div>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
+  </div>
 </div>
-
 
 
       <footer>

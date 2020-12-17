@@ -4,7 +4,7 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://packagemanager.rstudio.com/all/291"
+        "URL": "https://cloud.r-project.org"
       }
     ]
   },
@@ -43,6 +43,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "e652f23d8b1807cc975c51410d05b72f"
+    },
+    "XML": {
+      "Package": "XML",
+      "Version": "3.99-0.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "408d42d1359f2a84d377c1f7f0568624"
     },
     "askpass": {
       "Package": "askpass",
@@ -219,6 +226,13 @@
       "Repository": "CRAN",
       "Hash": "f43e0d5e85ccb0a4045670c0607ee504"
     },
+    "grImport": {
+      "Package": "grImport",
+      "Version": "0.9-3",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "510ede2a36dd1086c2bdc81715ad449e"
+    },
     "highlight": {
       "Package": "highlight",
       "Version": "0.5.0",
@@ -372,6 +386,25 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "b6b150cd4709e0c0c9b5d51ac4376282"
+    },
+    "plantuml": {
+      "Package": "plantuml",
+      "Version": "0.4",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "rkrug",
+      "RemoteRepo": "plantuml",
+      "RemoteRef": "master",
+      "RemoteSha": "4cc45be014152017b840462a2f814e5edb2cb07f",
+      "Hash": "bef6cceb744345f83e43c6e98a3cf528"
+    },
+    "png": {
+      "Package": "png",
+      "Version": "0.1-7",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "03b7076c234cb3331288919983326c55"
     },
     "praise": {
       "Package": "praise",
