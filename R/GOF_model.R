@@ -2,7 +2,8 @@
 ##'
 ##' @description Simplifies the creation of an instance of
 ##'   \link{GOF_model_test}
-##' @param model see \link{GOF_model_test}
+##' @param model of class 'lm' or 'glm'. Caution with MASS::glm.nb, see
+##'   vignette 'New-Models' for more details.
 ##' @param data see \link{GOF_model_test}
 ##' @param nmb_boot_samples see \link{GOF_model_test}
 ##' @param simulator_type either "parameteric" or "semi_parameteric_rademacher"
