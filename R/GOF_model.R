@@ -31,6 +31,12 @@ GOF_model <- function(model,
   checkmate::assert_subset(
     x = simulator_type,
     choices = c("parametric", "semi_parametric_rademacher"))
+  checkmate::assert_multi_class(x = model, classes = c("lm", "glm"))
+  if (inherits(x = model, what = "negbin")) {
+    warning("The GOF-test requires to refit the model. Refitting MASS::glm.nb can be problematic, see vignette New-Models")
+  }
+
+
 
   simulators <- list(
     lm = list(

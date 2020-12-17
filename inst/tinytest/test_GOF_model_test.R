@@ -49,7 +49,6 @@ GOF_model_test_necessary_input <- function() {
 }
 GOF_model_test_necessary_input()
 
-
 GOF_model_test_calc_Rn1_org <- function() {
   set.seed(1)
   X <- rnorm(10)

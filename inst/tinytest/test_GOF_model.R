@@ -36,6 +36,38 @@ GOF_model_test_dummy <- R6::R6Class(
                           gof_model_resample) {
     }))
 
+GOF_model_error_if_fit_class_is_not_lm_or_glm <- function() {
+  dummy <- dummy_glm_model()
+  class(dummy$fit) <- "lmglm"
+  expect_error(
+    GOF_model(
+      model = dummy$fit,
+      nmb_boot_samples = 1,
+      data = dummy$d,
+      y_name = "Y",
+      simulator_type = "parametric",
+      Rn1_statistic = Rn1_CvM$new()),
+    pattern = "model.*inherit.*lm.*glm.*but.*has.*lmglm")
+}
+GOF_model_error_if_fit_class_is_not_lm_or_glm()
+
+GOF_model_warns_if_MASS_glmnb_is_used <- function() {
+  X <- 1:10
+  Y <- 1:10
+  d <- data.frame(y = Y, x = X)
+  fit <- suppressWarnings(MASS::glm.nb(y ~ x, data = d))
+  expect_warning(
+    GOF_model(
+      model = fit,
+      nmb_boot_samples = 1,
+      data = d,
+      y_name = "Y",
+      simulator_type = "parametric",
+      Rn1_statistic = Rn1_CvM$new()),
+    pattern = "The GOF-test requires to refit the model. Refitting MASS::glm.nb can be problematic, see vignette New-Models")
+}
+GOF_model_warns_if_MASS_glmnb_is_used()
+
 GOF_model_uses_lm_info_extractor <- function() {
   dummy_lm <- dummy_lm_model()
 
