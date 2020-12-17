@@ -40,9 +40,6 @@
     <loc>http://MarselScheer.github.io/GOF/reference/GOF_model_test.html</loc>
   </url>
   <url>
-    <loc>http://MarselScheer.github.io/GOF/reference/GOF_model_test_injector.html</loc>
-  </url>
-  <url>
     <loc>http://MarselScheer.github.io/GOF/reference/GOF_model_trainer.html</loc>
   </url>
   <url>
@@ -53,5 +50,17 @@
   </url>
   <url>
     <loc>http://MarselScheer.github.io/GOF/reference/Rn1_statistic.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/reference/rrademacher.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/articles/Architecture.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/articles/New-Models.html</loc>
+  </url>
+  <url>
+    <loc>http://MarselScheer.github.io/GOF/articles/repro.html</loc>
   </url>
 </urlset>
