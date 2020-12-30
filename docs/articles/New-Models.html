@@ -104,7 +104,7 @@
   <span class="kw">x1</span> <span class="kw">=</span> <span class="no">X1</span>,
   <span class="kw">x2</span> <span class="kw">=</span> <span class="no">X2</span>)
 <span class="no">fit</span> <span class="kw">&lt;-</span> <span class="kw pkg">MASS</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/glm.nb.html">glm.nb</a></span>(<span class="no">y</span>~<span class="no">x1</span>+<span class="no">x2</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)</pre></body></html></div>
-<p>The first interface requires that we implement three functions <em>yhat</em>, <em>y_minus_yhat</em> and <em>beta_x_covariates</em>, which are the predictions for the dependent variable (also called target-variable), the residuals on the scale of the dependent variable and the scalar product of the estimated parameters and the independent variables (also called covariates or features).</p>
+<p>The first interface requires that we implement three functions <em>yhat</em>, <em>y_minus_yhat</em> and <em>beta_x_covariates</em>, which are the predictions for the dependent variable (also called target-variable), the residuals on the scale of the dependent variable and the inner product of the estimated parameters and the independent variables (also called covariates or features).</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">my_negbin_info_extractor</span> <span class="kw">&lt;-</span> <span class="kw pkg">R6</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/R6/man/R6Class.html">R6Class</a></span>(
   <span class="kw">classname</span> <span class="kw">=</span> <span class="st">"my_negbin_info_extractor"</span>,
   <span class="kw">inherit</span> <span class="kw">=</span> <span class="no">GOF_model_info_extractor</span>,
@@ -137,7 +137,7 @@
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">my_info_extractor</span>$<span class="fu">y_minus_yhat</span>(<span class="kw">model</span> <span class="kw">=</span> <span class="no">fit</span>))
 <span class="co">#&gt;         1         2         3         4         5         6 </span>
 <span class="co">#&gt;  1.318142  3.714645  1.471964 -0.744662  1.231083 -4.157037</span></pre></body></html></div>
-<p>And based on the estimated coefficients we can calculate their scalar product with <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> (Note that the model has an intercept so for the scalar product one has to think of an extra column in the data set that contains only ones!)</p>
+<p>And based on the estimated coefficients we can calculate their inner product with <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> (Note that the model has an intercept so for the inner product one has to think of an extra column in the data set that contains only ones!)</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">my_info_extractor</span>$<span class="fu">beta_x_covariates</span>(<span class="kw">model</span> <span class="kw">=</span> <span class="no">fit</span>))
 <span class="co">#&gt;          1          2          3          4          5          6 </span>
 <span class="co">#&gt; -0.3829335  0.2510347 -0.6385904  0.5565608 -0.2627726  1.4248025</span></pre></body></html></div>

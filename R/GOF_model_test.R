@@ -47,7 +47,7 @@ GOF_model_test <- R6::R6Class(
       private$Rn1_statistic <- Rn1_statistic
     },
     ##' @description calculates the marked empricial process for \code{model}
-    ##' @return vector ordered by the scalar product of the estimated
+    ##' @return vector ordered by the inner product of the estimated
     ##'   parameter and the independent variables
     get_Rn1_org = function() {
       if (is.null(private$Rn1_org)) {
@@ -62,7 +62,7 @@ GOF_model_test <- R6::R6Class(
     ##' @description calculates the marked empricial process for the
     ##'   resampled versions of \code{model}
     ##' @return list of length \code{nmb_boot_samples} where every element
-    ##'   is a vector ordered by the scalar product of the estimated
+    ##'   is a vector ordered by the inner product of the estimated
     ##'   parameter and the dependent variables
     get_Rn1_boot = function() {
       if (is.null(private$Rn1_boot)) {

@@ -75,7 +75,7 @@ calculates the marked empricial process for \code{model}
 }
 
 \subsection{Returns}{
-vector ordered by the scalar product of the estimated
+vector ordered by the inner product of the estimated
   parameter and the independent variables
 }
 }
@@ -91,7 +91,7 @@ calculates the marked empricial process for the
 
 \subsection{Returns}{
 list of length \code{nmb_boot_samples} where every element
-  is a vector ordered by the scalar product of the estimated
+  is a vector ordered by the inner product of the estimated
   parameter and the dependent variables
 }
 }

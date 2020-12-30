@@ -63,7 +63,7 @@ residuals on the scale of the dependent variable
 \if{html}{\out{<a id="method-beta_x_covariates"></a>}}
 \if{latex}{\out{\hypertarget{method-beta_x_covariates}{}}}
 \subsection{Method \code{beta_x_covariates()}}{
-abstract function that calculates the scalar product
+abstract function that calculates the inner product
   of estimated parameters and the independent variables.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GOF_model_info_extractor$beta_x_covariates(model)}\if{html}{\out{</div>}}
@@ -77,7 +77,7 @@ abstract function that calculates the scalar product
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-scalar product of the estimated parameters and the
+inner product of the estimated parameters and the
   independent variables.
 }
 }

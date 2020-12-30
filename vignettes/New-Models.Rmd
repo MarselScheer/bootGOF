@@ -54,7 +54,7 @@ The first interface requires
 that we implement three functions *yhat*, *y_minus_yhat* and
 *beta_x_covariates*, which are the predictions for the dependent
 variable (also called target-variable), the residuals on the scale
-of the dependent variable and the scalar product of the estimated
+of the dependent variable and the inner product of the estimated
 parameters and the independent variables (also called covariates or
 features).
 
@@ -95,8 +95,8 @@ head(my_info_extractor$y_minus_yhat(model = fit))
 ```
 
 And based on the estimated coefficients we can calculate their 
-scalar product with $x_1$ and $x_2$ (Note that the model has
-an intercept so for the scalar product one has to think of
+inner product with $x_1$ and $x_2$ (Note that the model has
+an intercept so for the inner product one has to think of
 an extra column in the data set that contains only ones!)
 
 ```{r}
