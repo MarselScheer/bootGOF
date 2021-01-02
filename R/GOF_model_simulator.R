@@ -43,26 +43,37 @@ rrademacher <- function(n) {
   return(ret)
 }
 
-
-##' @title Implements the "interface" GOF_model_simulator for
-##'   for linear models
-##' @description Rademacher random variables are used to change
-##' add or substract the residuals from the fitted values
+##' @title Implements the "interface" GOF_model_simulator
+##'   in a semi-parametric fashion
+##' @description This is a model agnostic resampling class, where
+##' Rademacher random variables are used to add or substract
+##' the residuals from the fitted values.
 ##' @export
-GOF_lm_sim_wild_rademacher <- R6::R6Class(
-  classname = "GOF_lm_sim_wild_rademacher",
+GOF_sim_wild_rademacher <- R6::R6Class(
+  classname = "GOF_sim_wild_rademacher",
   public = list(
+    ##' @param gof_model_info_extractor the info extractor that is used
+    ##'   to derive the residuals and fitted values for resampling.
+    initialize = function(gof_model_info_extractor) {
+      private$model_info_extractor = gof_model_info_extractor
+    },
     ##' @description a wild bootstrap using Rademacher random
     ##'   variables to resample the dependent variable
     ##' @param model see \link{GOF_model_simulator}
     ##' @return see \link{GOF_model_simulator}
     resample_y = function(model) {
-      eps <- residuals.lm(object = model, type = "response")
-      yhat <- predict.lm(object = model, type = "response")
+      eps <- private$model_info_extractor$y_minus_yhat(model = model)
+      yhat <- private$model_info_extractor$yhat(model = model)
       r <- rrademacher(n = length(eps))
       ret <- yhat + r * eps
       return(ret)
-    }))
+    }
+  ),
+  private = list(
+    model_info_extractor = NULL
+  )
+)
+
 
 ##' @title Implements the "interface" GOF_model_simulator for
 ##'   for generalized linear models

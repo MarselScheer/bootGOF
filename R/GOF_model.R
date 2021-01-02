@@ -41,7 +41,7 @@ GOF_model <- function(model,
   simulators <- list(
     lm = list(
       parametric = GOF_lm_sim_param,
-      semi_parametric_rademacher = GOF_lm_sim_wild_rademacher),
+      semi_parametric_rademacher = GOF_sim_wild_rademacher),
     glm = list(
       parametric = GOF_glm_sim_param,
       semi_parametric_rademacher = list(
@@ -58,9 +58,16 @@ GOF_model <- function(model,
     mt <- GOF_glm_trainer$new()
     mie <- GOF_glm_info_extractor$new()
   } else if (inherits(x = model, what = "lm")) {
-    ms <- simulators[["lm"]][[simulator_type]]$new()
     mt <- GOF_lm_trainer$new()
     mie <- GOF_lm_info_extractor$new()
+    
+    if (simulator_type == "parametric") {
+      ms <- simulators[["lm"]][[simulator_type]]$new()
+    } else {
+      ms <- simulators[["lm"]][[simulator_type]]$new(
+        gof_model_info_extractor = mie
+      )
+    }
   }
 
   model_resample <- gof_model_resample_class$new(

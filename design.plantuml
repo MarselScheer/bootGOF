@@ -8,7 +8,7 @@ interface GOF_model_simulator {
     + {abstract} resample_y(model)
 }
 GOF_model_simulator <|-- GOF_lm_sim_param
-GOF_model_simulator <|-- GOF_lm_sim_wild_rademacher
+GOF_model_simulator <|-- GOF_sim_wild_rademacher
 GOF_model_simulator <|-- GOF_glm_sim_param
 interface GOF_model_trainer {
     + {abstract} refit(model, data)
@@ -22,6 +22,7 @@ interface GOF_model_info_extractor {
 }
 GOF_model_info_extractor <|-- GOF_lm_info_extractor
 GOF_model_info_extractor <|-- GOF_glm_info_extractor
+GOF_model_info_extractor *-- GOF_sim_wild_rademacher
 abstract class GOF_model_resample {
     - GOF_model_simulator
     - GOF_model_trainer

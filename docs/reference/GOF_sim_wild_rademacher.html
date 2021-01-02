@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>R6 Class representing the resampling scheme for
-Goodness-of-fit-tests for (linear) models — GOF_model_resample • GOF</title>
+<title>Implements the "interface" GOF_model_simulator
+  in a semi-parametric fashion — GOF_sim_wild_rademacher • GOF</title>
 
 
 <!-- jquery -->
@@ -40,10 +40,11 @@ Goodness-of-fit-tests for (linear) models — GOF_model_resample • GOF</title>
 
 
 
-<meta property="og:title" content="R6 Class representing the resampling scheme for
-Goodness-of-fit-tests for (linear) models — GOF_model_resample" />
-<meta property="og:description" content="Class is able to resample model fit, i.e. generate a
-  new data set and refit the model to the new data." />
+<meta property="og:title" content="Implements the "interface" GOF_model_simulator
+  in a semi-parametric fashion — GOF_sim_wild_rademacher" />
+<meta property="og:description" content="This is a model agnostic resampling class, where
+Rademacher random variables are used to add or substract
+the residuals from the fitted values." />
 
 
 
@@ -126,15 +127,16 @@ Goodness-of-fit-tests for (linear) models — GOF_model_resample" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>R6 Class representing the resampling scheme for
-Goodness-of-fit-tests for (linear) models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarselScheer/GOF/blob/master/R/GOF_model_resample.R'><code>R/GOF_model_resample.R</code></a></small>
-    <div class="hidden name"><code>GOF_model_resample.Rd</code></div>
+    <h1>Implements the "interface" GOF_model_simulator
+  in a semi-parametric fashion</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MarselScheer/GOF/blob/master/R/GOF_model_simulator.R'><code>R/GOF_model_simulator.R</code></a></small>
+    <div class="hidden name"><code>GOF_sim_wild_rademacher.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Class is able to resample model fit, i.e. generate a
-  new data set and refit the model to the new data.</p>
+    <p>This is a model agnostic resampling class, where
+Rademacher random variables are used to add or substract
+the residuals from the fitted values.</p>
     </div>
 
 
@@ -145,46 +147,39 @@ Goodness-of-fit-tests for (linear) models</h1>
 <h3>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>GOF_model_resample$new()</code></a></p></li>
-<li><p><a href='#method-resample'><code>GOF_model_resample$resample()</code></a></p></li>
-<li><p><a href='#method-clone'><code>GOF_model_resample$clone()</code></a></p></li>
+<li><p><a href='#method-new'><code>GOF_sim_wild_rademacher$new()</code></a></p></li>
+<li><p><a href='#method-resample_y'><code>GOF_sim_wild_rademacher$resample_y()</code></a></p></li>
+<li><p><a href='#method-clone'><code>GOF_sim_wild_rademacher$clone()</code></a></p></li>
 </ul>
 <p><hr>
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
 
 <h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>GOF_model_resample</span>$<span class='fu'>new</span>(<span class='no'>gof_model_simulator</span>, <span class='no'>gof_model_trainer</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>GOF_sim_wild_rademacher</span>$<span class='fu'>new</span>(<span class='no'>gof_model_info_extractor</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
-<dt><code>gof_model_simulator</code></dt><dd><p>an instance that implements <a href='GOF_model_simulator.html'>GOF_model_simulator</a></p></dd>
-
-<dt><code>gof_model_trainer</code></dt><dd><p>an instance that implements <a href='GOF_model_trainer.html'>GOF_model_trainer</a></p></dd>
+<dt><code>gof_model_info_extractor</code></dt><dd><p>the info extractor that is used
+to derive the residuals and fitted values for resampling.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
-<p>No explicit return</p>
 <p><hr>
-<a id="method-resample"></a></p><h3>Method <code>resample()</code></h3>
-<p>resamples the dependent variable in <code>data</code> and refits
-  <code>model</code> to that new data set</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>GOF_model_resample</span>$<span class='fu'>resample</span>(<span class='no'>model</span>, <span class='no'>data</span>, <span class='no'>y_name</span>)</pre><p></div></p>
+<a id="method-resample_y"></a></p><h3>Method <code>resample_y()</code></h3>
+<p>a wild bootstrap using Rademacher random
+  variables to resample the dependent variable</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>GOF_sim_wild_rademacher</span>$<span class='fu'>resample_y</span>(<span class='no'>model</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
-<dt><code>model</code></dt><dd><p>fitted model based on <code>data</code></p></dd>
-
-<dt><code>data</code></dt><dd><p>used to fit <code>model</code></p></dd>
-
-<dt><code>y_name</code></dt><dd><p>string specifying the name of the dependent variable</p></dd>
+<dt><code>model</code></dt><dd><p>see <a href='GOF_model_simulator.html'>GOF_model_simulator</a></p></dd>
 
 </dl><p></div></p>
 <h3>Returns</h3>
-<p>a resampled version of <code>model</code></p>
+<p>see <a href='GOF_model_simulator.html'>GOF_model_simulator</a></p>
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>GOF_model_resample</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>GOF_sim_wild_rademacher</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
