@@ -177,15 +177,18 @@ GOF_model_test_expect_small_pvalue <- function() {
     y = rnorm(n = 100, mean = 4 + X1^2),
     x1 = X1)
   fit <- lm(y~x1, data = d)
+  ie <- GOF_lm_info_extractor$new()
   mt <- GOF_model_test$new(
     model = fit,
     data = d,
     y_name = "y",
     Rn1_statistic = Rn1_KS$new(),
     nmb_boot_samples = 100,
-    gof_model_info_extractor = GOF_lm_info_extractor$new(),
+    gof_model_info_extractor = ie,
     gof_model_resample = GOF_model_resample$new(
-      gof_model_simulator = GOF_lm_sim_wild_rademacher$new(),
+      gof_model_simulator = GOF_sim_wild_rademacher$new(
+        gof_model_info_extractor = ie
+      ),
       gof_model_trainer = GOF_lm_trainer$new()))
 
   expect_equal(mt$get_pvalue(), 0)
@@ -217,15 +220,18 @@ GOF_model_test_expect_non_small_pvalue <- function() {
     y = rnorm(n = 100, mean = 4 + X1 + X1^2),
     x1 = X1)
   fit <- lm(y~x1 + I(x1^2), data = d)
+  ie <- GOF_lm_info_extractor$new()
   mt <- GOF_model_test$new(
     model = fit,
     data = d,
     y_name = "y",
     Rn1_statistic = Rn1_CvM$new(),
     nmb_boot_samples = 100,
-    gof_model_info_extractor = GOF_lm_info_extractor$new(),
+    gof_model_info_extractor = ie,
     gof_model_resample = GOF_model_resample$new(
-      gof_model_simulator = GOF_lm_sim_wild_rademacher$new(),
+      gof_model_simulator = GOF_sim_wild_rademacher$new(
+        gof_model_info_extractor = ie
+      ),
       gof_model_trainer = GOF_lm_trainer$new()))
 
   expect_equal(mt$get_pvalue(), 0.8)

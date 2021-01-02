@@ -150,7 +150,7 @@ GOF_model_uses_lm_rademacher_simulator <- function() {
       initialize = function(gof_model_simulator, gof_model_trainer) {
         inject_lm_rademacher_simulator <<- inherits(
           x = gof_model_simulator,
-          what = "GOF_lm_sim_wild_rademacher")
+          what = "GOF_sim_wild_rademacher")
       }))
 
   GOF_model(

@@ -76,26 +76,6 @@ GOF_sim_wild_rademacher <- R6::R6Class(
 
 
 ##' @title Implements the "interface" GOF_model_simulator for
-##'   for linear models
-##' @description Rademacher random variables are used to change
-##' add or substract the residuals from the fitted values
-##' @export
-GOF_lm_sim_wild_rademacher <- R6::R6Class(
-  classname = "GOF_lm_sim_wild_rademacher",
-  public = list(
-    ##' @description a wild bootstrap using Rademacher random
-    ##'   variables to resample the dependent variable
-    ##' @param model see \link{GOF_model_simulator}
-    ##' @return see \link{GOF_model_simulator}
-    resample_y = function(model) {
-      eps <- residuals.lm(object = model, type = "response")
-      yhat <- predict.lm(object = model, type = "response")
-      r <- rrademacher(n = length(eps))
-      ret <- yhat + r * eps
-      return(ret)
-    }))
-
-##' @title Implements the "interface" GOF_model_simulator for
 ##'   for generalized linear models
 ##' @description after the GLM was fitted the distribution of the
 ##'   of the dependent variable is fully specified and used here
