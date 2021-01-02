@@ -24,7 +24,7 @@ reference:
     - GOF_model_simulator
     - GOF_glm_sim_param
     - GOF_lm_sim_param
-    - GOF_lm_sim_wild_rademacher
+    - GOF_sim_wild_rademacher
   - title: "Classes for refitting a model"
   - contents:
     - GOF_model_trainer

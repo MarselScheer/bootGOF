@@ -32,4 +32,3 @@ Note that the object-oriented concepts are realized via the
 R6-package and that R6 actually does not have a real 
 interface-functionality or abstract classes.
 
-There is also an 
