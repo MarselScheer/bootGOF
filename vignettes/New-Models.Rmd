@@ -29,25 +29,57 @@ be situations where one has to overwrite the default
 behavior. For instance, if you want to apply the methodology
 to new models or simply because a model fit returned by an
 R-package does not work properly with the GOF-package. 
-Here we show how to implement the three interfaces for a
-concret case, i.e. a model fitted by MASS::glm.nb.
+Here we show how to implement the three interfaces for some
+concret cases.
 
+# Least square estimates
+
+Assume we have such a model
+
+$$
+Y = m(\beta^\top X) + \epsilon
+$$
+
+without any knowledge about $\epsilon$. Then we could
+try to estimate the $\beta$ using a least square estimate
+and using the GOF-package for check our fitted model.
 First we generate a data set
-and fit a negative binomial model in order to apply the implemented
-interfaces to that fit. Although the user does not have to call those
-functions manually in order to use the Goodness-of-Fit test, we hope 
-that this make the process less abstract.
 
 ```{r}
-library(MASS)
 set.seed(1)
-X1 <- rnorm(100)
-X2 <- rnorm(100)
-d <- data.frame(
-  y = MASS::rnegbin(n = 100, mu = exp(0.2 + X1 * 0.2 + X2 * 0.6), theta = 2),
-  x1 = X1,
-  x2 = X2)
-fit <- MASS::glm.nb(y~x1+x2, data = d)
+X = runif(n = 200, min = 6, max = 14)
+d = data.frame(x = X, y = sin(0.5 * X) + rnorm(200, sd = 0.2))
+plot(y~x, data = d)
+```
+
+Lets have a short excursion at this point because the plot gives
+the impression that the following simple model might apply:
+```{r}
+wrong_model = lm(y ~ I(x^2), data = d)
+```
+
+However, goodness-of-fit-test rejects this model
+
+```{r}
+mt <- GOF_model(
+  data = d,
+  model = wrong_model,
+  simulator_type = "parametric",
+  nmb_boot_samples = 10,
+  y_name = "y",
+  Rn1_statistic = Rn1_KS$new())
+mt$get_pvalue()
+```
+
+Note that also in this simple case the standard diagnostic plots
+also reveal that this model is not a sufficient.
+
+```{r}
+fit <- minpack.lm::nlsLM(y ~ sin(a * x),
+  data = d,
+  start = c(a = 0.5),
+  control = nls.control(maxiter = 500))
+fit
 ```
 
 The first interface requires
@@ -56,24 +88,36 @@ that we implement three functions *yhat*, *y_minus_yhat* and
 variable (also called target-variable), the residuals on the scale
 of the dependent variable and the inner product of the estimated
 parameters and the independent variables (also called covariates or
-features).
+features). However, the object returned by *minpack.lm::nlsLM*
+does not contain the original data set but that data set is necessary
+to calculate the inner product. Hence, we make a list that
+contains the model fit and the data that was used to fit the model.
 
 ```{r}
-my_negbin_info_extractor <- R6::R6Class(
-  classname = "my_negbin_info_extractor",
+fit_and_data <- list(fit = fit, data = d)
+```
+
+Now we can implement the interface
+
+```{r}
+my_nls_info_extractor <- R6::R6Class(
+  classname = "my_nls_info_extractor",
   inherit = GOF_model_info_extractor,
   public = list(
     yhat = function(model) {
-      predict.glm(object = model, type = "response")
+      predict(object = model$fit)
     },
     y_minus_yhat = function(model) {
-      residuals.glm(object = model, type = "response")
+      residuals(object = model$fit)
     },
     beta_x_covariates = function(model) {
-      predict.glm(object = model, type = "link")
+      a_hat <- coef(object = model$fit)
+      x <- model$data$x
+      ret <- a_hat * x
+      return(ret)
     }
   ))
-my_info_extractor <- my_negbin_info_extractor$new()
+my_info_extractor <- my_nls_info_extractor$new()
 ```
 
 Lets look at the first few data points:
@@ -85,43 +129,36 @@ head(d)
 Now we are able to predict $y$:
 
 ```{r}
-head(my_info_extractor$yhat(model = fit))
+head(my_info_extractor$yhat(model = fit_and_data))
 ```
 
 And calculate the difference between $y$ and our prediction:
 
 ```{r}
-head(my_info_extractor$y_minus_yhat(model = fit))
+head(my_info_extractor$y_minus_yhat(model = fit_and_data))
 ```
 
-And based on the estimated coefficients we can calculate their 
-inner product with $x_1$ and $x_2$ (Note that the model has
-an intercept so for the inner product one has to think of
-an extra column in the data set that contains only ones!)
+And based on the estimated coefficient we can calculate the
+inner product with $x$:
 
 ```{r}
-head(my_info_extractor$beta_x_covariates(model = fit))
+head(my_info_extractor$beta_x_covariates(model = fit_and_data))
 ```
 
-The next interface requires that we implement the function
-*resample_y* which is a function that generates new
-dependent variable according to a fitted negative binomial
-model
+Since we did not make an assumption about the distribution of
+$\epsilon$ we cannot use a parametric resampling scheme. However,
+we can do a wild bootstrap using that uses only the predictions
+and the residuals. The class *GOF_sim_wild_rademacher* implements
+this wild bootstrap but needs an info extractor to obtain the
+preditions and residuals:
 
 ```{r}
-my_negbin_simulator <- R6::R6Class(
-  classname = "my_negbin_simulator",
-  inherit = GOF_model_simulator,
-  public = list(
-    resample_y = function(model) {
-      simulate(model)[,1]
-    }
-  )
+my_simulator <- GOF_sim_wild_rademacher$new(
+  gof_model_info_extractor = my_info_extractor
 )
-my_simulator <- my_negbin_simulator$new()
 ```
 
-This implemented interface generates as many observations
+This class generates as many observations
 as are contained in the data set used to fit the model
 following the fitted model.
 
@@ -130,13 +167,19 @@ Again looking at first at the original data points:
 ```{r}
 head(d)
 ```
+
 Now lets look at new $y$s generated according to the fitted
 model, i.e. following a negative binomial distribution
 subject to the independent variables:
 
 ```{r}
-head(my_simulator$resample_y(model = fit))
+head(my_simulator$resample_y(model = fit_and_data))
 ```
+
+Note that the resampled $y$'s sometimes equal the
+observed $y$. The reason is that the this wild bootstrap
+performs 'predictions +/- residual' and only the sign
+is drawn at random.
 
 Finally, we need to implement the interface
 *GOF_model_trainer* which requires a function
@@ -144,15 +187,21 @@ Finally, we need to implement the interface
 object by refitting it to a new data set.
 
 ```{r}
-my_negbin_trainer <- R6::R6Class(
-  classname = "GOF_glmnb_trainer",
+my_nls_trainer <- R6::R6Class(
+  classname = "GOF_nls_trainer",
   inherit = GOF_model_trainer,
   public = list(
     refit = function(model, data) {
-      MASS::glm.nb(formula = formula(model), data = data)
+      fit <- update(object = model$fit, data = data)
+      ret <- list(fit = fit, data = data)
+      return(ret)
     }))
-my_trainer <- my_negbin_trainer$new()
+my_trainer <- my_nls_trainer$new()
 ```
+This implementation basically equals the implementation
+of *GOF_lm/glm/_trainer*. The only difference is that
+we again store the data with the fit because *nlsLM()*
+is doesn't do this for us.
 
 Of course, fitting the model again to the original data 
 results in the same fitted model. With the defined classes
@@ -161,8 +210,8 @@ model to that new data set.
 
 ```{r}
 new_data <- d
-new_data$y <- my_simulator$resample_y(model = fit)
-my_trainer$refit(model = fit, data = new_data)
+new_data$y <- my_simulator$resample_y(model = fit_and_data)
+my_trainer$refit(model = fit_and_data, data = new_data)$fit
 ```
 
 Now all ingredients are available for applying the 
@@ -171,7 +220,7 @@ Goodness-of-Fit test:
 ```{r}
 set.seed(1)
 mt <- GOF_model_test$new(
-  model = fit,
+  model = fit_and_data,
   data = d,
   nmb_boot_samples = 100,
   y_name = "y",
@@ -185,9 +234,67 @@ mt <- GOF_model_test$new(
 mt$get_pvalue()
 ```
 
-Since the specified model family is correct we would expect a
-non-small pvalue. For sake of completness, lets compare it to
-the p-value generated by *GOF_model()*:
+# Negative Binomial using the MASS-package
+
+A negative binomial model is a generalized linear model. 
+Furthermore, within R MASS::glm.nb returns an object of class 
+*glm* and this package actually can process *glm*-classes. 
+However, MASS::glm.nb seems to have a bug that prevents 
+to propoerly update/refit such an object via the stats::update()
+function. We briefly illustrate this using an artificial
+data set:
+
+```{r}
+library(MASS)
+set.seed(1)
+X1 <- rnorm(100)
+X2 <- rnorm(100)
+d <- data.frame(
+  y = MASS::rnegbin(n = 100, mu = exp(0.2 + X1 * 0.2 + X2 * 0.6), theta = 2),
+  x1 = X1,
+  x2 = X2)
+fit <- MASS::glm.nb(y~x1+x2, data = d)
+fit
+```
+
+Note that fit-object shows that the call contained the
+parameter *init.theta* which obviously was not provided
+by us. The problem is that this *init.theta* parameter
+is used during refitting resampled data. So fitting
+resampled data and fitting the original data is slightly
+different. To circumvent this problem we can reimplement
+the the corresponding interface as follows
+
+```{r}
+my_negbin_trainer <- R6::R6Class(
+  classname = "GOF_glmnb_trainer",
+  inherit = GOF_model_trainer,
+  public = list(
+    refit = function(model, data) {
+      MASS::glm.nb(formula = formula(model), data = data)
+    }))
+```
+
+Now we can create the GOF-test-class using this new refitting-class
+
+```{r}
+set.seed(1)
+mt <- GOF_model_test$new(
+  model = fit,
+  data = d,
+  nmb_boot_samples = 100,
+  y_name = "y",
+  Rn1_statistic = Rn1_CvM$new(),
+  gof_model_info_extractor = GOF_glm_info_extractor$new(),
+  gof_model_resample = GOF_model_resample$new(
+    gof_model_simulator = GOF_glm_sim_param$new(),
+    gof_model_trainer = my_negbin_trainer$new()
+  )
+)
+mt$get_pvalue()
+```
+
+Lets compare the result with the default GOF-test for glm's
 
 ```{r}
 set.seed(1)
@@ -202,42 +309,5 @@ mt2 <- GOF_model(
 mt2$get_pvalue()
 ```
 
-# Some notes on the negative binomial model
-
-A negative binomial model is a generalized linear model. 
-Furthermore, within R MASS::glm.nb returns an object of class 
-*glm* and this package actually can process *glm*-classes. 
-However, MASS::glm.nb seems to have a bug that prevents 
-to propoerly update/refit such an object via the stats::update()
-function. For instance, the model we fitted at the beginning of
-this vignette did not used the *init.theta* parameter but the 
-function-call stored in the fit object explicitly uses this 
-parameter:
-
-```{r}
-fit
-```
-
-Although in the above example both p-values for the GOF-test
-were the same, it is probably safer to provide an implementation
-of the interface *GOF_model_trainer* for MASS::glm.nb that reflects
-as close a possible the way the original model was fitted.
-The other two interfaces do not need a reimplementation because
-the package already provides them (we implemented them only
-for illustrative purpose)!
-
-```{r}
-mt <- GOF_model_test$new(
-  model = fit,
-  data = d,
-  nmb_boot_samples = 100,
-  y_name = "y",
-  Rn1_statistic = Rn1_CvM$new(),
-  gof_model_info_extractor = GOF_glm_info_extractor$new(),
-  gof_model_resample = GOF_model_resample$new(
-    gof_model_simulator = GOF_glm_sim_param$new(),
-    gof_model_trainer = my_trainer
-  )
-)
-mt$get_pvalue()
-```
+In this case the p-values do not differ. However, it could be
+different in other settings.

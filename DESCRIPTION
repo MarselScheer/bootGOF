@@ -27,5 +27,6 @@ Suggests:
     tinytest,
     mockery,
     knitr,
-    rmarkdown
+    rmarkdown,
+    minpack.lm
 VignetteBuilder: knitr
