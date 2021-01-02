@@ -22,9 +22,42 @@ GOF_lm_sim_param_simulates <- function() {
 }
 GOF_lm_sim_param_simulates()
 
+GOF_sim_wild_rademacher_simulates <- function() {
+  info_mock <- R6::R6Class(
+    classname = "info_mock",
+    inherit = GOF_model_info_extractor,
+    public = list(
+      yhat = function(model) {
+        return(1:5)
+      },
+      y_minus_yhat = function(model) {
+        return(-2:2)
+      }
+    )
+  )
+  info_mock = info_mock$new()
+  ms <- GOF_sim_wild_rademacher$new(gof_model_info_extractor = info_mock)
+  mockery::stub(
+    where = ms$resample_y,
+    what = "rrademacher",
+    how = rep(1, 5)
+  )
+  out <- ms$resample_y(model = 5)
+  expect_equivalent(out, 1:5 + -2:2)
+  mockery::stub(
+    where = ms$resample_y,
+    what = "rrademacher",
+    how = rep(0, 5)
+  )
+  out <- ms$resample_y(model = list())
+  expect_equivalent(out, 1:5)
+}
+GOF_sim_wild_rademacher_simulates()
+
 GOF_lm_sim_param_wild_rademacher_simulates <- function() {
   set.seed(1)
-  ms <- GOF_lm_sim_wild_rademacher$new()
+  ie <- GOF_lm_info_extractor$new()
+  ms <- GOF_sim_wild_rademacher$new(gof_model_info_extractor = ie)
   X <- 1:10
   Y <- X + rnorm(10)
   d <- data.frame(y = Y, x = X)
