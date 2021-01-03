@@ -21,10 +21,10 @@ GOF_model_info_extractor <- R6::R6Class(
     y_minus_yhat = function(model) {
       stop("Abstract method. Needs to be implemented")
     },
-    ##' @description abstract function that calculates the scalar product
+    ##' @description abstract function that calculates the inner product
     ##'   of estimated parameters and the independent variables.
     ##' @param model fitted model
-    ##' @return scalar product of the estimated parameters and the
+    ##' @return inner product of the estimated parameters and the
     ##'   independent variables.
     beta_x_covariates = function(model) {
       stop("Abstract method. Needs to be implemented")

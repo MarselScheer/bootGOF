@@ -6,7 +6,8 @@
   for (linear) models.}
 \description{
 This class can test the null hypothesis that data follows
-  a particular linear model.
+  a particular linear model, i.e. classical linear models, generalized
+  linear models or models of the type \eqn{m(\beta^\top X) + \epsilon}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -75,7 +76,7 @@ calculates the marked empricial process for \code{model}
 }
 
 \subsection{Returns}{
-vector ordered by the scalar product of the estimated
+vector ordered by the inner product of the estimated
   parameter and the independent variables
 }
 }
@@ -91,7 +92,7 @@ calculates the marked empricial process for the
 
 \subsection{Returns}{
 list of length \code{nmb_boot_samples} where every element
-  is a vector ordered by the scalar product of the estimated
+  is a vector ordered by the inner product of the estimated
   parameter and the dependent variables
 }
 }

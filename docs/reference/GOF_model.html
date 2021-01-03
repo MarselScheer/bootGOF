@@ -41,7 +41,8 @@
 
 <meta property="og:title" content="Convenience function for creating a GOF-test for statistical models — GOF_model" />
 <meta property="og:description" content="Simplifies the creation of an instance of
-  GOF_model_test" />
+  GOF_model_test, the actual work horse for performing a
+  goodness-of-fit-test." />
 
 
 
@@ -131,7 +132,8 @@
 
     <div class="ref-description">
     <p>Simplifies the creation of an instance of
-  <a href='GOF_model_test.html'>GOF_model_test</a></p>
+  <a href='GOF_model_test.html'>GOF_model_test</a>, the actual work horse for performing a
+  goodness-of-fit-test.</p>
     </div>
 
     <pre class="usage"><span class='fu'>GOF_model</span>(
@@ -193,6 +195,32 @@ convenience function properly.</p></td>
 
     <p>instance of <a href='GOF_model_test.html'>GOF_model_test</a></p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='no'>N</span> <span class='kw'>&lt;-</span> <span class='fl'>100</span>
+<span class='no'>X1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>N</span>)
+<span class='no'>X2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>N</span>)
+<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Poisson.html'>rpois</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>N</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fl'>4</span> + <span class='no'>X1</span> * <span class='fl'>2</span> + <span class='no'>X2</span> * <span class='fl'>6</span>)),
+  <span class='kw'>x1</span> <span class='kw'>=</span> <span class='no'>X1</span>,
+  <span class='kw'>x2</span> <span class='kw'>=</span> <span class='no'>X2</span>)
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>y</span> ~ <span class='no'>x1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>())
+<span class='no'>mt</span> <span class='kw'>&lt;-</span> <span class='fu'>GOF_model</span>(
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>fit</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>,
+  <span class='kw'>nmb_boot_samples</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>simulator_type</span> <span class='kw'>=</span> <span class='st'>"parametric"</span>,
+  <span class='kw'>y_name</span> <span class='kw'>=</span> <span class='st'>"y"</span>,
+  <span class='kw'>Rn1_statistic</span> <span class='kw'>=</span> <span class='no'>Rn1_KS</span>$<span class='fu'>new</span>())
+<span class='no'>mt</span>$<span class='fu'>get_pvalue</span>()</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>y</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>())
+<span class='no'>mt</span> <span class='kw'>&lt;-</span> <span class='fu'>GOF_model</span>(
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>fit</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>,
+  <span class='kw'>nmb_boot_samples</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>simulator_type</span> <span class='kw'>=</span> <span class='st'>"parametric"</span>,
+  <span class='kw'>y_name</span> <span class='kw'>=</span> <span class='st'>"y"</span>,
+  <span class='kw'>Rn1_statistic</span> <span class='kw'>=</span> <span class='no'>Rn1_KS</span>$<span class='fu'>new</span>())
+<span class='no'>mt</span>$<span class='fu'>get_pvalue</span>()</div><div class='output co'>#&gt; [1] 0.61</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

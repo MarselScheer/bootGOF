@@ -1,7 +1,8 @@
 ##' @title R6 Class representing the Goodness-of-Fit test
 ##'   for (linear) models.
 ##' @description This class can test the null hypothesis that data follows
-##'   a particular linear model.
+##'   a particular linear model, i.e. classical linear models, generalized
+##'   linear models or models of the type \eqn{m(\beta^\top X) + \epsilon}.
 ##' @export
 GOF_model_test <- R6::R6Class(
   classname = "GOF_model_test",
@@ -47,7 +48,7 @@ GOF_model_test <- R6::R6Class(
       private$Rn1_statistic <- Rn1_statistic
     },
     ##' @description calculates the marked empricial process for \code{model}
-    ##' @return vector ordered by the scalar product of the estimated
+    ##' @return vector ordered by the inner product of the estimated
     ##'   parameter and the independent variables
     get_Rn1_org = function() {
       if (is.null(private$Rn1_org)) {
@@ -62,7 +63,7 @@ GOF_model_test <- R6::R6Class(
     ##' @description calculates the marked empricial process for the
     ##'   resampled versions of \code{model}
     ##' @return list of length \code{nmb_boot_samples} where every element
-    ##'   is a vector ordered by the scalar product of the estimated
+    ##'   is a vector ordered by the inner product of the estimated
     ##'   parameter and the dependent variables
     get_Rn1_boot = function() {
       if (is.null(private$Rn1_boot)) {

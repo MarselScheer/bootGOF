@@ -1,7 +1,8 @@
 ##' @title Convenience function for creating a GOF-test for statistical models
 ##'
 ##' @description Simplifies the creation of an instance of
-##'   \link{GOF_model_test}
+##'   \link{GOF_model_test}, the actual work horse for performing a
+##'   goodness-of-fit-test.
 ##' @param model of class 'lm' or 'glm'. Caution with MASS::glm.nb, see
 ##'   vignette 'New-Models' for more details.
 ##' @param data see \link{GOF_model_test}
@@ -19,6 +20,33 @@
 ##'   convenience function properly.
 ##' @export
 ##' @return instance of \link{GOF_model_test}
+##' @examples
+##' set.seed(1)
+##' N <- 100
+##' X1 <- rnorm(N)
+##' X2 <- rnorm(N)
+##' d <- data.frame(
+##'   y = rpois(n = N, lambda = exp(4 + X1 * 2 + X2 * 6)),
+##'   x1 = X1,
+##'   x2 = X2)
+##' fit <- glm(y ~ x1, data = d, family = poisson())
+##' mt <- GOF_model(
+##'   model = fit,
+##'   data = d,
+##'   nmb_boot_samples = 100,
+##'   simulator_type = "parametric",
+##'   y_name = "y",
+##'   Rn1_statistic = Rn1_KS$new())
+##' mt$get_pvalue()
+##' fit <- glm(y ~ x1 + x2, data = d, family = poisson())
+##' mt <- GOF_model(
+##'   model = fit,
+##'   data = d,
+##'   nmb_boot_samples = 100,
+##'   simulator_type = "parametric",
+##'   y_name = "y",
+##'   Rn1_statistic = Rn1_KS$new())
+##' mt$get_pvalue()
 GOF_model <- function(model,
                       data,
                       nmb_boot_samples,

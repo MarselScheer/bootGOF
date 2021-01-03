@@ -17,15 +17,17 @@ knitr::opts_chunk$set(
 
 # Class-diagram
 
-```{r, fig.fullheight=TRUE, fig.fullwidth=TRUE, dpi=600}
+```{r, eval = FALSE, echo = FALSE}
 suppressMessages(library(plantuml))
-uml_str <- paste(readLines("../design.plantuml"), collapse = "\n")
+uml_str <- paste(readLines("design.plantuml"), collapse = "\n")
 uml <- plantuml::plantuml(x = uml_str)
-devnull <- plot(uml)
+plot(uml, file = "./vignettes/class_diagram.svg")
 ```
+![Classdiagram](class_diagram.svg)
 
-* *Rn1_statistics*, *GOF_model_info_extractor*, *GOF_model_simulator* 
-  and *GOF_model_trainer* follow the strategy pattern
+* *Rn1_statistics*, *GOF_model_info_extractor*, *GOF_model_simulator*,
+  *GOF_sim_wild_rademacher* and *GOF_model_trainer* follow the
+  strategy pattern
 * *GOF_model_resample* follow the template pattern.
 
 Note that the object-oriented concepts are realized via the 
