@@ -14,9 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(GOF)
-```
 
 Usually, one creates a GOF-model-test-class via the function
 *GOF_model()*. But this function is actually a wrapper for the
@@ -46,6 +43,7 @@ and using the GOF-package for check our fitted model.
 First we generate a data set
 
 ```{r}
+library(GOF)
 set.seed(1)
 X = runif(n = 200, min = 6, max = 14)
 d = data.frame(x = X, y = sin(0.5 * X) + rnorm(200, sd = 0.2))
@@ -58,21 +56,22 @@ the impression that the following simple model might apply:
 wrong_model = lm(y ~ I(x^2), data = d)
 ```
 
-However, goodness-of-fit-test rejects this model
+However, a goodness-of-fit-test rejects this model
 
 ```{r}
 mt <- GOF_model(
   data = d,
   model = wrong_model,
   simulator_type = "parametric",
-  nmb_boot_samples = 10,
+  nmb_boot_samples = 100,
   y_name = "y",
   Rn1_statistic = Rn1_KS$new())
 mt$get_pvalue()
 ```
 
-Note that also in this simple case the standard diagnostic plots
-also reveal that this model is not a sufficient.
+Note that in this simple case the standard diagnostic plots
+also reveal that this model is not a sufficient. Now we
+fit the model using a least square estimator:
 
 ```{r}
 fit <- minpack.lm::nlsLM(y ~ sin(a * x),
@@ -82,7 +81,8 @@ fit <- minpack.lm::nlsLM(y ~ sin(a * x),
 fit
 ```
 
-The first interface requires
+In order to create a goodnes-of-fit-test using *GOF_model_test*
+we have to implement three interfaces. The first interface requires
 that we implement three functions *yhat*, *y_minus_yhat* and
 *beta_x_covariates*, which are the predictions for the dependent
 variable (also called target-variable), the residuals on the scale
@@ -120,7 +120,13 @@ my_nls_info_extractor <- R6::R6Class(
 my_info_extractor <- my_nls_info_extractor$new()
 ```
 
-Lets look at the first few data points:
+Implementing *yhat* and *y_minus_yhat* is straight forward
+using the function already offered by R
+but *beta_x_covariates* needs special attention. The
+reason is that *minpack.lm::nlsLM* can also fit very
+general models of the type $m(\beta, X)$. Hence,
+there is now built-in-function to extract objects
+like $\beta^\top X$. Lets look at the first few data points:
 
 ```{r}
 head(d)
@@ -147,7 +153,7 @@ head(my_info_extractor$beta_x_covariates(model = fit_and_data))
 
 Since we did not make an assumption about the distribution of
 $\epsilon$ we cannot use a parametric resampling scheme. However,
-we can do a wild bootstrap using that uses only the predictions
+we can do a wild bootstrap that uses only the predictions
 and the residuals. The class *GOF_sim_wild_rademacher* implements
 this wild bootstrap but needs an info extractor to obtain the
 preditions and residuals:
@@ -158,9 +164,9 @@ my_simulator <- GOF_sim_wild_rademacher$new(
 )
 ```
 
-This class generates as many observations
-as are contained in the data set used to fit the model
-following the fitted model.
+This class generates as many observations (according
+to the fitted model) as are contained in the data set
+used to fit the model.
 
 Again looking at first at the original data points:
 
@@ -184,7 +190,10 @@ is drawn at random.
 Finally, we need to implement the interface
 *GOF_model_trainer* which requires a function
 *refit* that is able to update the model 
-object by refitting it to a new data set.
+object by refitting it to a new data set. R already
+provides the necessary function, i.e. *stats::update*.
+However we combined the fitted model with the
+data set in a list and we need to take into account:
 
 ```{r}
 my_nls_trainer <- R6::R6Class(
@@ -199,11 +208,11 @@ my_nls_trainer <- R6::R6Class(
 my_trainer <- my_nls_trainer$new()
 ```
 This implementation basically equals the implementation
-of *GOF_lm/glm/_trainer*. The only difference is that
+of *GOF\_lm/glm/\_trainer*. The only difference is that
 we again store the data with the fit because *nlsLM()*
-is doesn't do this for us.
+doesn't do it for us.
 
-Of course, fitting the model again to the original data 
+Of course, fitting the model again to the original data set
 results in the same fitted model. With the defined classes
 we can now easily generate a new data set and refit the
 model to that new data set.
@@ -260,10 +269,12 @@ fit
 Note that fit-object shows that the call contained the
 parameter *init.theta* which obviously was not provided
 by us. The problem is that this *init.theta* parameter
-is used during refitting resampled data. So fitting
+is used by *stats::update* during refitting resampled data.
+So fitting
 resampled data and fitting the original data is slightly
-different. To circumvent this problem we can reimplement
-the the corresponding interface as follows
+different from the perspective of the fitting algorithm.
+To circumvent this problem we can reimplement the
+corresponding interface as follows:
 
 ```{r}
 my_negbin_trainer <- R6::R6Class(
@@ -275,6 +286,8 @@ my_negbin_trainer <- R6::R6Class(
     }))
 ```
 
+This way we ensure that the original data set and
+resampled data set are fitted in the same way.
 Now we can create the GOF-test-class using this new refitting-class
 
 ```{r}
