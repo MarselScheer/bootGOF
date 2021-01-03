@@ -44,7 +44,8 @@ instance of \link{GOF_model_test}
 }
 \description{
 Simplifies the creation of an instance of
-  \link{GOF_model_test}
+  \link{GOF_model_test}, the actual work horse for performing a
+  goodness-of-fit-test.
 }
 \examples{
 set.seed(1)

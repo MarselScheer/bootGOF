@@ -1,7 +1,8 @@
 ##' @title R6 Class representing the Goodness-of-Fit test
 ##'   for (linear) models.
 ##' @description This class can test the null hypothesis that data follows
-##'   a particular linear model.
+##'   a particular linear model, i.e. classical linear models, generalized
+##'   linear models or models of the type \eqn{m(\beta^\top X) + \epsilon}.
 ##' @export
 GOF_model_test <- R6::R6Class(
   classname = "GOF_model_test",

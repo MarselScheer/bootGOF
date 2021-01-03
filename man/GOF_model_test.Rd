@@ -6,7 +6,8 @@
   for (linear) models.}
 \description{
 This class can test the null hypothesis that data follows
-  a particular linear model.
+  a particular linear model, i.e. classical linear models, generalized
+  linear models or models of the type \eqn{m(\beta^\top X) + \epsilon}
 }
 \section{Methods}{
 \subsection{Public methods}{

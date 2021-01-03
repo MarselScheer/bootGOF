@@ -1,7 +1,8 @@
 ##' @title Convenience function for creating a GOF-test for statistical models
 ##'
 ##' @description Simplifies the creation of an instance of
-##'   \link{GOF_model_test}
+##'   \link{GOF_model_test}, the actual work horse for performing a
+##'   goodness-of-fit-test.
 ##' @param model of class 'lm' or 'glm'. Caution with MASS::glm.nb, see
 ##'   vignette 'New-Models' for more details.
 ##' @param data see \link{GOF_model_test}
