@@ -39,7 +39,7 @@ GOF_lm_sim_param <- R6::R6Class(
 ##' @param n number of random variables to be generated
 ##' @return vector of values following the Rademacher distribution
 rrademacher <- function(n) {
-  ret <- 2 * rbinom(n = n, size = 1, prob = 0.5) - 1
+  ret <- 2 * stats::rbinom(n = n, size = 1, prob = 0.5) - 1
   return(ret)
 }
 
