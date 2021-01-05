@@ -43,7 +43,7 @@ and using the GOF-package for check our fitted model.
 First we generate a data set
 
 ```{r}
-library(GOF)
+library(bootGOF)
 set.seed(1)
 X = runif(n = 200, min = 6, max = 14)
 d = data.frame(x = X, y = sin(0.5 * X) + rnorm(200, sd = 0.2))
