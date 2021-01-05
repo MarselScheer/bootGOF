@@ -74,6 +74,7 @@ also reveal that this model is not a sufficient. Now we
 fit the model using a least square estimator:
 
 ```{r}
+library(minpack.lm)
 fit <- minpack.lm::nlsLM(y ~ sin(a * x),
   data = d,
   start = c(a = 0.5),
@@ -100,6 +101,7 @@ fit_and_data <- list(fit = fit, data = d)
 Now we can implement the interface
 
 ```{r}
+library(R6)
 my_nls_info_extractor <- R6::R6Class(
   classname = "my_nls_info_extractor",
   inherit = GOF_model_info_extractor,

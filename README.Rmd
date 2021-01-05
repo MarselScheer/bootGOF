@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```{r badges, results='asis', echo=FALSE}
 suppressPackageStartupMessages(library(badgecreatr))
 acc <- "MarselScheer"
-repo <- "GOF"
+repo <- "bootGOF"
 branch <- "master"
 status <- "active"
 lifecycle <- "experimental"
@@ -32,7 +32,7 @@ cat(paste(badges, collapse = " "))
 ```
 
 
-# GOF
+# bootGOF
 
 Bootstrap based goodness-of-fit tests for (linear) models. 
 Assume you have fitted a statistical model, e.g. classical linear
@@ -93,13 +93,13 @@ mt$get_pvalue()
 You can install it from CRAN
 
 ```{r, eval = FALSE}
-install.packages("GOF")
+install.packages("bootGOF")
 ```
 
 or github
 
 ```{r gh-installation, eval = FALSE}
-devtools::install_github("MarselScheer/GOF")
+devtools::install_github("MarselScheer/bootGOF")
 ```
 
 # sessionInfo

@@ -1,5 +1,5 @@
-Title: Bootstrap based goodness-of-fit tests
 Package: bootGOF
+Title: Bootstrap Based Goodness-of-Fit Tests
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Marsel",
@@ -11,7 +11,9 @@ Authors@R:
              role = c("aut"),
              email = "dikta@fh-aachen.de"))
 Description: Bootstrap based goodness-of-fit tests.
-Imports: checkmate (>= 2.0.0)
+Imports:
+  checkmate (>= 2.0.0),
+  R6 (>= 2.4.1)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -28,5 +30,6 @@ Suggests:
     mockery,
     knitr,
     rmarkdown,
-    minpack.lm
+    minpack.lm,
+    MASS
 VignetteBuilder: knitr
