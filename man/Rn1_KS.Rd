@@ -8,7 +8,7 @@
 Implements the "interface" Rn1_statistic
 }
 \section{Super class}{
-\code{\link[GOF:Rn1_statistic]{GOF::Rn1_statistic}} -> \code{Rn1_KS}
+\code{\link[bootGOF:Rn1_statistic]{bootGOF::Rn1_statistic}} -> \code{Rn1_KS}
 }
 \section{Methods}{
 \subsection{Public methods}{

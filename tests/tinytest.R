@@ -1,5 +1,5 @@
 
 if ( requireNamespace("tinytest", quietly=TRUE) ){
-  tinytest::test_package("GOF")
+  tinytest::test_package("bootGOF")
 }
 

@@ -9,7 +9,7 @@ This class is specialized in extracting various information
   from an object of class "glm"
 }
 \section{Super class}{
-\code{\link[GOF:GOF_model_info_extractor]{GOF::GOF_model_info_extractor}} -> \code{GOF_glm_info_extractor}
+\code{\link[bootGOF:GOF_model_info_extractor]{bootGOF::GOF_model_info_extractor}} -> \code{GOF_glm_info_extractor}
 }
 \section{Methods}{
 \subsection{Public methods}{
