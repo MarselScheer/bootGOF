@@ -30,11 +30,7 @@ GOF_model_test <- R6::R6Class(
                           Rn1_statistic,
                           gof_model_info_extractor,
                           gof_model_resample) {
-      if (missing(model)) {
-        stop("Parameter model is mandatory")
-      }
       checkmate::assert_count(x = nmb_boot_samples, positive = TRUE)
-
       private$model_org <- model
       private$data_org <- data
       private$y_name <- y_name

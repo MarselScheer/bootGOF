@@ -4,31 +4,32 @@ Rn1_fun <- function(r, o) {
 GOF_model_test_necessary_input <- function() {
   expect_error(
     GOF_model_test$new(),
-    pattern = "Parameter model is mandatory")
+    pattern = "nmb_boot_samples")
   expect_error(
-    GOF_model_test$new(model = "dummy"),
-    pattern = "nmb_boot_samples.*missing")
-  expect_error(
-    GOF_model_test$new(model = "dummy", nmb_boot_samples = 0),
+    GOF_model_test$new(nmb_boot_samples = 0),
     pattern = ".*nmb_boot_samples.*>= 1")
+  expect_error(
+    GOF_model_test$new(
+      nmb_boot_samples = 1),
+    pattern = "model")
   expect_error(
     GOF_model_test$new(
       model = "dummy",
       nmb_boot_samples = 1),
-    pattern = "data.*missing")
+    pattern = "data")
   expect_error(
     GOF_model_test$new(
       model = "dummy",
       nmb_boot_samples = 1,
       data = "dummy"),
-    pattern = "y_name.*missing")
+    pattern = "y_name")
   expect_error(
     GOF_model_test$new(
       model = "dummy",
       nmb_boot_samples = 1,
       data = "dummy",
       y_name = "dummy"),
-    pattern = "Rn1_statistic.*missing")
+    pattern = "Rn1_statistic")
   expect_error(
     GOF_model_test$new(
       model = "dummy",
@@ -36,7 +37,7 @@ GOF_model_test_necessary_input <- function() {
       data = "dummy",
       y_name = "dummy",
       Rn1_statistic = "dummy"),
-    pattern = "gof_model_info_extractor.*missing")
+    pattern = "gof_model_info_extractor")
   expect_error(
     GOF_model_test$new(
       model = "dummy",
@@ -45,7 +46,7 @@ GOF_model_test_necessary_input <- function() {
       y_name = "dummy",
       Rn1_statistic = "dummy",
       gof_model_info_extractor = "dummy"),
-    pattern = "gof_model_resample.*missing")
+    pattern = "gof_model_resample")
 }
 GOF_model_test_necessary_input()
 
