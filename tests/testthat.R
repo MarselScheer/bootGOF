@@ -1,4 +1,4 @@
 library(testthat)
-library(GOF)
+library(bootGOF)
 
-test_check("GOF")
+test_check("bootGOF")

@@ -4,3 +4,34 @@ url: http://MarselScheer.github.io/GOF
 template:
   params:
     bootswatch: flatly
+reference:
+  - title: "GOF-tests"
+  - desc: >
+        Functions for performing the statistical test
+  - contents:
+    - GOF_model
+    - GOF_model_test
+  - title: "Statistics for the marked empiricial process"
+  - contents:
+    - Rn1_statistic
+    - Rn1_CvM
+    - Rn1_KS
+  - title: "Class that holds the bootstrap resampling schema"
+  - contents:
+    - GOF_model_resample
+  - title: "Classes for generating/resampling dependent variable"
+  - contents:
+    - GOF_model_simulator
+    - GOF_glm_sim_param
+    - GOF_lm_sim_param
+    - GOF_sim_wild_rademacher
+  - title: "Classes for refitting a model"
+  - contents:
+    - GOF_model_trainer
+    - GOF_glm_trainer
+    - GOF_lm_trainer
+  - title: "Classes extracting information from a model"
+  - contents:
+    - GOF_model_info_extractor
+    - GOF_glm_info_extractor
+    - GOF_lm_info_extractor

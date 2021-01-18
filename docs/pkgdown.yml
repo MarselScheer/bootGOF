@@ -1,8 +1,10 @@
 pandoc: 2.7.3
 pkgdown: 1.5.1
 pkgdown_sha: ~
-articles: []
-last_built: 2020-07-21T05:50Z
+articles:
+  Architecture: Architecture.html
+  New-Models: New-Models.html
+last_built: 2021-01-05T23:28Z
 urls:
   reference: http://MarselScheer.github.io/GOF/reference
   article: http://MarselScheer.github.io/GOF/articles
