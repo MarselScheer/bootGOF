@@ -1,6 +1,6 @@
 destination: docs
-title: GOF
-url: http://MarselScheer.github.io/GOF
+title: bootGOF
+url: http://MarselScheer.github.io/bootGOF
 template:
   params:
     bootswatch: flatly

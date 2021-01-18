@@ -4,8 +4,8 @@ pkgdown_sha: ~
 articles:
   Architecture: Architecture.html
   New-Models: New-Models.html
-last_built: 2021-01-05T23:28Z
+last_built: 2021-01-18T20:26Z
 urls:
-  reference: http://MarselScheer.github.io/GOF/reference
-  article: http://MarselScheer.github.io/GOF/articles
+  reference: http://MarselScheer.github.io/bootGOF/reference
+  article: http://MarselScheer.github.io/bootGOF/articles
 

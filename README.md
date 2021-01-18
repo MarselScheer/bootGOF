@@ -1,18 +1,20 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+    #> Warning: package 'badgecreatr' was built under R version 4.0.2
+
 [![Build
-Status](https://travis-ci.org/MarselScheer/GOF.svg?branch=master)](https://travis-ci.org/MarselScheer/GOF)
+Status](https://travis-ci.org/MarselScheer/bootGOF.svg?branch=master)](https://travis-ci.org/MarselScheer/bootGOF)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![CRAN\_Status\_Badge\_version\_ago](https://www.r-pkg.org/badges/version-ago/GOF)](https://cran.r-project.org/package=GOF)
+[![CRAN\_Status\_Badge\_version\_ago](https://www.r-pkg.org/badges/version-ago/bootGOF)](https://cran.r-project.org/package=bootGOF)
 [![metacran
-downloads](https://cranlogs.r-pkg.org/badges/GOF)](https://cran.r-project.org/package=GOF)
+downloads](https://cranlogs.r-pkg.org/badges/bootGOF)](https://cran.r-project.org/package=bootGOF)
 [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
-# GOF
+# bootGOF
 
 Bootstrap based goodness-of-fit tests for (linear) models. Assume you
 have fitted a statistical model, e.g. classical linear model or
@@ -42,6 +44,8 @@ family that is not correct and the GOF-test should reveal that:
 
 ``` r
 fit <- glm(y ~ x1, data = d, family = poisson())
+
+library(bootGOF)
 mt <- GOF_model(
   model = fit,
   data = d,
@@ -76,13 +80,13 @@ mt$get_pvalue()
 You can install it from CRAN
 
 ``` r
-install.packages("GOF")
+install.packages("bootGOF")
 ```
 
 or github
 
 ``` r
-devtools::install_github("MarselScheer/GOF")
+devtools::install_github("MarselScheer/bootGOF")
 ```
 
 # sessionInfo
@@ -108,21 +112,12 @@ sessionInfo()
 #> [1] stats     graphics  grDevices datasets  utils     methods   base     
 #> 
 #> other attached packages:
-#> [1] GOF_0.0.0.9000    badgecreatr_0.2.0 testthat_2.3.2   
+#> [1] bootGOF_0.0.0.9000 badgecreatr_0.2.0 
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] xfun_0.15         remotes_2.2.0     purrr_0.3.4       rematch2_2.1.2   
-#>  [5] vctrs_0.3.2       usethis_1.6.1     htmltools_0.5.0   yaml_2.2.1       
-#>  [9] rlang_0.4.7       pkgbuild_1.0.8    pkgdown_1.5.1     pillar_1.4.6     
-#> [13] glue_1.4.1        withr_2.2.0       mockery_0.4.2     sessioninfo_1.1.1
-#> [17] lifecycle_0.2.0   stringr_1.4.0     devtools_2.3.0    memoise_1.1.0    
-#> [21] evaluate_0.14     knitr_1.29        callr_3.4.3       ps_1.3.3         
-#> [25] parallel_4.0.0    fansi_0.4.1       Rcpp_1.0.4.6      renv_0.11.0      
-#> [29] backports_1.1.8   checkmate_2.0.0   desc_1.2.0        pkgload_1.1.0    
-#> [33] fs_1.4.2          digest_0.6.25     stringi_1.4.6     processx_3.4.3   
-#> [37] tinytest_1.2.1    rprojroot_1.3-2   cli_2.0.2         tools_4.0.0      
-#> [41] magrittr_1.5      tibble_3.0.3      crayon_1.3.4      pkgconfig_2.0.3  
-#> [45] MASS_7.3-51.6     ellipsis_0.3.1    xml2_1.3.2        prettyunits_1.1.1
-#> [49] assertthat_0.2.1  rmarkdown_2.3     roxygen2_7.1.0    R6_2.4.1         
-#> [53] compiler_4.0.0    git2r_0.27.1
+#>  [1] digest_0.6.25   R6_2.4.1        backports_1.1.8 git2r_0.27.1   
+#>  [5] magrittr_1.5    evaluate_0.14   rlang_0.4.7     stringi_1.4.6  
+#>  [9] renv_0.11.0     checkmate_2.0.0 rmarkdown_2.3   tools_4.0.0    
+#> [13] stringr_1.4.0   xfun_0.15       yaml_2.2.1      compiler_4.0.0 
+#> [17] htmltools_0.5.0 knitr_1.29
 ```
