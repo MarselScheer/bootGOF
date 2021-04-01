@@ -1,6 +1,6 @@
 ^renv$
 ^renv\.lock$
-^GOF\.Rproj$
+^bootGOF\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
 ^docs$
@@ -8,3 +8,4 @@
 ^docker$
 ^README\.Rmd$
 design.plantuml
+^\.github$
