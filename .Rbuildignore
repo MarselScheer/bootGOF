@@ -1,6 +1,6 @@
 ^renv$
 ^renv\.lock$
-^GOF\.Rproj$
+^bootGOF\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
 ^docs$
