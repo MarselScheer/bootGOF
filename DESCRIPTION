@@ -1,6 +1,6 @@
 Package: bootGOF
 Title: Bootstrap Based Goodness-of-Fit Tests
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     c(person(given = "Marsel",
              family = "Scheer",
@@ -14,7 +14,8 @@ Description: Bootstrap based goodness-of-fit tests. It allows
     to perform rigorous statistical tests to check if a chosen
     model family is correct based on the marked empiricial
     process. The implemented algorithms are described in
-    (Dikta and Scheer (2021) <doi:TBD>) and can be applied
+    (Dikta and Scheer (2021) <doi:10.1007/978-3-030-73480-0>)
+    and can be applied
     to generalized linear models without any further implementation
     effort. As far as certain linearity conditions are fulfilled
     the resampling scheme are also applicable beyond generalized
