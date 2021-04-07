@@ -1,11 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-    #> Warning: package 'badgecreatr' was built under R version 4.0.2
-
 [![Build
 Status](https://travis-ci.org/MarselScheer/bootGOF.svg?branch=master)](https://travis-ci.org/MarselScheer/bootGOF)
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -98,7 +96,7 @@ sessionInfo()
 #> Running under: Ubuntu 20.04 LTS
 #> 
 #> Matrix products: default
-#> BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-openmp/libopenblasp-r0.3.8.so
+#> BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so
 #> 
 #> locale:
 #>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -112,12 +110,12 @@ sessionInfo()
 #> [1] stats     graphics  grDevices datasets  utils     methods   base     
 #> 
 #> other attached packages:
-#> [1] bootGOF_0.0.0.9000 badgecreatr_0.2.0 
+#> [1] bootGOF_0.1.0     badgecreatr_0.2.0
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] digest_0.6.25   R6_2.4.1        backports_1.1.8 git2r_0.27.1   
-#>  [5] magrittr_1.5    evaluate_0.14   rlang_0.4.7     stringi_1.4.6  
-#>  [9] renv_0.11.0     checkmate_2.0.0 rmarkdown_2.3   tools_4.0.0    
+#>  [5] magrittr_1.5    evaluate_0.14   rlang_0.4.10    stringi_1.4.6  
+#>  [9] renv_0.10.0     checkmate_2.0.0 rmarkdown_2.3   tools_4.0.0    
 #> [13] stringr_1.4.0   xfun_0.15       yaml_2.2.1      compiler_4.0.0 
 #> [17] htmltools_0.5.0 knitr_1.29
 ```
