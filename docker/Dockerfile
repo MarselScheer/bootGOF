@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 # by plantuml
     graphviz \
 # xdg-utils and ff necessary to display 
-# drake-network-graphs from doom-emacs
+# drake-network-graphs
     xdg-utils \
     firefox \
     && ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime \
