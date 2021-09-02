@@ -1,5 +1,10 @@
-^GOF\.Rproj$
+^renv$
+^renv\.lock$
+^bootGOF\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^docker$
+^README\.Rmd$
+design.plantuml

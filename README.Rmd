@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```{r badges, results='asis', echo=FALSE}
 suppressPackageStartupMessages(library(badgecreatr))
 acc <- "MarselScheer"
-repo <- "GOF"
+repo <- "bootGOF"
 branch <- "master"
 status <- "active"
 lifecycle <- "experimental"
@@ -32,11 +32,60 @@ cat(paste(badges, collapse = " "))
 ```
 
 
-# GOF
+# bootGOF
 
-Bootstrap based goodness-of-fit tests.
+Bootstrap based goodness-of-fit tests for (linear) models. 
+Assume you have fitted a statistical model, e.g. classical linear
+model or generalized linear model or a model that follows
+$Y = m(\beta^\top X) + \epsilon$. This package allows to perform
+a rigorous statistical test to check if the chosen model family is correct.
     
 ## Example 
+
+First we generate a data-set in order to apply the package. 
+
+```{r}
+set.seed(1)
+N <- 100
+X1 <- rnorm(N)
+X2 <- rnorm(N)
+d <- data.frame(
+  y = rpois(n = N, lambda = exp(4 + X1 * 2 + X2 * 6)),
+  x1 = X1,
+  x2 = X2)
+```
+Note that both covariates influence the dependent variable $Y$. Taking
+only one of the covariates into account obviously leads to a model family
+that is not correct and the GOF-test should reveal that:
+
+```{r}
+fit <- glm(y ~ x1, data = d, family = poisson())
+
+library(bootGOF)
+mt <- GOF_model(
+  model = fit,
+  data = d,
+  nmb_boot_samples = 100,
+  simulator_type = "parametric",
+  y_name = "y",
+  Rn1_statistic = Rn1_KS$new())
+mt$get_pvalue()
+```
+
+On the other hand assuming the correct model family should in general not
+be rejected by the GOF-test:
+
+```{r}
+fit <- glm(y ~ x1 + x2, data = d, family = poisson())
+mt <- GOF_model(
+  model = fit,
+  data = d,
+  nmb_boot_samples = 100,
+  simulator_type = "parametric",
+  y_name = "y",
+  Rn1_statistic = Rn1_KS$new())
+mt$get_pvalue()
+```
 
 ...
 
@@ -45,13 +94,13 @@ Bootstrap based goodness-of-fit tests.
 You can install it from CRAN
 
 ```{r, eval = FALSE}
-install.packages("GOF")
+install.packages("bootGOF")
 ```
 
 or github
 
 ```{r gh-installation, eval = FALSE}
-devtools::install_github("MarselScheer/GOF")
+devtools::install_github("MarselScheer/bootGOF")
 ```
 
 # sessionInfo
