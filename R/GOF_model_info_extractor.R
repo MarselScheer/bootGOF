@@ -3,7 +3,7 @@
 ##' @description R6 does not offer interfaces. Hence all methods
 ##' are considered as abstract.
 ##' @export
-GOF_model_info_extractor <- R6::R6Class(
+GOF_model_info_extractor <- R6::R6Class( # nolint
   classname = "GOF_model_info_extractor",
   public = list(
     ##' @description Abstract function that estimates/predicts the
@@ -36,7 +36,7 @@ GOF_model_info_extractor <- R6::R6Class(
 ##' @description This class is specialized in extracting various information
 ##'   from an object of class "lm"
 ##' @export
-GOF_lm_info_extractor = R6::R6Class(
+GOF_lm_info_extractor <- R6::R6Class( # nolint
   classname = "GOF_lm_info_extractor",
   inherit = GOF_model_info_extractor,
   public = list(
@@ -65,7 +65,7 @@ GOF_lm_info_extractor = R6::R6Class(
 ##' @description This class is specialized in extracting various information
 ##'   from an object of class "glm"
 ##' @export
-GOF_glm_info_extractor = R6::R6Class(
+GOF_glm_info_extractor <- R6::R6Class( # nolint
   classname = "GOF_glm_info_extractor",
   inherit = GOF_model_info_extractor,
   public = list(

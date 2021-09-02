@@ -3,7 +3,7 @@
 ##' @description R6 does not offer interfaces. Hence all methods
 ##'   are considered as abstract.
 ##' @export
-GOF_model_simulator <- R6::R6Class(
+GOF_model_simulator <- R6::R6Class( # nolint
   classname = "GOF_model_simulator",
   public = list(
     ##' @description Abstract function that resamples/generates
@@ -22,7 +22,7 @@ GOF_model_simulator <- R6::R6Class(
 ##'   of the dependent variable is fully specified and used here
 ##'   to generate new depenedent variables that follow \code{model}
 ##' @export
-GOF_lm_sim_param <- R6::R6Class(
+GOF_lm_sim_param <- R6::R6Class( # nolint
   classname = "GOF_lm_sim_param",
   ##' @description generates/resamples the dependent variables based
   ##'   on the parameteric nature defined by \code{model}
@@ -30,7 +30,7 @@ GOF_lm_sim_param <- R6::R6Class(
   ##' @return see \link{GOF_model_simulator}
   public = list(
     resample_y = function(model) {
-      simulate(model)[,1]
+      simulate(model)[, 1]
     }))
 
 
@@ -49,13 +49,13 @@ rrademacher <- function(n) {
 ##' Rademacher random variables are used to add or substract
 ##' the residuals from the fitted values.
 ##' @export
-GOF_sim_wild_rademacher <- R6::R6Class(
+GOF_sim_wild_rademacher <- R6::R6Class( # nolint
   classname = "GOF_sim_wild_rademacher",
   public = list(
     ##' @param gof_model_info_extractor the info extractor that is used
     ##'   to derive the residuals and fitted values for resampling.
     initialize = function(gof_model_info_extractor) {
-      private$model_info_extractor = gof_model_info_extractor
+      private$model_info_extractor <- gof_model_info_extractor
     },
     ##' @description a wild bootstrap using Rademacher random
     ##'   variables to resample the dependent variable
@@ -81,12 +81,12 @@ GOF_sim_wild_rademacher <- R6::R6Class(
 ##'   of the dependent variable is fully specified and used here
 ##'   to generate new depenedent variables that follow \code{model}
 ##' @export
-GOF_glm_sim_param <- R6::R6Class(
+GOF_glm_sim_param <- R6::R6Class( # nolint
   classname = "GOF_glm_sim_param",
   public = list(
     ##' @description see \link{GOF_model_simulator}
     ##' @param model see \link{GOF_model_simulator}
     ##' @return see \link{GOF_model_simulator}
     resample_y = function(model) {
-      simulate(model)[,1]
+      simulate(model)[, 1]
     }))

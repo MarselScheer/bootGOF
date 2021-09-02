@@ -1,7 +1,7 @@
-Rn1_fun <- function(r, o) {
+Rn1_fun <- function(r, o) { # nolint
   cumsum(r[o])
 }
-GOF_model_test_necessary_input <- function() {
+GOF_model_test_necessary_input <- function() { # nolint
   expect_error(
     GOF_model_test$new(),
     pattern = "nmb_boot_samples")
@@ -50,10 +50,10 @@ GOF_model_test_necessary_input <- function() {
 }
 GOF_model_test_necessary_input()
 
-GOF_model_test_calc_Rn1_org <- function() {
+GOF_model_test_calc_Rn1_org <- function() { # nolint
   set.seed(1)
-  X <- rnorm(10)
-  Y <- 5 * X + rnorm(10)
+  X <- rnorm(10) # nolint
+  Y <- 5 * X + rnorm(10) # nolint
   d <- data.frame(y = Y, x = X)
   fit <- lm(y ~ x, data = d)
   mt <- GOF_model_test$new(
@@ -71,20 +71,20 @@ GOF_model_test_calc_Rn1_org <- function() {
 }
 GOF_model_test_calc_Rn1_org()
 
-GOF_model_test_calc_Rn1_boot <- function() {
+GOF_model_test_calc_Rn1_boot <- function() { # nolint
   set.seed(1)
-  X <- rnorm(10)
-  Y <- 5 * X + rnorm(10)
+  X <- rnorm(10) # nolint
+  Y <- 5 * X + rnorm(10) # nolint
   d <- data.frame(y = Y, x = X)
   fit <- lm(y ~ x, data = d)
 
 
   model_resample_mock <- list(rnorm(10), rnorm(10), rnorm(10))
-  MODEL_MOCK_NMB <- 0
+  MODEL_MOCK_NMB <- 0 # nolint
   lm_sim_para_mock <- R6::R6Class(
     public = list(
       resample_y = function(model) {
-        MODEL_MOCK_NMB <<- MODEL_MOCK_NMB + 1
+        MODEL_MOCK_NMB <<- MODEL_MOCK_NMB + 1 # nolint
         model_resample_mock[[MODEL_MOCK_NMB]]
       }))$new()
 
@@ -121,13 +121,13 @@ GOF_model_test_calc_Rn1_boot <- function() {
 }
 GOF_model_test_calc_Rn1_boot()
 
-GOF_model_test_calc_pvalue <- function() {
+GOF_model_test_calc_pvalue <- function() { # nolint
   set.seed(1)
-  X <- rnorm(10)
-  Y <- 5 * X + rnorm(10)
+  X <- rnorm(10) # nolint
+  Y <- 5 * X + rnorm(10) # nolint
   d <- data.frame(y = Y, x = X)
   fit <- lm(y ~ x, data = d)
-  KS <- Rn1_KS$new()
+  KS <- Rn1_KS$new() # nolint
   mt <- GOF_model_test$new(
     model = fit,
     data = d,
@@ -140,8 +140,7 @@ GOF_model_test_calc_pvalue <- function() {
       gof_model_trainer = GOF_lm_trainer$new()))
   out <- mt$get_pvalue()
   expect_equal(
-    out,
-    {
+    out, {
       stat_org <- KS$calc_statistic(mt$get_Rn1_org())
       stat_boot <- sapply(mt$get_Rn1_boot(), KS$calc_statistic)
       mean(stat_org < stat_boot)
@@ -152,10 +151,10 @@ GOF_model_test_calc_pvalue()
 
 
 
-GOF_model_test_expect_small_pvalue <- function() {
+GOF_model_test_expect_small_pvalue <- function() { # nolint
   set.seed(1)
-  X1 <- rnorm(100)
-  X2 <- rnorm(100)
+  X1 <- rnorm(100) # nolint
+  X2 <- rnorm(100) # nolint
   d <- data.frame(
     y = rpois(n = 100, lambda = exp(4 + X1 * 2 + X2 * 6)),
     x1 = X1)
@@ -173,7 +172,7 @@ GOF_model_test_expect_small_pvalue <- function() {
 
   expect_equal(mt$get_pvalue(), 0)
 
-  X1 <- rnorm(100)
+  X1 <- rnorm(100) # nolint
   d <- data.frame(
     y = rnorm(n = 100, mean = 4 + X1^2),
     x1 = X1)
@@ -196,9 +195,9 @@ GOF_model_test_expect_small_pvalue <- function() {
 }
 GOF_model_test_expect_small_pvalue()
 
-GOF_model_test_expect_non_small_pvalue <- function() {
+GOF_model_test_expect_non_small_pvalue <- function() { # nolint
   set.seed(1)
-  X1 <- rnorm(100)
+  X1 <- rnorm(100) # nolint
   d <- data.frame(
     y = rpois(n = 100, lambda = exp(4 + X1 * 2)),
     x1 = X1)
@@ -216,7 +215,7 @@ GOF_model_test_expect_non_small_pvalue <- function() {
 
   expect_equal(mt$get_pvalue(), 0.74)
 
-  X1 <- rnorm(100)
+  X1 <- rnorm(100) # nolint
   d <- data.frame(
     y = rnorm(n = 100, mean = 4 + X1 + X1^2),
     x1 = X1)

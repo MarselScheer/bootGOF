@@ -27,7 +27,7 @@ test: NAMESPACE
 	Rscript -e "pkgload::load_all(); tinytest::test_all()"
 
 lint:
-	Rscript -e "pkgload::load_all(); lintr::lint_package()"
+	Rscript -e "library(tinytest); pkgload::load_all(); lintr::lint_package()"
 
 pkgdown: NAMESPACE
 	Rscript -e "library(pkgdown); pkgdown::build_site()"

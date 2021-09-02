@@ -4,7 +4,7 @@
 ##'   a particular linear model, i.e. classical linear models, generalized
 ##'   linear models or models of the type \eqn{m(\beta^\top X) + \epsilon}.
 ##' @export
-GOF_model_test <- R6::R6Class(
+GOF_model_test <- R6::R6Class( # nolint
   classname = "GOF_model_test",
   public = list(
     ##' @param model a fitted model
@@ -27,28 +27,30 @@ GOF_model_test <- R6::R6Class(
                           data,
                           nmb_boot_samples,
                           y_name,
-                          Rn1_statistic,
+                          Rn1_statistic, # nolint
                           gof_model_info_extractor,
                           gof_model_resample) {
       checkmate::assert_count(x = nmb_boot_samples, positive = TRUE)
       private$model_org <- model
       private$data_org <- data
       private$y_name <- y_name
-      private$Rn1_statistic <- Rn1_statistic
+      private$Rn1_statistic <- Rn1_statistic # nolint
       private$nmb_boot_samples <- nmb_boot_samples
       private$model_info_extractor <- gof_model_info_extractor
       private$model_resample <- gof_model_resample
-      private$order_beta_dot_X_org <- order(
-        private$model_info_extractor$beta_x_covariates(model = private$model_org)
+      private$order_beta_dot_X_org <- order( # nolint
+        private$model_info_extractor$beta_x_covariates(
+          model = private$model_org
+        )
       )
-      private$Rn1_statistic <- Rn1_statistic
+      private$Rn1_statistic <- Rn1_statistic # nolint
     },
     ##' @description calculates the marked empricial process for \code{model}
     ##' @return vector ordered by the inner product of the estimated
     ##'   parameter and the independent variables
     get_Rn1_org = function() {
       if (is.null(private$Rn1_org)) {
-        private$Rn1_org <- private$Rn1(
+        private$Rn1_org <- private$Rn1( # nolint
           y_minus_yhat = private$model_info_extractor$y_minus_yhat(
             model = private$model_org
           ),
@@ -99,10 +101,12 @@ GOF_model_test <- R6::R6Class(
           model = private$model_org,
           data = private$data_org,
           y_name = private$y_name)
-        Rn1_boot <- private$Rn1(
-          y_minus_yhat = private$model_info_extractor$y_minus_yhat(model = fit_boot),
+        Rn1_boot <- private$Rn1( # nolint
+          y_minus_yhat = private$model_info_extractor$y_minus_yhat(
+            model = fit_boot
+          ),
           order_beta_x_covariates = private$order_beta_dot_X_org)
         return(Rn1_boot)
       }
-      private$Rn1_boot <- lapply(X = 1:private$nmb_boot_samples, FUN = f)
+      private$Rn1_boot <- lapply(X = 1:private$nmb_boot_samples, FUN = f) # nolint
     }))
