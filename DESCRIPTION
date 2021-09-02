@@ -1,6 +1,6 @@
 Package: bootGOF
 Title: Bootstrap Based Goodness-of-Fit Tests
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: 
     c(person(given = "Marsel",
              family = "Scheer",
