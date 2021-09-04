@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.0.0",
+    "Version": "4.1.0",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -50,13 +50,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "3ef0eac19317fd03c0c854aed581d473"
-    },
-    "badgecreatr": {
-      "Package": "badgecreatr",
-      "Version": "0.2.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "5db59479f84ad4a0650e74a8d8edac70"
     },
     "base64enc": {
       "Package": "base64enc",
@@ -162,13 +155,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "8c04112383ca1988e96f429255f95675"
-    },
-    "git2r": {
-      "Package": "git2r",
-      "Version": "0.27.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "531a82d1beed1f545beb25f4f5945bf7"
     },
     "glue": {
       "Package": "glue",
@@ -362,7 +348,9 @@
     "renv": {
       "Package": "renv",
       "Version": "0.14.0",
-      "Source": "Repository"
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "30e5eba91b67f7f4d75d31de14bbfbdc"
     },
     "rex": {
       "Package": "rex",
