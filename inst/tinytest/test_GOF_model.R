@@ -1,7 +1,7 @@
 dummy_lm_model <- function() {
   set.seed(1)
-  X <- rnorm(10)
-  Y <- 5 * X + rnorm(10)
+  X <- rnorm(10) # nolint
+  Y <- 5 * X + rnorm(10) # nolint
   d <- data.frame(y = Y, x = X)
   fit <- lm(y ~ x, data = d)
   ret <- list(fit = fit, X = X, Y = Y, d = d)
@@ -10,33 +10,33 @@ dummy_lm_model <- function() {
 
 dummy_glm_model <- function() {
   set.seed(1)
-  X <- 1:10
-  Y <- 1:10
+  X <- 1:10 # nolint
+  Y <- 1:10 # nolint
   d <- data.frame(y = Y, x = X)
   fit <- glm(y ~ x, data = d, family = poisson())
   ret <- list(fit = fit, X = X, Y = Y, d = d)
   return(ret)
 }
 
-GOF_model_resample_dummy <- R6::R6Class(
+GOF_model_resample_dummy <- R6::R6Class( # nolint
   classname = "dummy",
   public = list(
     initialize = function(gof_model_simulator, gof_model_trainer) {
     }))
 
-GOF_model_test_dummy <- R6::R6Class(
+GOF_model_test_dummy <- R6::R6Class( # nolint
   classname = "dummy",
   public = list(
     initialize = function(model,
                           data,
                           nmb_boot_samples,
                           y_name,
-                          Rn1_statistic,
+                          Rn1_statistic, # nolint
                           gof_model_info_extractor,
                           gof_model_resample) {
     }))
 
-GOF_model_error_if_fit_class_is_not_lm_or_glm <- function() {
+GOF_model_error_if_fit_class_is_not_lm_or_glm <- function() { # nolint
   dummy <- dummy_glm_model()
   class(dummy$fit) <- "lmglm"
   expect_error(
@@ -51,9 +51,9 @@ GOF_model_error_if_fit_class_is_not_lm_or_glm <- function() {
 }
 GOF_model_error_if_fit_class_is_not_lm_or_glm()
 
-GOF_model_warns_if_MASS_glmnb_is_used <- function() {
-  X <- 1:10
-  Y <- 1:10
+GOF_model_warns_if_MASS_glmnb_is_used <- function() { # nolint
+  X <- 1:10 # nolint
+  Y <- 1:10 # nolint
   d <- data.frame(y = Y, x = X)
   fit <- suppressWarnings(MASS::glm.nb(y ~ x, data = d))
   expect_warning(
@@ -63,23 +63,28 @@ GOF_model_warns_if_MASS_glmnb_is_used <- function() {
       data = d,
       y_name = "Y",
       simulator_type = "parametric",
-      Rn1_statistic = Rn1_CvM$new()),
-    pattern = "The GOF-test requires to refit the model. Refitting MASS::glm.nb can be problematic, see vignette New-Models")
+      Rn1_statistic = Rn1_CvM$new()
+    ),
+    pattern = paste(
+      "The GOF-test requires to refit the model.",
+      "Refitting MASS::glm.nb can be problematic, see vignette New-Models"
+    )
+  )
 }
 GOF_model_warns_if_MASS_glmnb_is_used()
 
-GOF_model_uses_lm_info_extractor <- function() {
+GOF_model_uses_lm_info_extractor <- function() { # nolint
   dummy_lm <- dummy_lm_model()
 
   inject_lm_info_extractor <- FALSE
-  GOF_model_test_spy <- R6::R6Class(
+  GOF_model_test_spy <- R6::R6Class( # nolint
     classname = "GOF_model_test",
     public = list(
       initialize = function(model,
                             data,
                             nmb_boot_samples,
                             y_name,
-                            Rn1_statistic,
+                            Rn1_statistic, # nolint
                             gof_model_info_extractor,
                             gof_model_resample) {
         inject_lm_info_extractor <<- inherits(
@@ -96,11 +101,11 @@ GOF_model_uses_lm_info_extractor <- function() {
 }
 GOF_model_uses_lm_info_extractor()
 
-GOF_model_uses_lm_trainer <- function() {
+GOF_model_uses_lm_trainer <- function() { # nolint
   dummy_lm <- dummy_lm_model()
 
   inject_lm_trainer <- FALSE
-  GOF_model_resample_spy <- R6::R6Class(
+  GOF_model_resample_spy <- R6::R6Class( # nolint
     classname = "GOF_model_resample",
     public = list(
       initialize = function(gof_model_simulator, gof_model_trainer) {
@@ -118,11 +123,11 @@ GOF_model_uses_lm_trainer <- function() {
 }
 GOF_model_uses_lm_trainer()
 
-GOF_model_uses_lm_parametric_simulator <- function() {
+GOF_model_uses_lm_parametric_simulator <- function() { # nolint
   dummy_lm <- dummy_lm_model()
 
   inject_lm_param_simulator <- FALSE
-  GOF_model_resample_spy <- R6::R6Class(
+  GOF_model_resample_spy <- R6::R6Class( # nolint
    classname = "GOF_model_resample",
     public = list(
       initialize = function(gof_model_simulator, gof_model_trainer) {
@@ -140,11 +145,11 @@ GOF_model_uses_lm_parametric_simulator <- function() {
 }
 GOF_model_uses_lm_parametric_simulator()
 
-GOF_model_uses_lm_rademacher_simulator <- function() {
+GOF_model_uses_lm_rademacher_simulator <- function() { # nolint
   dummy_lm <- dummy_lm_model()
 
   inject_lm_rademacher_simulator <- FALSE
-  GOF_model_resample_spy <- R6::R6Class(
+  GOF_model_resample_spy <- R6::R6Class( # nolint
    classname = "GOF_model_resample",
     public = list(
       initialize = function(gof_model_simulator, gof_model_trainer) {
@@ -162,18 +167,18 @@ GOF_model_uses_lm_rademacher_simulator <- function() {
 }
 GOF_model_uses_lm_rademacher_simulator()
 
-GOF_model_uses_unknow_simulator_type <- function() {
+GOF_model_uses_unknow_simulator_type <- function() { # nolint
   expect_error(
     GOF_model(simulator_type = "sthelse"),
     pattern = "simulator_type.*failed")
 }
 GOF_model_uses_unknow_simulator_type()
 
-GOF_model_uses_glm_parametric_simulator <- function() {
+GOF_model_uses_glm_parametric_simulator <- function() { # nolint
   dummy_glm <- dummy_glm_model()
 
   inject_glm_param_simulator <- FALSE
-  GOF_model_resample_spy <- R6::R6Class(
+  GOF_model_resample_spy <- R6::R6Class( # nolint
    classname = "GOF_model_resample",
     public = list(
       initialize = function(gof_model_simulator, gof_model_trainer) {
@@ -191,18 +196,18 @@ GOF_model_uses_glm_parametric_simulator <- function() {
 }
 GOF_model_uses_glm_parametric_simulator()
 
-GOF_model_uses_glm_info_extractor <- function() {
+GOF_model_uses_glm_info_extractor <- function() { # nolint
   dummy_glm <- dummy_glm_model()
 
   inject_glm_info_extractor <- FALSE
-  GOF_model_test_spy <- R6::R6Class(
+  GOF_model_test_spy <- R6::R6Class( # nolint
     classname = "GOF_model_test",
     public = list(
       initialize = function(model,
                             data,
                             nmb_boot_samples,
                             y_name,
-                            Rn1_statistic,
+                            Rn1_statistic, # nolint
                             gof_model_info_extractor,
                             gof_model_resample) {
         inject_glm_info_extractor <<- inherits(
@@ -219,11 +224,11 @@ GOF_model_uses_glm_info_extractor <- function() {
 }
 GOF_model_uses_glm_info_extractor()
 
-GOF_model_uses_glm_trainer <- function() {
+GOF_model_uses_glm_trainer <- function() { # nolint
   dummy_glm <- dummy_glm_model()
 
   inject_glm_trainer <- FALSE
-  GOF_model_resample_spy <- R6::R6Class(
+  GOF_model_resample_spy <- R6::R6Class( # nolint
     classname = "GOF_model_resample",
     public = list(
       initialize = function(gof_model_simulator, gof_model_trainer) {
@@ -242,10 +247,10 @@ GOF_model_uses_glm_trainer <- function() {
 GOF_model_uses_glm_trainer()
 
 
-GOF_model_expect_small_pvalue <- function() {
+GOF_model_expect_small_pvalue <- function() { # nolint
   set.seed(1)
-  X1 <- rnorm(100)
-  X2 <- rnorm(100)
+  X1 <- rnorm(100) # nolint
+  X2 <- rnorm(100) # nolint
   d <- data.frame(
     y = rpois(n = 100, lambda = exp(4 + X1 * 2 + X2 * 6)),
     x1 = X1)
@@ -260,7 +265,7 @@ GOF_model_expect_small_pvalue <- function() {
 
   expect_equal(mt$get_pvalue(), 0)
 
-  X1 <- rnorm(100)
+  X1 <- rnorm(100) # nolint
   d <- data.frame(
     y = rnorm(n = 100, mean = 4 + X1^2),
     x1 = X1)
@@ -277,9 +282,9 @@ GOF_model_expect_small_pvalue <- function() {
 }
 GOF_model_expect_small_pvalue()
 
-GOF_model_expect_non_small_pvalue <- function() {
+GOF_model_expect_non_small_pvalue <- function() { # nolint
   set.seed(1)
-  X1 <- rnorm(100)
+  X1 <- rnorm(100) # nolint
   d <- data.frame(
     y = rpois(n = 100, lambda = exp(4 + X1 * 2)),
     x1 = X1)
@@ -294,7 +299,7 @@ GOF_model_expect_non_small_pvalue <- function() {
 
   expect_equal(mt$get_pvalue(), 0.74)
 
-  X1 <- rnorm(100)
+  X1 <- rnorm(100) # nolint
   d <- data.frame(
     y = rnorm(n = 100, mean = 4 + X1 + X1^2),
     x1 = X1)
@@ -311,9 +316,9 @@ GOF_model_expect_non_small_pvalue <- function() {
 }
 GOF_model_expect_non_small_pvalue()
 
-GOF_model_error_for_glm_semi_parametric <- function() {
+GOF_model_error_for_glm_semi_parametric <- function() { # nolint
   set.seed(1)
-  X1 <- rnorm(100)
+  X1 <- rnorm(100) # nolint
   d <- data.frame(
     y = rpois(n = 100, lambda = exp(4 + X1 * 2)),
     x1 = X1)
@@ -326,7 +331,9 @@ GOF_model_error_for_glm_semi_parametric <- function() {
       simulator_type = "semi_parametric_rademacher",
       y_name = "y",
       Rn1_statistic = Rn1_KS$new()),
-    pattern = "Ordinary Least Square estimate necessary for semi_parameteric_rademacher"
+    pattern = paste(
+      "Ordinary Least Square estimate necessary for semi_parameteric_rademacher"
+    )
   )
 }
 GOF_model_error_for_glm_semi_parametric()

@@ -1,4 +1,4 @@
-GOF_model_simulator_all_methods_abstract <- function() {
+GOF_model_simulator_all_methods_abstract <- function() { # nolint
   ms <- GOF_model_simulator$new()
   expect_error(
     ms$resample_y(),
@@ -6,11 +6,11 @@ GOF_model_simulator_all_methods_abstract <- function() {
 }
 GOF_model_simulator_all_methods_abstract()
 
-GOF_lm_sim_param_simulates <- function() {
+GOF_lm_sim_param_simulates <- function() { # nolint
   set.seed(1)
   ms <- GOF_lm_sim_param$new()
-  X <- 1:1000
-  Y <- X + rnorm(1000, sd = 0.1)
+  X <- 1:1000 # nolint
+  Y <- X + rnorm(1000, sd = 0.1) # nolint
   d <- data.frame(y = Y, x = X)
   fit <- lm(y~x, data = d)
   expect_true(
@@ -22,7 +22,7 @@ GOF_lm_sim_param_simulates <- function() {
 }
 GOF_lm_sim_param_simulates()
 
-GOF_sim_wild_rademacher_simulates <- function() {
+GOF_sim_wild_rademacher_simulates <- function() { # nolint
   info_mock <- R6::R6Class(
     classname = "info_mock",
     inherit = GOF_model_info_extractor,
@@ -35,7 +35,7 @@ GOF_sim_wild_rademacher_simulates <- function() {
       }
     )
   )
-  info_mock = info_mock$new()
+  info_mock <- info_mock$new()
   ms <- GOF_sim_wild_rademacher$new(gof_model_info_extractor = info_mock)
   mockery::stub(
     where = ms$resample_y,
@@ -54,12 +54,12 @@ GOF_sim_wild_rademacher_simulates <- function() {
 }
 GOF_sim_wild_rademacher_simulates()
 
-GOF_lm_sim_param_wild_rademacher_simulates <- function() {
+GOF_lm_sim_param_wild_rademacher_simulates <- function() { # nolint
   set.seed(1)
   ie <- GOF_lm_info_extractor$new()
   ms <- GOF_sim_wild_rademacher$new(gof_model_info_extractor = ie)
-  X <- 1:10
-  Y <- X + rnorm(10)
+  X <- 1:10 # nolint
+  Y <- X + rnorm(10) # nolint
   d <- data.frame(y = Y, x = X)
   fit <- lm(y~x, data = d)
   mockery::stub(
@@ -83,11 +83,11 @@ GOF_lm_sim_param_wild_rademacher_simulates <- function() {
 }
 GOF_lm_sim_param_wild_rademacher_simulates()
 
-GOF_glm_sim_param_simulates <- function() {
+GOF_glm_sim_param_simulates <- function() { # nolint
   set.seed(1)
-  N <- 100
-  X1 <- rnorm(N)
-  X2 <- rnorm(N)
+  N <- 100 # nolint
+  X1 <- rnorm(N) # nolint
+  X2 <- rnorm(N) # nolint
   d <- data.frame(
     sth = rpois(n = N, lambda = exp(4 + X1 * 2 + X2 * 6)),
     x1 = X1, x2 = X2)
@@ -101,4 +101,3 @@ GOF_glm_sim_param_simulates <- function() {
   )
 }
 GOF_glm_sim_param_simulates()
-

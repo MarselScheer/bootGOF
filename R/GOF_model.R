@@ -47,12 +47,12 @@
 ##'   y_name = "y",
 ##'   Rn1_statistic = Rn1_KS$new())
 ##' mt$get_pvalue()
-GOF_model <- function(model,
+GOF_model <- function(model, # nolint
                       data,
                       nmb_boot_samples,
                       simulator_type,
                       y_name,
-                      Rn1_statistic,
+                      Rn1_statistic, # nolint
                       gof_model_resample_class = GOF_model_resample,
                       gof_model_test_class = GOF_model_test
                       ) {
@@ -61,7 +61,10 @@ GOF_model <- function(model,
     choices = c("parametric", "semi_parametric_rademacher"))
   checkmate::assert_multi_class(x = model, classes = c("lm", "glm"))
   if (inherits(x = model, what = "negbin")) {
-    warning("The GOF-test requires to refit the model. Refitting MASS::glm.nb can be problematic, see vignette New-Models")
+    warning(paste(
+      "The GOF-test requires to refit the model.",
+      "Refitting MASS::glm.nb can be problematic, see vignette New-Models"
+    ))
   }
 
 
@@ -75,8 +78,8 @@ GOF_model <- function(model,
       semi_parametric_rademacher = list(
         new = function() stop(
           paste(
-            "Ordinary Least Square estimate necessary for semi_parameteric_rademacher.",
-            "But MLE is used for GLMs."
+            "Ordinary Least Square estimate necessary for",
+            "semi_parameteric_rademacher. But MLE is used for GLMs."
           )))
     )
   )
@@ -88,7 +91,7 @@ GOF_model <- function(model,
   } else if (inherits(x = model, what = "lm")) {
     mt <- GOF_lm_trainer$new()
     mie <- GOF_lm_info_extractor$new()
-    
+
     if (simulator_type == "parametric") {
       ms <- simulators[["lm"]][[simulator_type]]$new()
     } else {
