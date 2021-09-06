@@ -26,6 +26,9 @@ clean-cmd-check-files:
 test: NAMESPACE
 	Rscript -e "pkgload::load_all(); tinytest::test_all()"
 
+coverage: NAMESPACE
+	Rscript -e "pkgload::load_all(); covr::package_coverage(type = 'tests')"
+
 lint:
 	Rscript -e "library(tinytest); pkgload::load_all(); lintr::lint_package()"
 
