@@ -1,4 +1,4 @@
-FROM rocker/verse:4.1.0
+FROM rocker/tidyverse:devel
 
 RUN apt-get update && apt-get install -y \
     ranger \
