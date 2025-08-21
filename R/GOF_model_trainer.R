@@ -2,6 +2,10 @@
 ##'
 ##' @description R6 does not offer interfaces. Hence all methods
 ##' are considered as abstract.
+##' @importFrom R6 R6Class
+##' According to https://roxygen2.r-lib.org/articles/namespace.html#imports
+##' the above R6Class import is not necessary but we need it to
+##' get rid of a warning from the CRAN check :-(
 ##' @export
 GOF_model_trainer <- R6::R6Class( # nolint
   classname = "GOF_model_trainer",
