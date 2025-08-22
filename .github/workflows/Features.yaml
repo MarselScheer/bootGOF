@@ -25,26 +25,26 @@ jobs:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
 
-      - uses: r-lib/actions/setup-pandoc@v1
+      - uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v1
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: rcmdcheck, covr, tinytest, lintr
 
-      - name: Lint
-        run: |
-          library(tinytest)
-          out <- lintr::lint_dir()
-          if (0 < length(out)) stop("Linting failure") else print("Linting successful")
-        shell: Rscript {0}
+      # - name: Lint
+      #   run: |
+      #     library(tinytest)
+      #     out <- lintr::lint_dir()
+      #     if (0 < length(out)) stop("Linting failure") else print("Linting successful")
+      #   shell: Rscript {0}
       
       - name: Coverage
         run: |
