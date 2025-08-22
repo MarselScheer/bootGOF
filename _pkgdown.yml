@@ -2,8 +2,7 @@ destination: docs
 title: bootGOF
 url: http://MarselScheer.github.io/bootGOF
 template:
-  params:
-    bootswatch: flatly
+  bootstrap: 5
 reference:
   - title: "GOF-tests"
   - desc: >

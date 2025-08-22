@@ -33,7 +33,7 @@ lint:
 	Rscript -e "library(tinytest); pkgload::load_all(); lintr::lint_package()"
 
 pkgdown: NAMESPACE
-	Rscript -e "library(pkgdown); pkgdown::build_site()"
+	Rscript -e "library(pkgdown); pkgdown::build_site_github_pages(new_process=FALSE, install=FALSE)"
 
 README:
 	Rscript -e "pkgload::load_all(); rmarkdown::render(input='README.Rmd', output_format='md_document')"
