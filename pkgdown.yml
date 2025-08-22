@@ -1,11 +1,10 @@
-pandoc: 2.7.3
-pkgdown: 1.6.1
+pandoc: 3.1.11
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   Architecture: Architecture.html
   New-Models: New-Models.html
-last_built: 2021-09-07T18:33Z
+last_built: 2025-08-22T16:34Z
 urls:
   reference: http://MarselScheer.github.io/bootGOF/reference
   article: http://MarselScheer.github.io/bootGOF/articles
-
