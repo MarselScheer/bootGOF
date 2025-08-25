@@ -29,7 +29,9 @@ GOF_model_test <- R6::R6Class( # nolint
                           y_name,
                           Rn1_statistic, # nolint
                           gof_model_info_extractor,
-                          gof_model_resample) {
+                          gof_model_resample,
+                          n_cores,
+                          seed) {
       checkmate::assert_count(x = nmb_boot_samples, positive = TRUE)
       private$model_org <- model
       private$data_org <- data
@@ -38,6 +40,8 @@ GOF_model_test <- R6::R6Class( # nolint
       private$nmb_boot_samples <- nmb_boot_samples
       private$model_info_extractor <- gof_model_info_extractor
       private$model_resample <- gof_model_resample
+      private$n_cores <- n_cores
+      private$seed <- seed
       private$order_beta_dot_X_org <- order( # nolint
         private$model_info_extractor$beta_x_covariates(
           model = private$model_org
@@ -84,6 +88,8 @@ GOF_model_test <- R6::R6Class( # nolint
     nmb_boot_samples = NULL,
     model_info_extractor = NULL,
     model_resample = NULL,
+    n_cores = NULL,
+    seed = NULL,
     Rn1_statistic = NULL,
     Rn1_boot = NULL,
     Rn1_org = NULL,
@@ -108,5 +114,34 @@ GOF_model_test <- R6::R6Class( # nolint
           order_beta_x_covariates = private$order_beta_dot_X_org)
         return(Rn1_boot)
       }
-      private$Rn1_boot <- lapply(X = 1:private$nmb_boot_samples, FUN = f) # nolint
+
+      # Replace RNG with "L'Ecuyer-CMRG" if going parallel
+      replaced.RNG <- FALSE
+      if ((!is.null(private$n_cores)) && private$n_cores > 0) {
+        # save and replace current RNG state
+        original.state <- if (exists(".Random.seed", .GlobalEnv)) .GlobalEnv$.Random.seed else NULL
+        RNGkind("L'Ecuyer-CMRG")
+        set.seed(NULL)
+        replaced.RNG <- TRUE
+      } else {
+        if ((!is.null(private$n_cores)) && private$n_cores < 0) {
+          warning("The number of cores must not be a negative number. Defaulting to 1")
+        }
+        private$n_cores <- 1
+      }
+
+      if (!is.null(private$seed)) {
+        set.seed(private$seed)
+      }
+
+      private$Rn1_boot <- parallel::mclapply(X = 1:private$nmb_boot_samples, FUN = f, mc.cores = private$n_cores) # nolint
+
+      # Reset initial RNG if it has been replaced
+      if (replaced.RNG) {
+        if (!is.null(original.state)) {
+          .GlobalEnv$.Random.seed <- original.state
+        } else {
+          RNGkind("default")
+        }
+      }
     }))

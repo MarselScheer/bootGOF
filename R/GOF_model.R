@@ -1,3 +1,5 @@
+library(parallel)
+
 ##' @title Convenience function for creating a GOF-test for statistical models
 ##'
 ##' @description Simplifies the creation of an instance of
@@ -54,7 +56,9 @@ GOF_model <- function(model, # nolint
                       y_name,
                       Rn1_statistic, # nolint
                       gof_model_resample_class = GOF_model_resample,
-                      gof_model_test_class = GOF_model_test
+                      gof_model_test_class = GOF_model_test,
+                      n_cores = NULL,
+                      seed = NULL
                       ) {
   checkmate::assert_subset(
     x = simulator_type,
@@ -66,8 +70,6 @@ GOF_model <- function(model, # nolint
       "Refitting MASS::glm.nb can be problematic, see vignette New-Models"
     ))
   }
-
-
 
   simulators <- list(
     lm = list(
@@ -113,6 +115,9 @@ GOF_model <- function(model, # nolint
     y_name = y_name,
     Rn1_statistic = Rn1_statistic,
     gof_model_info_extractor = mie,
-    gof_model_resample = model_resample)
+    gof_model_resample = model_resample,
+    n_cores = n_cores,
+    seed = seed)
+
   return(ret)
 }
