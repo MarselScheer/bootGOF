@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 
 [![R build status](https://github.com/MarselScheer/bootGOF/workflows/R-CMD-check/badge.svg)](https://github.com/MarselScheer/bootGOF/actions)
-[![Coverage Status](https://img.shields.io/codecov/c/github/MarselScheer/bootGOF/develop.svg)](https://codecov.io/github/MarselScheer/bootGOF?branch=develop)
+[![Coverage Status](https://img.shields.io/codecov/c/github/MarselScheer/bootGOF/develop.svg)](https://app.codecov.io/github/MarselScheer/bootGOF?branch=develop)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
