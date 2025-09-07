@@ -1,3 +1,8 @@
+Version 0.1.1.9000
+=========================
+
+* placeholder for next development cycle
+
 Version 0.1.1
 =========================
 
