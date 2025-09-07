@@ -1,4 +1,4 @@
-GOF_model_info_extractor_all_methods_are_abstract <- function() {
+GOF_model_info_extractor_all_methods_are_abstract <- function() { # nolint
   mif <- GOF_model_info_extractor$new()
   expect_error(
     mif$yhat(model = list()),
@@ -13,8 +13,8 @@ GOF_model_info_extractor_all_methods_are_abstract <- function() {
 }
 GOF_model_info_extractor_all_methods_are_abstract()
 
-GOF_lm_info_extractor_one_covariate <- function() {
-  fit <- lm(y~x, data = data.frame(y = 2*(1:10), x = 1:10))
+GOF_lm_info_extractor_one_covariate <- function() { # nolint
+  fit <- lm(y~x, data = data.frame(y = 2 * (1:10), x = 1:10))
   mif <- GOF_lm_info_extractor$new()
   expect_equivalent(
     mif$yhat(model = fit),
@@ -29,9 +29,9 @@ GOF_lm_info_extractor_one_covariate <- function() {
 GOF_lm_info_extractor_one_covariate()
 
 
-GOF_glm_info_extractor_one_covariate <- function() {
-  Y <- 2 * (1:10)
-  X = 1:10
+GOF_glm_info_extractor_one_covariate <- function() { # nolint
+  Y <- 2 * (1:10) # nolint
+  X <- 1:10 # nolint
   fit <- glm(y~x, data = data.frame(y = Y, x = X), family = poisson())
   beta <- coef(fit)
   b_times_x <- beta["(Intercept)"] + beta["x"] * X

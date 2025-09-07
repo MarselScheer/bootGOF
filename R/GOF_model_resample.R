@@ -4,11 +4,13 @@
 ##' @description Class is able to resample model fit, i.e. generate a
 ##'   new data set and refit the model to the new data.
 ##' @export
-GOF_model_resample <- R6::R6Class(
+GOF_model_resample <- R6::R6Class( # nolint
   classname = "GOF_model_resample",
   public = list(
-    ##' @param gof_model_simulator an instance that implements \link{GOF_model_simulator}
-    ##' @param gof_model_trainer an instance that implements \link{GOF_model_trainer}
+    ##' @param gof_model_simulator an instance that implements
+    ##'   \link{GOF_model_simulator}
+    ##' @param gof_model_trainer an instance that implements
+    ##'   \link{GOF_model_trainer}
     ##' @return No explicit return
     initialize = function(gof_model_simulator, gof_model_trainer) {
       private$model_simulator <- gof_model_simulator

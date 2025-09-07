@@ -2,8 +2,12 @@
 ##'
 ##' @description R6 does not offer interfaces. Hence all methods
 ##' are considered as abstract.
+##' According to https://roxygen2.r-lib.org/articles/namespace.html#imports
+##' the R6Class import below is not necessary but we need it to
+##' get rid of a warning from the CRAN check :-(
+##' @importFrom R6 R6Class
 ##' @export
-GOF_model_trainer <- R6::R6Class(
+GOF_model_trainer <- R6::R6Class( # nolint
   classname = "GOF_model_trainer",
   public = list(
     ##' @description Abstract function refits the model to
@@ -20,7 +24,7 @@ GOF_model_trainer <- R6::R6Class(
 ##'   for linear models
 ##' @description refits an object of class "lm" to a new data set
 ##' @export
-GOF_lm_trainer <- R6::R6Class(
+GOF_lm_trainer <- R6::R6Class( # nolint
   classname = "GOF_lm_trainer",
   public = list(
     ##' @description see \link{GOF_model_trainer}
@@ -35,7 +39,7 @@ GOF_lm_trainer <- R6::R6Class(
 ##'   for generalized linear models
 ##' @description refits an object of class "glm" to a new data set
 ##' @export
-GOF_glm_trainer <- R6::R6Class(
+GOF_glm_trainer <- R6::R6Class( # nolint
   classname = "GOF_glm_trainer",
   public = list(
     ##' @description see \link{GOF_model_trainer}

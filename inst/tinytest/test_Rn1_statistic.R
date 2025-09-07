@@ -1,4 +1,4 @@
-Rn1_statistic_all_methods_are_abstract <- function() {
+Rn1_statistic_all_methods_are_abstract <- function() { # nolint
   stat <- Rn1_statistic$new()
   expect_error(
     stat$calc_statistic(Rn1 = 1:100),
@@ -7,7 +7,7 @@ Rn1_statistic_all_methods_are_abstract <- function() {
 }
 Rn1_statistic_all_methods_are_abstract()
 
-Rn1_KS_calculates_Kolomogorov_Smirnoff <- function() {
+Rn1_KS_calculates_Kolomogorov_Smirnoff <- function() { # nolint
   stat <- Rn1_KS$new()
   r <- runif(10)
   expect_equal(
@@ -16,7 +16,7 @@ Rn1_KS_calculates_Kolomogorov_Smirnoff <- function() {
 }
 Rn1_KS_calculates_Kolomogorov_Smirnoff()
 
-Rn1_CvM_calculates_Cramer_von_Mises <- function() {
+Rn1_CvM_calculates_Cramer_von_Mises <- function() { # nolint
   stat <- Rn1_CvM$new()
   r <- runif(10)
   expect_equal(

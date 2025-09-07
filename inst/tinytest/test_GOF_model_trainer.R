@@ -1,4 +1,4 @@
-GOF_model_trainer_all_methods_abstract <- function() {
+GOF_model_trainer_all_methods_abstract <- function() { # nolint
   mt <- GOF_model_trainer$new()
   expect_error(
     mt$refit(),
@@ -6,12 +6,12 @@ GOF_model_trainer_all_methods_abstract <- function() {
 }
 GOF_model_trainer_all_methods_abstract()
 
-GOF_lm_trainer_refits_model <- function() {
+GOF_lm_trainer_refits_model <- function() { # nolint
   mt <- GOF_lm_trainer$new()
   d <- data.frame(Y = 1:10, X = 1:10)
   fit <- lm(Y~X, data = d)
   d_new <- d
-  d_new$Y <- -(1:10)
+  d_new$Y <- -(1:10) # nolint
   fit_new <- mt$refit(model = fit, data = d_new)
   expect_equivalent(
     coef(fit_new),
@@ -19,12 +19,12 @@ GOF_lm_trainer_refits_model <- function() {
 }
 GOF_lm_trainer_refits_model()
 
-GOF_glm_trainer_refits_model <- function() {
+GOF_glm_trainer_refits_model <- function() { # nolint
   mt <- GOF_glm_trainer$new()
   d <- data.frame(Y = 1:10, X = 1:10)
   fit <- glm(Y~X, data = d, family = Gamma())
   d_new <- d
-  d_new$Y <- (101:110)
+  d_new$Y <- (101:110) # nolint
   fit_new <- mt$refit(model = fit, data = d_new)
   expect_equivalent(
     coef(fit_new),
