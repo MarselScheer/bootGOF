@@ -20,6 +20,13 @@ library(parallel)
 ##'   class used for performing the GOF test (\link{GOF_model_test})
 ##'   is injected. This parameter simply makes it easier to test the
 ##'   convenience function properly.
+##' @param n_cores positive integer specifying the number of CPU cores to use
+##'   for parallel resampling. If bigger than 1, the L'Ecuyer-CMRG is used;
+##'   if 'NULL' or 1, one core is used with the current RNG.
+##'   Default is "NULL".
+##' @param seed integer intended to seed the internally setup
+##'   L'Ecuyer-CMRG, but will also be applied when RNG not replaced.
+##'   Default is "NULL", which will not alter the seed.
 ##' @export
 ##' @return instance of \link{GOF_model_test}
 ##' @examples

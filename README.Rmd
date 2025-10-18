@@ -81,6 +81,19 @@ mt$get_pvalue()
 
 ...
 
+## Parallelization
+
+The bootstrapping process can be accelerated using the `n_cores` parameter of
+the `GOF_model` function, that specifies the number of CPU cores to use.
+
+If this parameter is set to at least two cores, internally the currently used
+RNG is stored and replaced by the L'Ecuyer-CMRG generator, which is safe to use
+in a parallel context.
+
+This internal generator can be seeded using the `seed` parameter of the
+`GOF_model` function, which however will also apply if the `n_cores` parameter
+is not used and thus the generator is not replaced.
+
 ## Installation
 
 You can install it from CRAN

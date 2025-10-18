@@ -22,6 +22,12 @@ GOF_model_test <- R6::R6Class( # nolint
     ##' @param gof_model_resample an instance that implements
     ##'   \link{GOF_model_resample} in order to apply it to
     ##'   \code{model}
+    ##' @param n_cores positive integer specifying the number of CPU cores to
+    ##'   use for parallel resampling. If bigger than 1, the L'Ecuyer-CMRG is
+    ##'   used; if 'NULL' or 1, one core is used with the current RNG.
+    ##' @param seed integer intended to seed the internally setup
+    ##'   L'Ecuyer-CMRG, but will also be applied when RNG not replaced,
+    ##'   as long as it is not "NULL".
     ##' @return An instance of the Class
     initialize = function(model,
                           data,
