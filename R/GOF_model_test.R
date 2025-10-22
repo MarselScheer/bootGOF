@@ -123,15 +123,16 @@ GOF_model_test <- R6::R6Class( # nolint
       }
 
       # Replace RNG with "L'Ecuyer-CMRG" if going parallel
-      replaced.RNG <- FALSE
+      replaced_rng <- FALSE
       if (is.null(private$n_cores)) {
         private$n_cores <- 1
       } else if (private$n_cores > 1) {
         # save and replace current RNG state
-        original.state <- if (exists(".Random.seed", .GlobalEnv)) .GlobalEnv$.Random.seed else NULL
+        original_state <- if (exists(".Random.seed", .GlobalEnv))
+            .GlobalEnv$.Random.seed else NULL # nolint
         RNGkind("L'Ecuyer-CMRG")
         set.seed(NULL)
-        replaced.RNG <- TRUE
+        replaced_rng <- TRUE
       }
 
       if (!is.null(private$seed)) {
@@ -141,9 +142,9 @@ GOF_model_test <- R6::R6Class( # nolint
       private$Rn1_boot <- parallel::mclapply(X = 1:private$nmb_boot_samples, FUN = f, mc.cores = private$n_cores) # nolint
 
       # Reset initial RNG if it has been replaced
-      if (replaced.RNG) {
-        if (!is.null(original.state)) {
-          .GlobalEnv$.Random.seed <- original.state
+      if (replaced_rng) {
+        if (!is.null(original_state)) {
+          .GlobalEnv$.Random.seed <- original_state
         } else {
           RNGkind("default")
         }
