@@ -39,6 +39,7 @@ GOF_model_test <- R6::R6Class( # nolint
                           n_cores,
                           seed) {
       checkmate::assert_count(x = nmb_boot_samples, positive = TRUE)
+      checkmate::assert_count(x = n_cores, positive = TRUE, null.ok = TRUE)
       private$model_org <- model
       private$data_org <- data
       private$y_name <- y_name
@@ -123,17 +124,14 @@ GOF_model_test <- R6::R6Class( # nolint
 
       # Replace RNG with "L'Ecuyer-CMRG" if going parallel
       replaced.RNG <- FALSE
-      if ((!is.null(private$n_cores)) && private$n_cores > 0) {
+      if (is.null(private$n_cores)) {
+        private$n_cores <- 1
+      } else if (private$n_cores > 1) {
         # save and replace current RNG state
         original.state <- if (exists(".Random.seed", .GlobalEnv)) .GlobalEnv$.Random.seed else NULL
         RNGkind("L'Ecuyer-CMRG")
         set.seed(NULL)
         replaced.RNG <- TRUE
-      } else {
-        if ((!is.null(private$n_cores)) && private$n_cores < 0) {
-          warning("The number of cores must not be a negative number. Defaulting to 1")
-        }
-        private$n_cores <- 1
       }
 
       if (!is.null(private$seed)) {

@@ -11,24 +11,37 @@ GOF_model_test_necessary_input <- function() { # nolint
   expect_error(
     GOF_model_test$new(
       nmb_boot_samples = 1),
+    pattern = "n_cores")
+  expect_error(
+    GOF_model_test$new(
+      nmb_boot_samples = 1,
+      n_cores = 0),
+    pattern = ".*n_cores.*>= 1")
+  expect_error(
+    GOF_model_test$new(
+      nmb_boot_samples = 1,
+      n_cores = 1),
     pattern = "model")
   expect_error(
     GOF_model_test$new(
       model = "dummy",
-      nmb_boot_samples = 1),
+      nmb_boot_samples = 1,
+      n_cores = 1),
     pattern = "data")
   expect_error(
     GOF_model_test$new(
       model = "dummy",
       nmb_boot_samples = 1,
-      data = "dummy"),
+      data = "dummy",
+      n_cores = 1),
     pattern = "y_name")
   expect_error(
     GOF_model_test$new(
       model = "dummy",
       nmb_boot_samples = 1,
       data = "dummy",
-      y_name = "dummy"),
+      y_name = "dummy",
+      n_cores = 1),
     pattern = "Rn1_statistic")
   expect_error(
     GOF_model_test$new(
@@ -36,7 +49,8 @@ GOF_model_test_necessary_input <- function() { # nolint
       nmb_boot_samples = 1,
       data = "dummy",
       y_name = "dummy",
-      Rn1_statistic = "dummy"),
+      Rn1_statistic = "dummy",
+      n_cores = 1),
     pattern = "gof_model_info_extractor")
   expect_error(
     GOF_model_test$new(
@@ -45,18 +59,9 @@ GOF_model_test_necessary_input <- function() { # nolint
       data = "dummy",
       y_name = "dummy",
       Rn1_statistic = "dummy",
-      gof_model_info_extractor = "dummy"),
-    pattern = "gof_model_resample")
-  expect_error(
-    GOF_model_test$new(
-      model = "dummy",
-      nmb_boot_samples = 1,
-      data = "dummy",
-      y_name = "dummy",
-      Rn1_statistic = "dummy",
       gof_model_info_extractor = "dummy",
-      gof_model_resample = "dummy"),
-    pattern = "n_cores")
+      n_cores = 1),
+    pattern = "gof_model_resample")
   expect_error(
     GOF_model_test$new(
       model = "dummy",
@@ -279,6 +284,81 @@ GOF_model_test_expect_non_small_pvalue <- function() { # nolint
 GOF_model_test_expect_non_small_pvalue()
 
 
+
+GOF_model_test_no_initial_RNG <- function() { # nolint
+  set.seed(1)
+  X <- rnorm(10) # nolint
+  Y <- 5 * X + rnorm(10) # nolint
+  d <- data.frame(y = Y, x = X)
+  fit <- lm(y ~ x, data = d)
+
+  remove(.Random.seed, envir = .GlobalEnv)
+
+  mt <- GOF_model_test$new(
+    model = fit,
+    nmb_boot_samples = 1,
+    data = d,
+    y_name = "y",
+    Rn1_statistic = "dummy",
+    gof_model_info_extractor = GOF_lm_info_extractor$new(),
+    gof_model_resample = GOF_model_resample$new(
+      gof_model_simulator = GOF_lm_sim_param$new(),
+      gof_model_trainer = GOF_lm_trainer$new()),
+    n_cores = 4,
+    seed = 1
+  )
+  out <- mt$get_Rn1_boot()
+
+  reset.state <- .GlobalEnv$.Random.seed
+  RNGkind("default")
+  expect_equal(reset.state[1:2], .GlobalEnv$.Random.seed[1:2])
+}
+GOF_model_test_no_initial_RNG()
+
+GOF_model_test_calc_Rn1_boot_parallel <- function() { # nolint
+  set.seed(1)
+  X <- rnorm(10) # nolint
+  Y <- 5 * X + rnorm(10) # nolint
+  d <- data.frame(y = Y, x = X)
+  fit <- lm(y ~ x, data = d)
+
+  model_resample_mock <- list(rnorm(10), rnorm(10), rnorm(10))
+  MODEL_MOCK_NMB <- 0 # nolint
+  lm_sim_para_mock <- R6::R6Class(
+    public = list(
+      resample_y = function(model) {
+        MODEL_MOCK_NMB <<- MODEL_MOCK_NMB + 1 # nolint
+        model_resample_mock[[MODEL_MOCK_NMB]]
+      }))$new()
+
+  mt <- GOF_model_test$new(
+    model = fit,
+    nmb_boot_samples = 3,
+    data = d,
+    y_name = "y",
+    Rn1_statistic = "dummy",
+    gof_model_info_extractor = GOF_lm_info_extractor$new(),
+    gof_model_resample = GOF_model_resample$new(
+      gof_model_simulator = lm_sim_para_mock,
+      gof_model_trainer = GOF_lm_trainer$new()
+    ),
+    n_cores = 4,
+    seed = 1
+  )
+
+  d1 <- d
+  d1$y <- model_resample_mock[[1]]
+  fit1 <- lm(y~x, data = d1)
+  out <- mt$get_Rn1_boot()
+  expect_equal(
+    out,
+    list(
+      Rn1_fun(r = residuals(fit1), o = order(X)),
+      Rn1_fun(r = residuals(fit1), o = order(X)),
+      Rn1_fun(r = residuals(fit1), o = order(X))
+    ))
+}
+GOF_model_test_calc_Rn1_boot_parallel()
 
 GOF_model_test_calc_pvalue_parallel <- function() { # nolint
   set.seed(1)
