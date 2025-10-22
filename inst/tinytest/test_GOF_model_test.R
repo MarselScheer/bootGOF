@@ -47,6 +47,27 @@ GOF_model_test_necessary_input <- function() { # nolint
       Rn1_statistic = "dummy",
       gof_model_info_extractor = "dummy"),
     pattern = "gof_model_resample")
+  expect_error(
+    GOF_model_test$new(
+      model = "dummy",
+      nmb_boot_samples = 1,
+      data = "dummy",
+      y_name = "dummy",
+      Rn1_statistic = "dummy",
+      gof_model_info_extractor = "dummy",
+      gof_model_resample = "dummy"),
+    pattern = "n_cores")
+  expect_error(
+    GOF_model_test$new(
+      model = "dummy",
+      nmb_boot_samples = 1,
+      data = "dummy",
+      y_name = "dummy",
+      Rn1_statistic = "dummy",
+      gof_model_info_extractor = "dummy",
+      gof_model_resample = "dummy",
+      n_cores = 1),
+    pattern = "seed")
 }
 GOF_model_test_necessary_input()
 
@@ -63,7 +84,9 @@ GOF_model_test_calc_Rn1_org <- function() { # nolint
     Rn1_statistic = "dummy",
     nmb_boot_samples = 10,
     gof_model_info_extractor = GOF_lm_info_extractor$new(),
-    gof_model_resample = "dummy")
+    gof_model_resample = "dummy",
+    n_cores = NULL,
+    seed = NULL)
   expect_equal(
     mt$get_Rn1_org(),
     Rn1_fun(r = residuals(fit), o = order(X))
@@ -98,7 +121,9 @@ GOF_model_test_calc_Rn1_boot <- function() { # nolint
     gof_model_resample = GOF_model_resample$new(
       gof_model_simulator = lm_sim_para_mock,
       gof_model_trainer = GOF_lm_trainer$new()
-    )
+    ),
+    n_cores = NULL,
+    seed = NULL
   )
 
   d1 <- d
@@ -137,7 +162,10 @@ GOF_model_test_calc_pvalue <- function() { # nolint
     gof_model_info_extractor = GOF_lm_info_extractor$new(),
     gof_model_resample = GOF_model_resample$new(
       gof_model_simulator = GOF_lm_sim_param$new(),
-      gof_model_trainer = GOF_lm_trainer$new()))
+      gof_model_trainer = GOF_lm_trainer$new()),
+    n_cores = NULL,
+    seed = NULL
+  )
   out <- mt$get_pvalue()
   expect_equal(
     out, {
@@ -168,7 +196,10 @@ GOF_model_test_expect_small_pvalue <- function() { # nolint
     gof_model_info_extractor = GOF_glm_info_extractor$new(),
     gof_model_resample = GOF_model_resample$new(
       gof_model_simulator = GOF_glm_sim_param$new(),
-      gof_model_trainer = GOF_glm_trainer$new()))
+      gof_model_trainer = GOF_glm_trainer$new()),
+    n_cores = NULL,
+    seed = NULL
+  )
 
   expect_equal(mt$get_pvalue(), 0)
 
@@ -189,7 +220,10 @@ GOF_model_test_expect_small_pvalue <- function() { # nolint
       gof_model_simulator = GOF_sim_wild_rademacher$new(
         gof_model_info_extractor = ie
       ),
-      gof_model_trainer = GOF_lm_trainer$new()))
+      gof_model_trainer = GOF_lm_trainer$new()),
+    n_cores = NULL,
+    seed = NULL
+  )
 
   expect_equal(mt$get_pvalue(), 0)
 }
@@ -211,7 +245,10 @@ GOF_model_test_expect_non_small_pvalue <- function() { # nolint
     gof_model_info_extractor = GOF_glm_info_extractor$new(),
     gof_model_resample = GOF_model_resample$new(
       gof_model_simulator = GOF_glm_sim_param$new(),
-      gof_model_trainer = GOF_glm_trainer$new()))
+      gof_model_trainer = GOF_glm_trainer$new()),
+    n_cores = NULL,
+    seed = NULL
+  )
 
   expect_equal(mt$get_pvalue(), 0.74)
 
@@ -232,8 +269,143 @@ GOF_model_test_expect_non_small_pvalue <- function() { # nolint
       gof_model_simulator = GOF_sim_wild_rademacher$new(
         gof_model_info_extractor = ie
       ),
-      gof_model_trainer = GOF_lm_trainer$new()))
+      gof_model_trainer = GOF_lm_trainer$new()),
+    n_cores = NULL,
+    seed = NULL
+  )
 
   expect_equal(mt$get_pvalue(), 0.8)
 }
 GOF_model_test_expect_non_small_pvalue()
+
+
+
+GOF_model_test_calc_pvalue_parallel <- function() { # nolint
+  set.seed(1)
+  X <- rnorm(10) # nolint
+  Y <- 5 * X + rnorm(10) # nolint
+  d <- data.frame(y = Y, x = X)
+  fit <- lm(y ~ x, data = d)
+  KS <- Rn1_KS$new() # nolint
+  mt <- GOF_model_test$new(
+    model = fit,
+    data = d,
+    y_name = "y",
+    Rn1_statistic = KS,
+    nmb_boot_samples = 10,
+    gof_model_info_extractor = GOF_lm_info_extractor$new(),
+    gof_model_resample = GOF_model_resample$new(
+      gof_model_simulator = GOF_lm_sim_param$new(),
+      gof_model_trainer = GOF_lm_trainer$new()),
+    n_cores = 4,
+    seed = 1
+  )
+  out <- mt$get_pvalue()
+  expect_equal(
+    out, {
+      stat_org <- KS$calc_statistic(mt$get_Rn1_org())
+      stat_boot <- sapply(mt$get_Rn1_boot(), KS$calc_statistic)
+      mean(stat_org < stat_boot)
+    }
+  )
+}
+GOF_model_test_calc_pvalue_parallel()
+
+GOF_model_test_expect_small_pvalue_parallel <- function() { # nolint
+  set.seed(1)
+  X1 <- rnorm(100) # nolint
+  X2 <- rnorm(100) # nolint
+  d <- data.frame(
+    y = rpois(n = 100, lambda = exp(4 + X1 * 2 + X2 * 6)),
+    x1 = X1)
+  fit <- glm(y~x1, data = d, family = poisson())
+  mt <- GOF_model_test$new(
+    model = fit,
+    data = d,
+    y_name = "y",
+    Rn1_statistic = Rn1_KS$new(),
+    nmb_boot_samples = 100,
+    gof_model_info_extractor = GOF_glm_info_extractor$new(),
+    gof_model_resample = GOF_model_resample$new(
+      gof_model_simulator = GOF_glm_sim_param$new(),
+      gof_model_trainer = GOF_glm_trainer$new()),
+    n_cores = 4,
+    seed = 1
+  )
+
+  expect_equal(mt$get_pvalue(), 0)
+
+  X1 <- rnorm(100) # nolint
+  d <- data.frame(
+    y = rnorm(n = 100, mean = 4 + X1^2),
+    x1 = X1)
+  fit <- lm(y~x1, data = d)
+  ie <- GOF_lm_info_extractor$new()
+  mt <- GOF_model_test$new(
+    model = fit,
+    data = d,
+    y_name = "y",
+    Rn1_statistic = Rn1_KS$new(),
+    nmb_boot_samples = 100,
+    gof_model_info_extractor = ie,
+    gof_model_resample = GOF_model_resample$new(
+      gof_model_simulator = GOF_sim_wild_rademacher$new(
+        gof_model_info_extractor = ie
+      ),
+      gof_model_trainer = GOF_lm_trainer$new()),
+    n_cores = 4,
+    seed = 1
+  )
+
+  expect_equal(mt$get_pvalue(), 0)
+}
+GOF_model_test_expect_small_pvalue_parallel()
+
+GOF_model_test_expect_non_small_pvalue_parallel <- function() { # nolint
+  set.seed(1)
+  X1 <- rnorm(100) # nolint
+  d <- data.frame(
+    y = rpois(n = 100, lambda = exp(4 + X1 * 2)),
+    x1 = X1)
+  fit <- glm(y~x1, data = d, family = poisson())
+  mt <- GOF_model_test$new(
+    model = fit,
+    data = d,
+    y_name = "y",
+    Rn1_statistic = Rn1_KS$new(),
+    nmb_boot_samples = 100,
+    gof_model_info_extractor = GOF_glm_info_extractor$new(),
+    gof_model_resample = GOF_model_resample$new(
+      gof_model_simulator = GOF_glm_sim_param$new(),
+      gof_model_trainer = GOF_glm_trainer$new()),
+    n_cores = 4,
+    seed = 1
+  )
+
+  expect_equal(mt$get_pvalue(), 0.89)
+
+  X1 <- rnorm(100) # nolint
+  d <- data.frame(
+    y = rnorm(n = 100, mean = 4 + X1 + X1^2),
+    x1 = X1)
+  fit <- lm(y~x1 + I(x1^2), data = d)
+  ie <- GOF_lm_info_extractor$new()
+  mt <- GOF_model_test$new(
+    model = fit,
+    data = d,
+    y_name = "y",
+    Rn1_statistic = Rn1_CvM$new(),
+    nmb_boot_samples = 100,
+    gof_model_info_extractor = ie,
+    gof_model_resample = GOF_model_resample$new(
+      gof_model_simulator = GOF_sim_wild_rademacher$new(
+        gof_model_info_extractor = ie
+      ),
+      gof_model_trainer = GOF_lm_trainer$new()),
+    n_cores = 4,
+    seed = 1
+  )
+
+  expect_equal(mt$get_pvalue(), 0.94)
+}
+GOF_model_test_expect_non_small_pvalue_parallel()
