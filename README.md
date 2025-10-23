@@ -68,6 +68,45 @@ not be rejected by the GOF-test:
 
 …
 
+## Parallelization
+
+The bootstrapping process can be accelerated using the `n_cores`
+parameter of the `GOF_model` function, that specifies the number of CPU
+cores to use.
+
+If this parameter is set to at least two cores, internally the currently
+used RNG is replaced by the L’Ecuyer-CMRG generator, which is safe to
+use in a parallel context.
+
+This internal generator can be seeded using the `seed` parameter of the
+`GOF_model` function, which however will also apply if the `n_cores`
+parameter is not used and thus the generator is not replaced.
+
+For example:
+
+    set.seed(1)
+    N <- 100
+    X1 <- rnorm(N)
+    X2 <- rnorm(N)
+    d <- data.frame(
+      y = rpois(n = N, lambda = exp(4 + X1 * 2 + X2 * 6)),
+      x1 = X1,
+      x2 = X2)
+
+    fit <- glm(y ~ x1 + x2, data = d, family = poisson())
+
+    mt <- GOF_model(
+      model = fit,
+      data = d,
+      nmb_boot_samples = 100,
+      simulator_type = "parametric",
+      y_name = "y",
+      Rn1_statistic = Rn1_KS$new(),
+      n_cores = 2,
+      seed = 1)
+    mt$get_pvalue()
+    #> [1] 0.62
+
 ## Installation
 
 You can install it from CRAN
@@ -89,9 +128,9 @@ package in your environment by calling:
 # sessionInfo
 
     sessionInfo()
-    #> R Under development (unstable) (2025-08-19 r88650)
+    #> R Under development (unstable) (2025-10-19 r88945)
     #> Platform: x86_64-pc-linux-gnu
-    #> Running under: Ubuntu 24.04.2 LTS
+    #> Running under: Ubuntu 24.04.3 LTS
     #> 
     #> Matrix products: default
     #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -109,15 +148,15 @@ package in your environment by calling:
     #> tzcode source: system (glibc)
     #> 
     #> attached base packages:
-    #> [1] stats     graphics  grDevices datasets  utils     methods   base     
+    #> [1] parallel  stats     graphics  grDevices utils     datasets  methods  
+    #> [8] base     
     #> 
     #> other attached packages:
-    #> [1] bootGOF_0.1.1
+    #> [1] bootGOF_0.1.1.9000
     #> 
     #> loaded via a namespace (and not attached):
     #>  [1] digest_0.6.37     desc_1.4.3        backports_1.5.0   R6_2.6.1         
     #>  [5] fastmap_1.2.0     xfun_0.53         knitr_1.50        htmltools_0.5.8.1
-    #>  [9] rmarkdown_2.29    cli_3.6.5         renv_1.1.5        withr_3.0.2      
-    #> [13] pkgload_1.4.0     compiler_4.6.0    rprojroot_2.1.0   tools_4.6.0      
-    #> [17] pkgbuild_1.4.8    checkmate_2.3.3   evaluate_1.0.4    yaml_2.3.10      
-    #> [21] rlang_1.1.6
+    #>  [9] rmarkdown_2.30    cli_3.6.5         pkgload_1.4.1     compiler_4.6.0   
+    #> [13] rprojroot_2.1.1   tools_4.6.0       pkgbuild_1.4.8    checkmate_2.3.3  
+    #> [17] evaluate_1.0.5    yaml_2.3.10       rlang_1.1.6

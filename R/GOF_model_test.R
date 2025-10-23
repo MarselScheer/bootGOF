@@ -22,6 +22,12 @@ GOF_model_test <- R6::R6Class( # nolint
     ##' @param gof_model_resample an instance that implements
     ##'   \link{GOF_model_resample} in order to apply it to
     ##'   \code{model}
+    ##' @param n_cores positive integer specifying the number of CPU cores to
+    ##'   use for parallel resampling. If bigger than 1, the L'Ecuyer-CMRG is
+    ##'   used; if 'NULL' or 1, one core is used with the current RNG.
+    ##' @param seed integer intended to seed the internally setup
+    ##'   L'Ecuyer-CMRG, but will also be applied when RNG not replaced,
+    ##'   as long as it is not "NULL".
     ##' @return An instance of the Class
     initialize = function(model,
                           data,
@@ -29,8 +35,11 @@ GOF_model_test <- R6::R6Class( # nolint
                           y_name,
                           Rn1_statistic, # nolint
                           gof_model_info_extractor,
-                          gof_model_resample) {
+                          gof_model_resample,
+                          n_cores,
+                          seed) {
       checkmate::assert_count(x = nmb_boot_samples, positive = TRUE)
+      checkmate::assert_count(x = n_cores, positive = TRUE, null.ok = TRUE)
       private$model_org <- model
       private$data_org <- data
       private$y_name <- y_name
@@ -38,6 +47,8 @@ GOF_model_test <- R6::R6Class( # nolint
       private$nmb_boot_samples <- nmb_boot_samples
       private$model_info_extractor <- gof_model_info_extractor
       private$model_resample <- gof_model_resample
+      private$n_cores <- n_cores
+      private$seed <- seed
       private$order_beta_dot_X_org <- order( # nolint
         private$model_info_extractor$beta_x_covariates(
           model = private$model_org
@@ -84,6 +95,8 @@ GOF_model_test <- R6::R6Class( # nolint
     nmb_boot_samples = NULL,
     model_info_extractor = NULL,
     model_resample = NULL,
+    n_cores = NULL,
+    seed = NULL,
     Rn1_statistic = NULL,
     Rn1_boot = NULL,
     Rn1_org = NULL,
@@ -108,5 +121,32 @@ GOF_model_test <- R6::R6Class( # nolint
           order_beta_x_covariates = private$order_beta_dot_X_org)
         return(Rn1_boot)
       }
-      private$Rn1_boot <- lapply(X = 1:private$nmb_boot_samples, FUN = f) # nolint
+
+      # Replace RNG with "L'Ecuyer-CMRG" if going parallel
+      replaced_rng <- FALSE
+      if (is.null(private$n_cores)) {
+        private$n_cores <- 1
+      } else if (private$n_cores > 1) {
+        # save and replace current RNG state
+        original_state <- if (exists(".Random.seed", .GlobalEnv))
+            .GlobalEnv$.Random.seed else NULL # nolint
+        RNGkind("L'Ecuyer-CMRG")
+        set.seed(NULL)
+        replaced_rng <- TRUE
+      }
+
+      if (!is.null(private$seed)) {
+        set.seed(private$seed)
+      }
+
+      private$Rn1_boot <- parallel::mclapply(X = 1:private$nmb_boot_samples, FUN = f, mc.cores = private$n_cores) # nolint
+
+      # Reset initial RNG if it has been replaced
+      if (replaced_rng) {
+        if (!is.null(original_state)) {
+          .GlobalEnv$.Random.seed <- original_state
+        } else {
+          RNGkind("default")
+        }
+      }
     }))

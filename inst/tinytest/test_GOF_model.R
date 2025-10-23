@@ -33,7 +33,9 @@ GOF_model_test_dummy <- R6::R6Class( # nolint
                           y_name,
                           Rn1_statistic, # nolint
                           gof_model_info_extractor,
-                          gof_model_resample) {
+                          gof_model_resample,
+                          n_cores,
+                          seed) {
     }))
 
 GOF_model_error_if_fit_class_is_not_lm_or_glm <- function() { # nolint
@@ -86,7 +88,9 @@ GOF_model_uses_lm_info_extractor <- function() { # nolint
                             y_name,
                             Rn1_statistic, # nolint
                             gof_model_info_extractor,
-                            gof_model_resample) {
+                            gof_model_resample,
+                            n_cores,
+                            seed) {
         inject_lm_info_extractor <<- inherits(
           x = gof_model_info_extractor,
           what = "GOF_lm_info_extractor")
@@ -209,7 +213,9 @@ GOF_model_uses_glm_info_extractor <- function() { # nolint
                             y_name,
                             Rn1_statistic, # nolint
                             gof_model_info_extractor,
-                            gof_model_resample) {
+                            gof_model_resample,
+                            n_cores,
+                            seed) {
         inject_glm_info_extractor <<- inherits(
           x = gof_model_info_extractor,
           what = "GOF_glm_info_extractor")

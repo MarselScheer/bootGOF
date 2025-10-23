@@ -240,7 +240,9 @@ mt <- GOF_model_test$new(
   gof_model_resample = GOF_model_resample$new(
     gof_model_simulator = my_simulator,
     gof_model_trainer = my_trainer
-  )
+  ),
+  n_cores = NULL,
+  seed = NULL
 )
 mt$get_pvalue()
 ```
@@ -304,7 +306,9 @@ mt <- GOF_model_test$new(
   gof_model_resample = GOF_model_resample$new(
     gof_model_simulator = GOF_glm_sim_param$new(),
     gof_model_trainer = my_negbin_trainer$new()
-  )
+  ),
+  n_cores = NULL,
+  seed = NULL
 )
 mt$get_pvalue()
 ```

@@ -1,3 +1,5 @@
+library(parallel)
+
 ##' @title Convenience function for creating a GOF-test for statistical models
 ##'
 ##' @description Simplifies the creation of an instance of
@@ -18,6 +20,13 @@
 ##'   class used for performing the GOF test (\link{GOF_model_test})
 ##'   is injected. This parameter simply makes it easier to test the
 ##'   convenience function properly.
+##' @param n_cores positive integer specifying the number of CPU cores to use
+##'   for parallel resampling. If bigger than 1, the L'Ecuyer-CMRG is used;
+##'   if 'NULL' or 1, one core is used with the current RNG.
+##'   Default is "NULL".
+##' @param seed integer intended to seed the internally setup
+##'   L'Ecuyer-CMRG, but will also be applied when RNG not replaced.
+##'   Default is "NULL", which will not alter the seed.
 ##' @export
 ##' @return instance of \link{GOF_model_test}
 ##' @examples
@@ -54,7 +63,9 @@ GOF_model <- function(model, # nolint
                       y_name,
                       Rn1_statistic, # nolint
                       gof_model_resample_class = GOF_model_resample,
-                      gof_model_test_class = GOF_model_test
+                      gof_model_test_class = GOF_model_test,
+                      n_cores = NULL,
+                      seed = NULL
                       ) {
   checkmate::assert_subset(
     x = simulator_type,
@@ -66,8 +77,6 @@ GOF_model <- function(model, # nolint
       "Refitting MASS::glm.nb can be problematic, see vignette New-Models"
     ))
   }
-
-
 
   simulators <- list(
     lm = list(
@@ -113,6 +122,9 @@ GOF_model <- function(model, # nolint
     y_name = y_name,
     Rn1_statistic = Rn1_statistic,
     gof_model_info_extractor = mie,
-    gof_model_resample = model_resample)
+    gof_model_resample = model_resample,
+    n_cores = n_cores,
+    seed = seed)
+
   return(ret)
 }
