@@ -304,7 +304,7 @@ GOF_model_test_no_initial_RNG <- function() { # nolint
     gof_model_resample = GOF_model_resample$new(
       gof_model_simulator = GOF_lm_sim_param$new(),
       gof_model_trainer = GOF_lm_trainer$new()),
-    n_cores = 4,
+    n_cores = 2,
     seed = 1
   )
   out <- mt$get_Rn1_boot()
@@ -315,7 +315,7 @@ GOF_model_test_no_initial_RNG <- function() { # nolint
 }
 GOF_model_test_no_initial_RNG()
 
-GOF_model_test_calc_Rn1_boot_parallel <- function() { # nolint
+GOF_model_test_calc_Rn1_boot_2_cores <- function() { # nolint
   set.seed(1)
   X <- rnorm(10) # nolint
   Y <- 5 * X + rnorm(10) # nolint
@@ -342,25 +342,28 @@ GOF_model_test_calc_Rn1_boot_parallel <- function() { # nolint
       gof_model_simulator = lm_sim_para_mock,
       gof_model_trainer = GOF_lm_trainer$new()
     ),
-    n_cores = 4,
+    n_cores = 2,
     seed = 1
   )
 
   d1 <- d
   d1$y <- model_resample_mock[[1]]
   fit1 <- lm(y~x, data = d1)
+  d2 <- d
+  d2$y <- model_resample_mock[[2]]
+  fit2 <- lm(y~x, data = d2)
   out <- mt$get_Rn1_boot()
   expect_equal(
     out,
     list(
       Rn1_fun(r = residuals(fit1), o = order(X)),
       Rn1_fun(r = residuals(fit1), o = order(X)),
-      Rn1_fun(r = residuals(fit1), o = order(X))
+      Rn1_fun(r = residuals(fit2), o = order(X))
     ))
 }
-GOF_model_test_calc_Rn1_boot_parallel()
+GOF_model_test_calc_Rn1_boot_2_cores()
 
-GOF_model_test_calc_pvalue_parallel <- function() { # nolint
+GOF_model_test_calc_pvalue_2_cores <- function() { # nolint
   set.seed(1)
   X <- rnorm(10) # nolint
   Y <- 5 * X + rnorm(10) # nolint
@@ -377,7 +380,7 @@ GOF_model_test_calc_pvalue_parallel <- function() { # nolint
     gof_model_resample = GOF_model_resample$new(
       gof_model_simulator = GOF_lm_sim_param$new(),
       gof_model_trainer = GOF_lm_trainer$new()),
-    n_cores = 4,
+    n_cores = 2,
     seed = 1
   )
   out <- mt$get_pvalue()
@@ -389,9 +392,9 @@ GOF_model_test_calc_pvalue_parallel <- function() { # nolint
     }
   )
 }
-GOF_model_test_calc_pvalue_parallel()
+GOF_model_test_calc_pvalue_2_cores()
 
-GOF_model_test_expect_small_pvalue_parallel <- function() { # nolint
+GOF_model_test_expect_small_pvalue_2_cores <- function() { # nolint
   set.seed(1)
   X1 <- rnorm(100) # nolint
   X2 <- rnorm(100) # nolint
@@ -409,7 +412,7 @@ GOF_model_test_expect_small_pvalue_parallel <- function() { # nolint
     gof_model_resample = GOF_model_resample$new(
       gof_model_simulator = GOF_glm_sim_param$new(),
       gof_model_trainer = GOF_glm_trainer$new()),
-    n_cores = 4,
+    n_cores = 2,
     seed = 1
   )
 
@@ -433,15 +436,15 @@ GOF_model_test_expect_small_pvalue_parallel <- function() { # nolint
         gof_model_info_extractor = ie
       ),
       gof_model_trainer = GOF_lm_trainer$new()),
-    n_cores = 4,
+    n_cores = 2,
     seed = 1
   )
 
   expect_equal(mt$get_pvalue(), 0)
 }
-GOF_model_test_expect_small_pvalue_parallel()
+GOF_model_test_expect_small_pvalue_2_cores()
 
-GOF_model_test_expect_non_small_pvalue_parallel <- function() { # nolint
+GOF_model_test_expect_non_small_pvalue_2_cores <- function() { # nolint
   set.seed(1)
   X1 <- rnorm(100) # nolint
   d <- data.frame(
@@ -458,11 +461,11 @@ GOF_model_test_expect_non_small_pvalue_parallel <- function() { # nolint
     gof_model_resample = GOF_model_resample$new(
       gof_model_simulator = GOF_glm_sim_param$new(),
       gof_model_trainer = GOF_glm_trainer$new()),
-    n_cores = 4,
+    n_cores = 2,
     seed = 1
   )
 
-  expect_equal(mt$get_pvalue(), 0.89)
+  expect_equal(mt$get_pvalue(), 0.8)
 
   X1 <- rnorm(100) # nolint
   d <- data.frame(
@@ -482,10 +485,10 @@ GOF_model_test_expect_non_small_pvalue_parallel <- function() { # nolint
         gof_model_info_extractor = ie
       ),
       gof_model_trainer = GOF_lm_trainer$new()),
-    n_cores = 4,
+    n_cores = 2,
     seed = 1
   )
 
-  expect_equal(mt$get_pvalue(), 0.94)
+  expect_equal(mt$get_pvalue(), 0.92)
 }
-GOF_model_test_expect_non_small_pvalue_parallel()
+GOF_model_test_expect_non_small_pvalue_2_cores()
